@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "source_url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419",
+    "law": "LFI 2025 — revalorisation +1.8% (revenus 2024)",
+    "year": 2025,
+    "fiscal_year_income": 2024,
+    "last_verified": "2026-02-10",
+    "description": "Barème de l'impôt sur le revenu 2025 et taux de cotisations sociales salariales"
+  },
+  "income_tax_brackets": [
+    { "min": 0, "max": 11497, "rate": 0.00 },
+    { "min": 11497, "max": 29315, "rate": 0.11 },
+    { "min": 29315, "max": 83823, "rate": 0.30 },
+    { "min": 83823, "max": 180294, "rate": 0.41 },
+    { "min": 180294, "max": null, "rate": 0.45 }
+  ],
+  "professional_deduction": {
+    "rate": 0.10,
+    "min": 504,
+    "max": 14426
+  },
+  "quotient_familial": {
+    "cap_per_half_part": 1791,
+    "parts_single": 1,
+    "parts_couple": 2,
+    "parts_per_child_1_2": 0.5,
+    "parts_per_child_3_plus": 1
+  },
+  "pass": 47100,
+  "social_contributions": {
+    "csg_deductible": {
+      "rate": 0.068,
+      "base_rate": 0.9825,
+      "base_cap_multiple_pass": 4,
+      "description": "CSG déductible — base 98.25% du brut jusqu'à 4×PASS, 100% au-delà"
+    },
+    "csg_non_deductible": {
+      "rate": 0.024,
+      "base_rate": 0.9825,
+      "base_cap_multiple_pass": 4,
+      "description": "CSG non-déductible"
+    },
+    "crds": {
+      "rate": 0.005,
+      "base_rate": 0.9825,
+      "base_cap_multiple_pass": 4,
+      "description": "CRDS"
+    },
+    "vieillesse_plafonnee": {
+      "rate": 0.069,
+      "cap": "PASS",
+      "description": "Assurance vieillesse plafonnée"
+    },
+    "vieillesse_deplafonnee": {
+      "rate": 0.004,
+      "cap": null,
+      "description": "Assurance vieillesse déplafonnée"
+    },
+    "retraite_complementaire_t1": {
+      "rate": 0.0315,
+      "cap": "PASS",
+      "description": "AGIRC-ARRCO Tranche 1"
+    },
+    "retraite_complementaire_t2": {
+      "rate": 0.0864,
+      "min": "PASS",
+      "cap": "8xPASS",
+      "description": "AGIRC-ARRCO Tranche 2"
+    },
+    "ceg_t1": {
+      "rate": 0.0086,
+      "cap": "PASS",
+      "description": "Contribution d'équilibre général T1"
+    },
+    "ceg_t2": {
+      "rate": 0.0108,
+      "min": "PASS",
+      "cap": "8xPASS",
+      "description": "Contribution d'équilibre général T2"
+    }
+  },
+  "estimated_vat": {
+    "savings_rate": 0.15,
+    "effective_vat_rate": 0.125,
+    "description": "TVA estimée via consommation (taux moyen effectif ~12.5%, taux épargne INSEE ~15%)"
+  }
+}

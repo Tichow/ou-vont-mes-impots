@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "note": "Prix unitaires approximatifs, sourcés depuis INSEE, rapports officiels, et tarifs publics.",
+    "last_verified": "2026-02-10"
+  },
+  "equivalences": {
+    "education": {
+      "item": "livres scolaires",
+      "unit_price": 8.50,
+      "emoji": "📚",
+      "source": "Prix moyen livre France, SNE 2024"
+    },
+    "defense": {
+      "item": "heures de vol d'un Rafale",
+      "unit_price": 16000,
+      "emoji": "✈️",
+      "source": "Cour des comptes, rapport défense 2024"
+    },
+    "health": {
+      "item": "consultations chez un généraliste",
+      "unit_price": 26.50,
+      "emoji": "🏥",
+      "source": "Tarif conventionnel CNAM 2025"
+    },
+    "retirement": {
+      "item": "mois de pension moyenne",
+      "unit_price": 1531,
+      "emoji": "👴",
+      "source": "Pension moyenne brute DREES 2024"
+    },
+    "justice": {
+      "item": "jours de détention",
+      "unit_price": 120,
+      "emoji": "⚖️",
+      "source": "Coût moyen journée détention, DAP 2024"
+    },
+    "culture": {
+      "item": "entrées au Louvre",
+      "unit_price": 22,
+      "emoji": "🎭",
+      "source": "Tarif plein Louvre 2025"
+    },
+    "debt": {
+      "item": "secondes d'intérêts de la dette",
+      "unit_price": 1900,
+      "emoji": "💸",
+      "source": "Charge dette ~60Md€/an ÷ 31.5M secondes/an"
+    },
+    "infrastructure": {
+      "item": "mètres d'autoroute",
+      "unit_price": 6000,
+      "emoji": "🛣️",
+      "source": "Coût moyen construction autoroute, rapport Sénat"
+    },
+    "security": {
+      "item": "heures de patrouille police",
+      "unit_price": 45,
+      "emoji": "🚔",
+      "source": "Estimation coût horaire chargé, Cour des comptes"
+    },
+    "research": {
+      "item": "heures de chercheur CNRS",
+      "unit_price": 55,
+      "emoji": "🔬",
+      "source": "Coût horaire chargé chercheur, CNRS 2024"
+    },
+    "aid": {
+      "item": "repas distribués par le PAM",
+      "unit_price": 0.50,
+      "emoji": "🌍",
+      "source": "Coût moyen repas Programme Alimentaire Mondial"
+    },
+    "admin": {
+      "item": "courriers administratifs traités",
+      "unit_price": 3.20,
+      "emoji": "🏛️",
+      "source": "Estimation coût unitaire traitement courrier, DGFIP"
+    },
+    "generic": {
+      "item": "pizzas margherita",
+      "unit_price": 11.50,
+      "emoji": "🍕",
+      "source": "Prix moyen pizzeria France, INSEE 2024"
+    }
+  }
+}
