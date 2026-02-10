@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "source_url": "https://www.budget.gouv.fr/budget-etat",
+    "secondary_source": "https://www.data.gouv.fr/fr/datasets/budget-de-letat/",
+    "last_verified": "2026-02-10",
+    "description": "Évolution de la répartition budgétaire par grands secteurs, 2015-2025. Pourcentages des dépenses totales de l'État. Données simplifiées pour visualisation.",
+    "note": "Les pourcentages sont des approximations basées sur les LFI successives. La répartition Sécu (santé/retraites) est estimée à partir des comptes de la Sécu."
+  },
+  "years": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  "sectors": {
+    "health": {
+      "name": "Santé",
+      "color": "#10B981",
+      "values": [24.5, 24.8, 24.6, 24.9, 25.0, 28.2, 27.5, 26.8, 26.3, 26.1, 26.0]
+    },
+    "retirement": {
+      "name": "Retraites",
+      "color": "#F59E0B",
+      "values": [26.0, 25.8, 25.5, 25.3, 25.2, 24.0, 24.5, 24.8, 25.0, 25.0, 25.0]
+    },
+    "education": {
+      "name": "Éducation",
+      "color": "#3B82F6",
+      "values": [10.5, 10.4, 10.3, 10.2, 10.1, 9.5, 9.8, 10.0, 10.0, 10.0, 10.0]
+    },
+    "defense": {
+      "name": "Défense",
+      "color": "#EF4444",
+      "values": [6.5, 6.5, 6.8, 7.0, 7.2, 6.8, 7.0, 7.5, 7.8, 8.0, 8.0]
+    },
+    "debt": {
+      "name": "Dette",
+      "color": "#6B7280",
+      "values": [8.5, 7.8, 7.5, 7.2, 6.8, 6.5, 6.0, 6.5, 7.5, 8.0, 8.0]
+    },
+    "other": {
+      "name": "Autres",
+      "color": "#A3A3A3",
+      "values": [24.0, 24.7, 25.3, 25.4, 25.7, 25.0, 25.2, 24.4, 23.4, 22.9, 23.0]
+    }
+  },
+  "events": [
+    { "year": 2017, "label": "Hausse CSG (+1,7 pts)", "description": "Transfert cotisations chômage → CSG pour financer la Sécu" },
+    { "year": 2020, "label": "COVID-19", "description": "Explosion des dépenses santé (+3,2 pts), \"quoi qu'il en coûte\"" },
+    { "year": 2022, "label": "Guerre en Ukraine", "description": "Accélération budget défense (LPM 2024-2030), hausse charge dette" },
+    { "year": 2023, "label": "Remontée des taux", "description": "Charge de la dette en forte hausse (+1 pt) suite aux hausses de taux BCE" },
+    { "year": 2024, "label": "LPM Défense", "description": "Budget défense à 8% — objectif 2% du PIB OTAN atteint" }
+  ]
+}
