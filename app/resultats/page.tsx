@@ -6,8 +6,10 @@ import { motion } from "motion/react";
 import { ArrowLeft, BarChart3, Share2 } from "lucide-react";
 import { calculateTaxes } from "@/lib/tax-engine";
 import { SankeyDiagram } from "@/components/breakdown/SankeyDiagram";
+import { TreemapChart } from "@/components/breakdown/TreemapChart";
 import { EquivalenceCards } from "@/components/breakdown/EquivalenceCards";
 import { SummaryCards } from "@/components/breakdown/SummaryCards";
+import { TaxBreakdownTable } from "@/components/breakdown/TaxBreakdownTable";
 import type { UserInput } from "@/lib/types";
 
 function ResultsContent() {
@@ -39,24 +41,24 @@ function ResultsContent() {
     <main className="min-h-screen bg-surface-alt">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-2">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-2 text-sm text-text-muted hover:text-text transition-colors"
+            className="flex items-center gap-1.5 text-sm text-text-muted hover:text-text transition-colors flex-shrink-0"
           >
             <ArrowLeft size={16} />
-            Modifier
+            <span className="hidden sm:inline">Modifier</span>
           </button>
-          <div className="flex items-center gap-2">
-            <BarChart3 size={20} className="text-primary" />
-            <span className="font-bold text-text">Où Vont Mes Impôts</span>
+          <div className="flex items-center gap-2 min-w-0">
+            <BarChart3 size={20} className="text-primary flex-shrink-0" />
+            <span className="font-bold text-text truncate">Où Vont Mes Impôts</span>
           </div>
           <button
             onClick={handleShare}
-            className="flex items-center gap-2 text-sm bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
+            className="flex items-center gap-1.5 text-sm bg-primary text-white px-3 md:px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors flex-shrink-0"
           >
             <Share2 size={14} />
-            Partager
+            <span className="hidden sm:inline">Partager</span>
           </button>
         </div>
       </header>
@@ -96,6 +98,21 @@ function ResultsContent() {
           </div>
         </section>
 
+        {/* Treemap */}
+        <section>
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-xl font-bold text-text mb-4"
+          >
+            Répartition par secteur
+          </motion.h2>
+          <div className="rounded-2xl border border-border bg-white p-6">
+            <TreemapChart sectors={result.budgetAllocation} totalTaxes={result.totalTaxes} />
+          </div>
+        </section>
+
         {/* Equivalences */}
         <section>
           <motion.h2
@@ -110,6 +127,24 @@ function ResultsContent() {
             Tes impôts traduits en choses du quotidien.
           </p>
           <EquivalenceCards sectors={result.budgetAllocation} />
+        </section>
+
+        {/* Detailed breakdown */}
+        <section>
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="text-xl font-bold text-text mb-2"
+          >
+            Détail de ta fiche de paie
+          </motion.h2>
+          <p className="text-text-muted mb-4 text-sm">
+            Chaque ligne de cotisation, de ton brut à ton net.
+          </p>
+          <div className="rounded-2xl border border-border bg-white p-6">
+            <TaxBreakdownTable result={result} />
+          </div>
         </section>
 
         {/* Disclaimer */}
