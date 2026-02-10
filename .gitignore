@@ -31,3 +31,6 @@ next-env.d.ts
 # editor
 .vscode/
 .idea/
+
+# internal docs (not for public repo)
+PROJECT_PLAN.md

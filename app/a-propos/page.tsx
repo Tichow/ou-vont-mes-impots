@@ -1,10 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
 import {
-  ArrowLeft,
-  BarChart3,
   AlertTriangle,
   BookOpen,
   Scale,
@@ -13,6 +10,8 @@ import {
   Database,
   PieChart,
 } from "lucide-react";
+import { Header } from "@/components/shared/Header";
+import { ScrollReveal } from "@/components/shared/ScrollReveal";
 
 type SourceItem = {
   name: string;
@@ -122,90 +121,65 @@ function Section({
   delay?: number;
 }) {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay }}
-    >
-      <div className="flex items-center gap-2 mb-4">
-        <div className="p-2 rounded-lg bg-primary/10">
-          <Icon size={18} className="text-primary" />
+    <ScrollReveal variant="fade-up" delay={delay}>
+      <section>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-2 rounded-lg bg-primary/10">
+            <Icon size={18} className="text-primary" />
+          </div>
+          <h2 className="text-xl font-bold text-text heading-tight">{title}</h2>
         </div>
-        <h2 className="text-xl font-bold text-text">{title}</h2>
-      </div>
-      {children}
-    </motion.section>
+        {children}
+      </section>
+    </ScrollReveal>
   );
 }
 
 export default function AProposPage() {
   return (
     <main className="min-h-screen bg-surface-alt">
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-4xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-2">
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 text-sm text-text-muted hover:text-text transition-colors"
-          >
-            <ArrowLeft size={16} />
-            <span className="hidden sm:inline">Accueil</span>
-          </Link>
-          <div className="flex items-center gap-2">
-            <BarChart3 size={20} className="text-primary" />
-            <span className="font-bold text-text">Où Vont Mes Impôts</span>
-          </div>
-          <div className="w-16" />
-        </div>
-      </header>
+      <Header variant="about" />
 
-      <div className="max-w-4xl mx-auto px-6 py-8 space-y-10">
+      <div className="max-w-4xl mx-auto px-6 py-10 space-y-16 md:space-y-20">
         {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <h1 className="text-2xl md:text-3xl font-extrabold text-text">
+        <ScrollReveal variant="fade-up">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">
             Sources & Méthodologie
           </h1>
-          <p className="text-text-muted mt-1">
+          <p className="text-text-muted mt-2 text-lg">
             Transparence sur nos calculs, nos sources et nos limites.
           </p>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Disclaimer box */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4"
-        >
-          <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-          <div className="text-sm">
-            <p className="font-semibold text-amber-900">
-              Cet outil est purement indicatif
-            </p>
-            <p className="text-amber-800 mt-1 leading-relaxed">
-              Les montants affichés sont des <strong>estimations</strong> basées sur le
-              barème fiscal <strong>2025 (revenus 2024)</strong> et les données budgétaires
-              publiques (LFI 2025). Ils ne constituent en aucun cas un avis fiscal.
-              Pour une simulation précise et personnalisée, consultez{" "}
-              <a
-                href="https://www.impots.gouv.fr/simulateurs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline font-medium"
-              >
-                impots.gouv.fr
-              </a>.
-            </p>
+        <ScrollReveal variant="scale">
+          <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-5">
+            <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+            <div className="text-sm">
+              <p className="font-semibold text-amber-900">
+                Cet outil est purement indicatif
+              </p>
+              <p className="text-amber-800 mt-1 leading-relaxed">
+                Les montants affichés sont des <strong>estimations</strong> basées sur le
+                barème fiscal <strong>2025 (revenus 2024)</strong> et les données budgétaires
+                publiques (LFI 2025). Ils ne constituent en aucun cas un avis fiscal.
+                Pour une simulation précise et personnalisée, consultez{" "}
+                <a
+                  href="https://www.impots.gouv.fr/simulateurs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline font-medium"
+                >
+                  impots.gouv.fr
+                </a>.
+              </p>
+            </div>
           </div>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Fiscal year */}
-        <Section title="Année fiscale" icon={BookOpen} delay={0.15}>
-          <div className="bg-white rounded-xl border border-border p-5 text-sm leading-relaxed text-text-muted space-y-3">
+        <Section title="Année fiscale" icon={BookOpen} delay={0}>
+          <div className="bg-white rounded-2xl border border-border p-5 text-sm leading-relaxed text-text-muted space-y-3">
             <p>
               Tous les calculs utilisent le <strong className="text-text">barème 2025</strong>,
               applicable aux revenus perçus en <strong className="text-text">2024</strong>.
@@ -225,40 +199,36 @@ export default function AProposPage() {
         </Section>
 
         {/* Simplifications */}
-        <Section title="Hypothèses simplificatrices" icon={AlertTriangle} delay={0.2}>
+        <Section title="Hypothèses simplificatrices" icon={AlertTriangle} delay={0}>
           <div className="space-y-3">
             {SIMPLIFICATIONS.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.25 + i * 0.05 }}
-                className="bg-white rounded-xl border border-border p-4"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="p-1.5 rounded-lg bg-amber-50 flex-shrink-0">
-                    <item.icon size={16} className="text-amber-600" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <h3 className="font-semibold text-text text-sm">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-text-muted leading-relaxed">
-                      {item.detail}
-                    </p>
-                    <div className="text-xs bg-surface-alt rounded-lg px-3 py-1.5 inline-block text-text-muted">
-                      <strong className="text-text">Impact :</strong> {item.impact}
+              <ScrollReveal key={item.title} variant="fade-left" delay={i * 0.05}>
+                <div className="bg-white rounded-2xl border border-border p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="p-1.5 rounded-lg bg-amber-50 flex-shrink-0">
+                      <item.icon size={16} className="text-amber-600" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <h3 className="font-semibold text-text text-sm">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-text-muted leading-relaxed">
+                        {item.detail}
+                      </p>
+                      <div className="text-xs bg-surface-alt rounded-lg px-3 py-1.5 inline-block text-text-muted">
+                        <strong className="text-text">Impact :</strong> {item.impact}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </ScrollReveal>
             ))}
           </div>
         </Section>
 
         {/* What's NOT included */}
-        <Section title="Ce que l'outil ne couvre pas" icon={Scale} delay={0.3}>
-          <div className="bg-white rounded-xl border border-border p-5 text-sm">
+        <Section title="Ce que l'outil ne couvre pas" icon={Scale} delay={0}>
+          <div className="bg-white rounded-2xl border border-border p-5 text-sm">
             <ul className="space-y-2 text-text-muted">
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">•</span>
@@ -300,15 +270,15 @@ export default function AProposPage() {
         </Section>
 
         {/* Primary Sources */}
-        <Section title="Sources primaires" icon={BookOpen} delay={0.35}>
+        <Section title="Sources primaires" icon={BookOpen} delay={0}>
           <div className="space-y-2">
-            {PRIMARY_SOURCES.map((source, i) => (
+            {PRIMARY_SOURCES.map((source) => (
               <a
                 key={source.name}
                 href={source.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 bg-white rounded-xl border border-border p-4 hover:border-primary/40 transition-colors group"
+                className="flex items-start gap-3 bg-white rounded-2xl border border-border p-4 hover:border-primary/40 transition-colors group"
               >
                 <ExternalLink
                   size={14}
@@ -328,7 +298,7 @@ export default function AProposPage() {
         </Section>
 
         {/* Secondary Sources */}
-        <Section title="Sources secondaires" icon={Database} delay={0.4}>
+        <Section title="Sources secondaires" icon={Database} delay={0}>
           <div className="space-y-2">
             {SECONDARY_SOURCES.map((source) => (
               <a
@@ -336,7 +306,7 @@ export default function AProposPage() {
                 href={source.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 bg-white rounded-xl border border-border p-4 hover:border-primary/40 transition-colors group"
+                className="flex items-start gap-3 bg-white rounded-2xl border border-border p-4 hover:border-primary/40 transition-colors group"
               >
                 <ExternalLink
                   size={14}
@@ -356,8 +326,8 @@ export default function AProposPage() {
         </Section>
 
         {/* Open source & license */}
-        <Section title="Open source" icon={BookOpen} delay={0.45}>
-          <div className="bg-white rounded-xl border border-border p-5 text-sm text-text-muted leading-relaxed space-y-2">
+        <Section title="Open source" icon={BookOpen} delay={0}>
+          <div className="bg-white rounded-2xl border border-border p-5 text-sm text-text-muted leading-relaxed space-y-2">
             <p>
               Ce projet est <strong className="text-text">open source</strong> sous licence MIT.
               Le code source est disponible sur{" "}
@@ -394,13 +364,13 @@ export default function AProposPage() {
         <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
           <Link
             href="/"
-            className="flex-1 text-center text-sm bg-primary text-white px-4 py-3 rounded-xl hover:bg-primary-dark transition-colors font-medium"
+            className="flex-1 text-center text-sm bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all font-medium"
           >
             Calculer mes impôts
           </Link>
           <Link
             href="/resultats?salary=35000&status=single&children=0"
-            className="flex-1 text-center text-sm border border-border text-text px-4 py-3 rounded-xl hover:bg-surface-alt transition-colors font-medium"
+            className="flex-1 text-center text-sm border border-border text-text px-4 py-3 rounded-full hover:bg-surface-alt transition-colors font-medium"
           >
             Voir un exemple de résultats
           </Link>

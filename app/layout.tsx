@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Figtree } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const figtree = Figtree({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={inter.variable}>
+    <html lang="fr" className={figtree.variable}>
       <body className="min-h-screen bg-surface antialiased">{children}</body>
     </html>
   );

@@ -3,80 +3,63 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { SalaryInput } from "@/components/salary/SalaryInput";
-import { BarChart3, Github } from "lucide-react";
+import { Header } from "@/components/shared/Header";
+import { ScrollReveal } from "@/components/shared/ScrollReveal";
+import { DecorativeShapes } from "@/components/shared/DecorativeShapes";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="w-full py-4 px-6">
-        <nav className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <BarChart3 size={24} className="text-primary" />
-            <span className="font-bold text-lg text-text">
-              Où Vont Mes Impôts
-            </span>
-          </div>
-          <a
-            href="https://github.com/tichow/ou-vont-mes-impots"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-text-muted hover:text-text transition-colors"
-          >
-            <Github size={20} />
-          </a>
-        </nav>
-      </header>
+      <Header variant="landing" />
 
       {/* Hero */}
-      <section className="flex-1 flex flex-col items-center justify-center px-6 py-12">
+      <section className="relative flex-1 flex flex-col items-center justify-center px-6 py-20 md:py-28">
+        <DecorativeShapes variant="hero" />
+
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="relative z-10 text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-text leading-tight mb-4">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-text leading-[1.05] mb-6 heading-tight">
             Chaque euro compte.
             <br />
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span className="gradient-text">
               Découvre où vont les tiens.
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-text-muted max-w-xl mx-auto">
+          <p className="text-lg md:text-xl text-text-muted max-w-xl mx-auto leading-relaxed">
             Entre ton salaire brut et visualise le trajet de chaque euro
             prélevé — de ta fiche de paie jusqu&apos;aux missions de l&apos;État.
           </p>
         </motion.div>
 
-        <SalaryInput />
+        <div className="relative z-10 w-full">
+          <SalaryInput />
+        </div>
       </section>
 
       {/* Trust indicators */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-        className="py-8 px-6 border-t border-border"
-      >
+      <ScrollReveal variant="fade-up" className="py-10 px-6 border-t border-border/50 bg-surface-warm">
         <div className="max-w-3xl mx-auto flex flex-wrap items-center justify-center gap-8 text-sm text-text-muted">
-          <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-accent" />
+          <span className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-accent" />
             Données officielles (data.gouv.fr)
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-primary" />
+          <span className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-primary" />
             100% open source
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-social" />
+          <span className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-social" />
             Calculs côté client — aucune donnée collectée
           </span>
         </div>
-      </motion.section>
+      </ScrollReveal>
 
       {/* Footer */}
-      <footer className="py-6 px-6 text-center text-xs text-text-muted space-y-2">
+      <footer className="py-8 px-6 text-center text-xs text-text-muted space-y-2">
         <p>
           Barème fiscal 2025 (revenus 2024) · LFI 2025 · Sources :{" "}
           <a

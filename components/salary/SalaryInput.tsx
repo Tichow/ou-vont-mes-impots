@@ -57,7 +57,9 @@ export function SalaryInput() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full max-w-lg mx-auto"
     >
-      <div className="rounded-2xl bg-white p-8 shadow-xl shadow-primary/5 border border-border">
+      <div className="relative rounded-3xl bg-white p-8 md:p-10 shadow-primary-lg border border-border overflow-hidden">
+        {/* Gradient accent bar */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent" />
         {/* Salary input */}
         <label className="block text-sm font-medium text-text-muted mb-2">
           Salaire brut annuel
@@ -149,7 +151,7 @@ export function SalaryInput() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSubmit}
-          className="w-full py-4 px-6 bg-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-primary-dark transition-colors shadow-lg shadow-primary/25"
+          className="w-full py-4 px-6 bg-gradient-to-r from-primary to-primary-dark text-white font-semibold rounded-full flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/30 transition-all shadow-primary-sm"
         >
           Voir où vont mes impôts
           <ArrowRight size={20} />
