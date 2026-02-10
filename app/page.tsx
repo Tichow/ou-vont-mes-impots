@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 import { SalaryInput } from "@/components/salary/SalaryInput";
 import { BarChart3, Github } from "lucide-react";
@@ -75,7 +76,7 @@ export default function HomePage() {
       </motion.section>
 
       {/* Footer */}
-      <footer className="py-6 px-6 text-center text-xs text-text-muted">
+      <footer className="py-6 px-6 text-center text-xs text-text-muted space-y-2">
         <p>
           Barème fiscal 2025 (revenus 2024) · LFI 2025 · Sources :{" "}
           <a
@@ -104,6 +105,11 @@ export default function HomePage() {
           >
             budget.gouv.fr
           </a>
+        </p>
+        <p>
+          <Link href="/a-propos" className="underline hover:text-text">
+            Sources, méthodologie et limites
+          </Link>
         </p>
       </footer>
     </main>

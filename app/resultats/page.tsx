@@ -3,13 +3,16 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, Suspense } from "react";
 import { motion } from "motion/react";
-import { ArrowLeft, BarChart3, Share2 } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, BarChart3, Share2, Clock, Globe, BookOpen } from "lucide-react";
 import { calculateTaxes } from "@/lib/tax-engine";
 import { SankeyDiagram } from "@/components/breakdown/SankeyDiagram";
 import { TreemapChart } from "@/components/breakdown/TreemapChart";
 import { EquivalenceCards } from "@/components/breakdown/EquivalenceCards";
 import { SummaryCards } from "@/components/breakdown/SummaryCards";
 import { TaxBreakdownTable } from "@/components/breakdown/TaxBreakdownTable";
+import { HistoryTimeline } from "@/components/comparison/HistoryTimeline";
+import { CountryCompare } from "@/components/comparison/CountryCompare";
 import type { UserInput } from "@/lib/types";
 
 function ResultsContent() {
@@ -147,6 +150,50 @@ function ResultsContent() {
           </div>
         </section>
 
+        {/* History timeline */}
+        <section>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Clock size={20} className="text-primary" />
+              <h2 className="text-xl font-bold text-text">
+                Évolution du budget (2015-2025)
+              </h2>
+            </div>
+            <p className="text-text-muted mb-4 text-sm">
+              Comment la répartition des dépenses a changé en 10 ans.
+            </p>
+          </motion.div>
+          <div className="rounded-2xl border border-border bg-white p-6">
+            <HistoryTimeline />
+          </div>
+        </section>
+
+        {/* Country comparison */}
+        <section>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Globe size={20} className="text-primary" />
+              <h2 className="text-xl font-bold text-text">
+                La France face au monde
+              </h2>
+            </div>
+            <p className="text-text-muted mb-4 text-sm">
+              Comparaison internationale des prélèvements obligatoires.
+            </p>
+          </motion.div>
+          <div className="rounded-2xl border border-border bg-white p-6">
+            <CountryCompare />
+          </div>
+        </section>
+
         {/* Disclaimer */}
         <section className="text-xs text-text-muted leading-relaxed border-t border-border pt-6">
           <p>
@@ -161,6 +208,12 @@ function ResultsContent() {
           <p className="mt-2">
             Sources : Loi de Finances 2025, data.gouv.fr, INSEE, budget.gouv.fr.
             Données ouvertes sous Licence Ouverte 2.0.
+          </p>
+          <p className="mt-2">
+            <Link href="/a-propos" className="inline-flex items-center gap-1 underline hover:text-text">
+              <BookOpen size={12} />
+              Sources, méthodologie et limites
+            </Link>
           </p>
         </section>
       </div>

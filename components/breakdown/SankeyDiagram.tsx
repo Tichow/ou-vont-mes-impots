@@ -24,9 +24,11 @@ type Props = {
 const NODE_WIDTH = 18;
 const NODE_PADDING = 16;
 
-function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: SLinkExtra[] & { source: number; target: number; value: number }[] } {
+type LinkInput = SLinkExtra & { source: number; target: number; value: number };
+
+function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[] } {
   const nodes: SNodeExtra[] = [];
-  const links: (SLinkExtra & { source: number; target: number; value: number })[] = [];
+  const links: LinkInput[] = [];
 
   // 0: Salaire brut
   nodes.push({ id: "gross", label: `Salaire brut · ${formatEuros(result.input.grossAnnualSalary)}`, color: "#0F172A" });

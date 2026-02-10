@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useRef, useEffect } from "react";
-import { hierarchy, treemap, treemapSquarify } from "d3-hierarchy";
+import { hierarchy, treemap, treemapSquarify, type HierarchyRectangularNode } from "d3-hierarchy";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronRight } from "lucide-react";
 import type { BudgetSector } from "@/lib/types";
@@ -50,7 +50,7 @@ export function TreemapChart({ sectors, totalTaxes }: Props) {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const leaves = useMemo(() => {
+  const leaves = useMemo((): HierarchyRectangularNode<TreeNode>[] => {
     const root = hierarchy(buildTreeData(sectors))
       .sum((d) => d.value ?? 0)
       .sort((a, b) => (b.value ?? 0) - (a.value ?? 0));
@@ -61,8 +61,7 @@ export function TreemapChart({ sectors, totalTaxes }: Props) {
       .round(true)
       .tile(treemapSquarify);
 
-    layout(root);
-    return root.leaves();
+    return layout(root).leaves();
   }, [sectors, dimensions]);
 
   return (
