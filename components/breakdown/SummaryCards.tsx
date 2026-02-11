@@ -54,14 +54,14 @@ const cards: CardDef[] = [
   },
   {
     key: "state-taxes",
-    label: "Budget de l\u2019\u00C9tat",
-    glossaryId: "ir",
+    label: "Contribution au budget",
+    glossaryId: "contribution_etat",
     icon: Landmark,
     color: "text-primary",
     accentColor: "bg-primary",
     getValue: (r) => formatEuros(r.stateTaxes),
     getSub: (r) => `IR ${formatEuros(r.incomeTax.amount)} + TVA ${formatEuros(r.estimatedVAT.amount)}`,
-    note: "TVA estimée",
+    note: "TVA estim\u00E9e",
   },
 ];
 

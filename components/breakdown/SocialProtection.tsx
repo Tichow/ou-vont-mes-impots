@@ -51,14 +51,17 @@ export function SocialProtection({ destinations }: Props) {
             />
           </div>
 
-          {/* Organism + equivalence */}
-          <div className="mt-2.5 space-y-0.5">
-            <p className="text-xs text-text-muted">
-              <span className="text-text-muted/60">&rarr;</span>{" "}
+          {/* Description + organism + equivalence */}
+          <div className="mt-2.5 space-y-1">
+            <p className="text-xs text-text-muted leading-relaxed">
+              {dest.description}
+            </p>
+            <p className="text-[11px] text-text-muted/60">
+              <span className="text-text-muted/40">&rarr;</span>{" "}
               {dest.organism}
             </p>
             <p
-              className="text-xs text-text-muted"
+              className="text-xs text-text-muted font-medium"
               title={dest.equivalence.source}
             >
               {dest.equivalence.description}

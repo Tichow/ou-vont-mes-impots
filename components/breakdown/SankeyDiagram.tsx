@@ -65,12 +65,18 @@ function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[
   nodes.push({ id: "net", label: "Net en poche", shortLabel: "Net", amount: result.netTakeHome, color: "#10B981" });
 
   // ── Column 3a: Protection sociale by destination (from cotisations — orange) ──
+  const SHORT_DEST_LABELS: Record<string, string> = {
+    retraite: "Retraite",
+    sante: "Maladie",
+    famille: "Famille",
+    dette_sociale: "Dette",
+  };
   for (const dest of result.cotisationsByDestination) {
     if (dest.amount <= 0) continue;
     nodes.push({
       id: `sp_${dest.id}`,
       label: dest.label,
-      shortLabel: dest.label,
+      shortLabel: SHORT_DEST_LABELS[dest.id] ?? dest.label,
       amount: dest.amount,
       color: dest.color,
     });

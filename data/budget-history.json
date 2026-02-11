@@ -3,8 +3,8 @@
     "source_url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026",
     "secondary_source": "https://www.vie-publique.fr/loi/300444-budget-de-letat-2026-projet-de-loi-de-finances-plf-2026",
     "last_verified": "2026-02-11",
-    "description": "Évolution de la répartition budgétaire par grands secteurs, 2015-2026. Pourcentages des dépenses publiques totales (État + Sécu). Données simplifiées pour visualisation.",
-    "note": "Les pourcentages sont des approximations basées sur les LFI successives et les comptes de la Sécu (rapports DREES et CCSS). Ils représentent la part de chaque secteur dans les dépenses publiques combinées."
+    "description": "Évolution de la répartition des dépenses publiques totales par grands secteurs, 2015-2026. Périmètre : État + Sécurité sociale combinés (~1 200 Md€ en 2026). Ce périmètre diffère de la section 'Budget de l'État' qui ne couvre que ~500 Md€.",
+    "note": "Les pourcentages sont des approximations basées sur les LFI et LFSS successives, les rapports DREES et CCSS. Périmètre consolidé (COFOG) nécessaire pour la comparabilité historique, car la frontière État/Sécu a évolué (ex. réforme CSG 2017)."
   },
   "years": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   "sectors": {

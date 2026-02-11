@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "description": "Glossaire des termes fiscaux pour les tooltips interactifs",
+    "last_updated": "2026-02-11",
+    "year": 2026
+  },
+  "terms": {
+    "salaire_brut": {
+      "term": "Salaire brut",
+      "definition": "Rémunération totale avant toute retenue. C'est le montant inscrit en haut de votre fiche de paie, avant déduction des cotisations sociales et de l'impôt.",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2301"
+      }
+    },
+    "net_avant_ir": {
+      "term": "Net avant impôt",
+      "definition": "Salaire après déduction des cotisations sociales, mais avant le prélèvement à la source de l'impôt sur le revenu. C'est le « net imposable » de votre fiche de paie.",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2301"
+      }
+    },
+    "net_apres_ir": {
+      "term": "Net en poche",
+      "definition": "Ce qui arrive réellement sur votre compte en banque chaque mois : le brut moins toutes les cotisations et l'impôt sur le revenu prélevé à la source.",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2301"
+      }
+    },
+    "csg_deductible": {
+      "term": "CSG déductible",
+      "definition": "Contribution Sociale Généralisée prélevée à 6,8 % sur votre brut. Elle finance la Sécurité sociale (maladie, famille, vieillesse) et est déduite de votre revenu imposable.",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    "csg_non_deductible": {
+      "term": "CSG non-déductible",
+      "definition": "Part de la CSG (2,4 %) qui n'est pas déductible de votre revenu imposable. Vous payez donc de l'impôt sur le revenu sur ce montant.",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    "crds": {
+      "term": "CRDS",
+      "definition": "Contribution au Remboursement de la Dette Sociale (0,5 %). Elle sert à rembourser la dette de la Sécurité sociale. Non déductible de l'impôt.",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    "vieillesse_plafonnee": {
+      "term": "Assurance vieillesse plafonnée",
+      "definition": "Cotisation retraite de base (6,90 %) calculée sur votre salaire jusqu'au plafond de la Sécurité sociale (48 060 €/an). Elle finance votre pension de retraite de base.",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    "vieillesse_deplafonnee": {
+      "term": "Assurance vieillesse déplafonnée",
+      "definition": "Cotisation retraite de base (0,40 %) calculée sur la totalité de votre salaire, sans plafond. Elle complète votre pension de retraite de base.",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    "retraite_t1": {
+      "term": "Retraite complémentaire T1",
+      "definition": "Cotisation Agirc-Arrco tranche 1 (3,15 %) sur votre salaire jusqu'au plafond Sécu. Elle vous donne des points de retraite complémentaire.",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    "retraite_t2": {
+      "term": "Retraite complémentaire T2",
+      "definition": "Cotisation Agirc-Arrco tranche 2 (8,64 %) sur la part de votre salaire entre 1 et 8 plafonds Sécu. Ne s'applique que si vous gagnez plus de 48 060 €/an.",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    "ceg_t1": {
+      "term": "CEG T1",
+      "definition": "Contribution d'Équilibre Général tranche 1 (0,86 %). Elle finance l'équilibre du régime Agirc-Arrco sur la part de salaire sous le plafond Sécu.",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    "ceg_t2": {
+      "term": "CEG T2",
+      "definition": "Contribution d'Équilibre Général tranche 2 (1,08 %) sur la part de salaire au-dessus du plafond Sécu. Ne s'applique que si vous dépassez 48 060 €/an.",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    "ir": {
+      "term": "Impôt sur le revenu",
+      "definition": "Impôt progressif par tranches sur vos revenus nets. Il est prélevé à la source chaque mois sur votre salaire. Son taux dépend de vos revenus et de votre situation familiale.",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/particulier/questions/comment-calculer-mon-taux-dimposition-dapres-le-bareme-progressif-de-limpot"
+      }
+    },
+    "tmi": {
+      "term": "Taux marginal d'imposition",
+      "definition": "Taux de la tranche la plus haute de votre barème d'IR. Ce n'est pas le taux réel que vous payez (qui est plus bas), mais le taux appliqué à chaque euro supplémentaire gagné.",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/particulier/questions/comment-calculer-mon-taux-dimposition-dapres-le-bareme-progressif-de-limpot"
+      }
+    },
+    "tva": {
+      "term": "TVA",
+      "definition": "Taxe sur la Valeur Ajoutée, incluse dans le prix de tout ce que vous achetez (20 % taux normal). C'est un impôt indirect : vous le payez sans vous en rendre compte à chaque achat.",
+      "source": {
+        "label": "economie.gouv.fr",
+        "url": "https://www.economie.gouv.fr/particuliers/tva-taux-quotidien"
+      }
+    },
+    "cotisations": {
+      "term": "Cotisations sociales",
+      "definition": "Prélèvements obligatoires sur votre salaire brut, directement fléchés vers vos caisses de protection sociale : retraite (CNAV + AGIRC-ARRCO), assurance maladie (CNAM), allocations familiales (CNAF), dette sociale (CADES). Contrairement aux impôts, ils ne vont pas dans un pot commun — chaque euro a une destination précise.",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    "contribution_etat": {
+      "term": "Contribution au budget de l'État",
+      "definition": "Somme de votre impôt sur le revenu (IR) et de la TVA estimée sur vos achats. Contrairement aux cotisations (fléchées vers la Sécu), ces impôts sont versés au budget général : c'est le Parlement qui décide de leur répartition chaque année via la loi de finances.",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026"
+      }
+    },
+    "fiche_de_paie": {
+      "term": "Fiche de paie",
+      "definition": "Document mensuel détaillant votre salaire brut, toutes les cotisations prélevées, l'impôt retenu à la source, et le net versé sur votre compte.",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F559"
+      }
+    }
+  }
+}
