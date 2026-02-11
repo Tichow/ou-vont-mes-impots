@@ -57,41 +57,40 @@ function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[
   // ── Column 1: Source ──────────────────────────────────────────────
   nodes.push({ id: "gross", label: "Salaire brut", shortLabel: "Brut", amount: totalGross, color: "#0F172A", sortOrder: 0 });
 
-  // ── Column 2: Types de prélèvement ────────────────────────────────
+  // ── Column 2: Intermediaries (cotisations & IR only) ──────────────
   nodes.push({ id: "social", label: "Cotisations sociales", shortLabel: "Cotis.", amount: result.socialContributions.total, color: "#F59E0B", sortOrder: 0 });
   if (result.incomeTax.amount > 0) {
     nodes.push({ id: "ir", label: "Impôt sur le revenu", shortLabel: "IR", amount: result.incomeTax.amount, color: "#3B82F6", sortOrder: 1 });
   }
-  nodes.push({ id: "net", label: "Net en poche", shortLabel: "Net", amount: result.netTakeHome, color: "#10B981", sortOrder: 2 });
 
-  // ── Column 3a: Protection sociale by destination (from cotisations — orange) ──
+  // ── Column 3: All final destinations ────────────────────────────────
+  // Net en poche at the very top (biggest flow, prevents crossings)
+  nodes.push({ id: "net", label: "Net en poche", shortLabel: "Net", amount: result.netTakeHome, color: "#10B981", sortOrder: -1 });
+
+  // Cotisations destinations sorted by amount descending (below Net)
   const SHORT_DEST_LABELS: Record<string, string> = {
     retraite: "Retraite",
     sante: "Maladie",
     famille: "Famille",
     dette_sociale: "Dette",
   };
-  const DEST_ORDER: Record<string, number> = {
-    retraite: 0,
-    sante: 1,
-    famille: 2,
-    dette_sociale: 3,
-  };
-  for (const dest of result.cotisationsByDestination) {
-    if (dest.amount <= 0) continue;
+  const sortedDests = [...result.cotisationsByDestination]
+    .filter((d) => d.amount > 0)
+    .sort((a, b) => b.amount - a.amount);
+  sortedDests.forEach((dest, i) => {
     nodes.push({
       id: `sp_${dest.id}`,
       label: dest.label,
       shortLabel: SHORT_DEST_LABELS[dest.id] ?? dest.label,
       amount: dest.amount,
       color: dest.color,
-      sortOrder: DEST_ORDER[dest.id] ?? 4,
+      sortOrder: i,
     });
-  }
+  });
 
-  // ── Column 3b: Budget de l'État (single node from IR) ─────────────
+  // Budget de l'État at the very bottom (aligned with IR source)
   if (result.incomeTax.amount > 0) {
-    nodes.push({ id: "st_budget", label: "Budget de l\u2019\u00C9tat", shortLabel: "Budget", amount: result.incomeTax.amount, color: "#3B82F6", sortOrder: 5 });
+    nodes.push({ id: "st_budget", label: "Budget de l\u2019\u00C9tat", shortLabel: "Budget", amount: result.incomeTax.amount, color: "#3B82F6", sortOrder: 100 });
   }
 
   // ── Links: Brut → prélèvements ────────────────────────────────────
