@@ -59,11 +59,11 @@ Toutes les données proviennent de **sources officielles** et sont traçables :
 |--------|--------|-------|
 | Barème IR | [service-public.gouv.fr](https://www.service-public.gouv.fr/particuliers/vosdroits/F1419) | 2026 (revenus 2025) |
 | Taux de cotisations | [URSSAF](https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html) | 2026 |
-| Répartition CSG | [CSS art. L136-8](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006740080) | Inchangée depuis 2019 |
+| Répartition CSG | [CSS art. L136-8](https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173099) | Inchangée depuis 2019 |
 | Budget de l'État | [budget.gouv.fr — LFI 2026](https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026) | 2026 |
-| Détail par programme | [data.economie.gouv.fr — PLF 2025](https://data.economie.gouv.fr/explore/dataset/plf-2025-depenses-2025-selon-destination) | 2025 |
+| Détail par programme | [data.economie.gouv.fr — PLF 2025](https://data.economie.gouv.fr/explore/dataset/plf25-depenses-2025-selon-destination/) | 2025 |
 | Sécurité sociale | [LFSS 2026](https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss) | 2026 |
-| Pensions moyennes | [DREES — Les retraités et les retraites](https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse/panoramas-de-la-drees/les-retraites-et-les-retraites) | 2025 |
+| Pensions moyennes | [DREES — Les retraités et les retraites](https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites) | 2025 |
 | Comparaison internationale | [OCDE Taxing Wages](https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html) + [Revenue Statistics](https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html) | 2024 / 2023 |
 
 Les calculs sont validés par **51 tests unitaires** couvrant le moteur fiscal, la ventilation par destination, et l'allocation budgétaire.

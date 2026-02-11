@@ -59,7 +59,7 @@ const PRIMARY_SOURCES: SourceItem[] = [
   },
   {
     name: "CSS art. L136-8 — Répartition de la CSG",
-    url: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036385822/",
+    url: "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173099",
     description:
       "Article du Code de la Sécurité sociale définissant la répartition des 9,2 points de CSG entre organismes : CNAM (6,45 pts), CNAF (0,95 pts), FSV (0,7 pts), CNSA (0,6 pts) et CADES (0,5 pts). Base du circuit « Protection sociale ».",
   },
@@ -110,7 +110,7 @@ const SECONDARY_SOURCES: SourceItem[] = [
   },
   {
     name: "DREES — Les retraités et les retraites, édition 2025",
-    url: "https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse/panoramas-de-la-drees/les-retraites-et-les-retraites",
+    url: "https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites",
     description:
       "Pension moyenne brute de droit direct : 1 666 €/mois (fin 2023). Utilisée pour l'équivalence « X mois de pension moyenne » dans le circuit retraite.",
   },
