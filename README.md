@@ -43,14 +43,13 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 
 | Couche | Technologie | Pourquoi |
 |--------|------------|----------|
-| Framework | Next.js 15 (App Router) | SSG, routing, optimisation automatique |
-| Langage | TypeScript (strict) | Zéro `any`, sécurité des types |
-| Styling | Tailwind CSS v4 | Config CSS-first, design tokens |
-| Animations | Motion v12 | Barres animées, transitions fluides |
-| Data Viz | D3.js (tree-shaken) | Sankey (`d3-sankey` uniquement) |
-| Charts | Recharts | Aires empilées, barres horizontales |
-| Tests | Vitest | 204 tests unitaires sur le moteur fiscal |
-| OG Images | Satori + resvg | Génération statique au build |
+| Framework | Next.js 16 (App Router) | SSG, Turbopack, React 19 |
+| Langage | TypeScript 5.9 (strict) | Zéro `any`, sécurité des types |
+| Styling | Tailwind CSS v4 | Config CSS-first (`@theme`), pas de `tailwind.config` |
+| Animations | Motion v12 (`motion/react`) | Barres animées, transitions fluides |
+| Data Viz | D3.js (tree-shaken) | `d3-sankey`, `d3-hierarchy`, `d3-shape`, `d3-scale` |
+| Charts | Recharts 3 | Aires empilées, barres horizontales |
+| Tests | Vitest 4 | 204 tests unitaires sur le moteur fiscal |
 | Déploiement | Vercel | Export statique, CDN mondial |
 
 ## Données et sources
@@ -87,6 +86,7 @@ pnpm build     # Build statique
 app/
 ├── page.tsx                 # Landing — saisie du salaire
 ├── resultats/page.tsx       # Dashboard de résultats
+├── glossaire/page.tsx       # Glossaire — 63 termes sourcés, recherche et filtres
 └── a-propos/page.tsx        # Sources, méthodologie et limites
 
 components/
@@ -96,11 +96,11 @@ components/
 │   ├── BudgetBreakdown.tsx  # Circuit 2 : budget État, drill-down programmes
 │   └── TaxBreakdownTable.tsx
 ├── comparison/              # Timeline historique, comparaison pays
-└── ui/                      # Glossaire interactif, composants réutilisables
+└── ui/                      # Glossaire interactif (tooltips), composants réutilisables
 
 lib/
 ├── tax-engine.ts            # Moteur fiscal pur (deux circuits)
-├── glossary.ts              # Accès aux définitions du glossaire
+├── glossary.ts              # Accès aux définitions du glossaire (tooltips)
 └── formatting.ts            # Formatage nombres/devises
 
 data/                        # JSON statiques, chaque fichier sourcé
