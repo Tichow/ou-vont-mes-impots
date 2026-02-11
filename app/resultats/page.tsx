@@ -223,23 +223,18 @@ function ResultsContent() {
         </section>
 
         {/* Disclaimer */}
-        <section className="text-xs text-text-muted leading-relaxed border-t border-border pt-8">
+        <section className="text-xs text-text-muted leading-relaxed border-t border-border pt-8 space-y-2">
           <p>
-            <strong>Outil indicatif.</strong> Les montants affichés sont des estimations basées sur
-            le barème fiscal 2026 (revenus 2025) et les données budgétaires publiques (LFI 2026, LFSS 2026).
-            Ils ne constituent pas un avis fiscal. Pour une simulation précise,
-            consultez{" "}
+            <strong>Projet personnel à visée pédagogique.</strong> Ceci n&apos;est pas un outil officiel.
+            Les montants sont des estimations basées sur le barème fiscal 2026 (revenus 2025)
+            et les données budgétaires publiques. Le site peut contenir des erreurs.
+            Pour une simulation officielle :{" "}
             <a href="https://www.impots.gouv.fr/simulateurs" target="_blank" rel="noopener noreferrer" className="underline hover:text-text">
               impots.gouv.fr
             </a>.
           </p>
-          <p className="mt-2">
-            Sources : LFI 2026, LFSS 2026, data.gouv.fr, INSEE, budget.gouv.fr.
-            Détail par programme : PLF 2025 (data.economie.gouv.fr).
-            Répartition CSG : CSS art. L136-8.
-            Données ouvertes sous Licence Ouverte 2.0.
-          </p>
-          <p className="mt-2">
+          <p>
+            Données publiques sous Licence Ouverte 2.0 ·{" "}
             <Link
               href={`/a-propos?${new URLSearchParams({
                 salary: input.grossAnnualSalary.toString(),
@@ -250,7 +245,7 @@ function ResultsContent() {
               className="inline-flex items-center gap-1 underline hover:text-text"
             >
               <BookOpen size={12} />
-              Sources, méthodologie et limites
+              Sources et méthodologie
             </Link>
           </p>
         </section>

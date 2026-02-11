@@ -7,7 +7,7 @@ import { BarChart3, Github } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/", label: "Accueil" },
-  { href: "/resultats", label: "Resultats" },
+  { href: "/resultats", label: "Résultats" },
   { href: "/a-propos", label: "Sources" },
 ] as const;
 
@@ -39,7 +39,7 @@ function HeaderInner() {
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <BarChart3 size={22} className="text-primary" />
           <span className="font-bold text-lg heading-tight text-text hidden sm:inline">
-            Ou Vont Mes Impots
+            Où Vont Mes Impôts
           </span>
         </Link>
 
@@ -86,7 +86,7 @@ export function Header() {
             <div className="flex items-center gap-2">
               <BarChart3 size={22} className="text-primary" />
               <span className="font-bold text-lg heading-tight text-text hidden sm:inline">
-                Ou Vont Mes Impots
+                Où Vont Mes Impôts
               </span>
             </div>
           </nav>

@@ -58,6 +58,6 @@
     { "year": 2022, "label": "Guerre en Ukraine", "description": "Accélération budget défense (LPM 2024-2030), hausse charge dette" },
     { "year": 2023, "label": "Remontée des taux", "description": "Charge de la dette en forte hausse suite aux hausses de taux BCE" },
     { "year": 2024, "label": "LPM Défense", "description": "Budget défense +3,3 Md€/an — trajectoire LPM vers 2% PIB OTAN" },
-    { "year": 2026, "label": "Budget 2026 (49.3)", "description": "Défense 57,1 Md€ (+6,7 Md), dette dépasse la défense pour la première fois" }
+    { "year": 2026, "label": "Budget 2026 (49.3)", "description": "Défense 57,1 Md€ (+6,7 Md), charge de la dette et défense désormais au même niveau (~5%)" }
   ]
 }

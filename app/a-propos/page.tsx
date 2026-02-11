@@ -212,15 +212,21 @@ export default function AProposPage() {
         <ScrollReveal variant="scale">
           <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-5">
             <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-            <div className="text-sm">
+            <div className="text-sm space-y-2">
               <p className="font-semibold text-amber-900">
-                Cet outil est purement indicatif
+                Projet personnel à visée pédagogique
               </p>
-              <p className="text-amber-800 mt-1 leading-relaxed">
+              <p className="text-amber-800 leading-relaxed">
+                Ceci n&apos;est <strong>pas un outil officiel</strong> de l&apos;administration fiscale.
+                L&apos;objectif est de vulgariser le fonctionnement des prélèvements obligatoires
+                et de rendre plus lisible l&apos;utilisation de l&apos;argent public.
+                Ce n&apos;est pas une prise de position politique.
+              </p>
+              <p className="text-amber-800 leading-relaxed">
                 Les montants affichés sont des <strong>estimations</strong> basées sur le
                 barème fiscal <strong>2026 (revenus 2025)</strong> et les données budgétaires
-                publiques (LFI 2026). Ils ne constituent en aucun cas un avis fiscal.
-                Pour une simulation précise et personnalisée, consultez{" "}
+                publiques (LFI 2026). Le site peut contenir des erreurs ou des approximations.
+                Pour une simulation officielle et personnalisée, consultez{" "}
                 <a
                   href="https://www.impots.gouv.fr/simulateurs"
                   target="_blank"

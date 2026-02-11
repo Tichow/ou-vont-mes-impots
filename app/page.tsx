@@ -33,6 +33,9 @@ export default function HomePage() {
             Entrez votre salaire brut et visualisez le trajet de chaque euro
             prélevé, de votre fiche de paie jusqu&apos;aux missions de l&apos;État.
           </p>
+          <p className="text-sm text-text-muted/70 mt-3 max-w-md mx-auto">
+            Un outil pédagogique pour mieux comprendre comment sont utilisés nos impôts.
+          </p>
         </motion.div>
 
         <div className="relative z-10 w-full">
@@ -59,39 +62,19 @@ export default function HomePage() {
       </ScrollReveal>
 
       {/* Footer */}
-      <footer className="py-8 px-6 text-center text-xs text-text-muted space-y-2">
+      <footer className="py-8 px-6 text-center text-xs text-text-muted space-y-2 max-w-2xl mx-auto">
         <p>
-          Barème fiscal 2026 (revenus 2025) · LFI 2026 · Sources :{" "}
-          <a
-            href="https://www.impots.gouv.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-text"
-          >
+          Projet personnel à visée pédagogique. Ceci n&apos;est pas un outil officiel
+          de l&apos;administration fiscale et le site peut contenir des erreurs.
+          Pour une simulation officielle, consultez{" "}
+          <a href="https://www.impots.gouv.fr/simulateurs" target="_blank" rel="noopener noreferrer" className="underline hover:text-text">
             impots.gouv.fr
-          </a>
-          ,{" "}
-          <a
-            href="https://www.data.gouv.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-text"
-          >
-            data.gouv.fr
-          </a>
-          ,{" "}
-          <a
-            href="https://www.budget.gouv.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-text"
-          >
-            budget.gouv.fr
-          </a>
+          </a>.
         </p>
         <p>
+          Barème fiscal 2026 (revenus 2025) · LFI 2026 · Données publiques sous Licence Ouverte 2.0 ·{" "}
           <Link href="/a-propos" className="underline hover:text-text">
-            Sources, méthodologie et limites
+            Sources et méthodologie
           </Link>
         </p>
       </footer>

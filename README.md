@@ -2,7 +2,9 @@
 
 **Suivez l'argent de vos prélèvements, euro par euro.**
 
-Application web interactive qui montre aux citoyens français exactement où va chaque euro prélevé sur leur salaire : cotisations fléchées vers la protection sociale, impôts redistribués dans le budget de l'État.
+Projet personnel à visée pédagogique : une application web interactive pour comprendre où va chaque euro prélevé sur un salaire. Cotisations fléchées vers la protection sociale, impôts redistribués dans le budget de l'État.
+
+> **Ceci n'est pas un outil officiel** de l'administration fiscale. L'objectif est de vulgariser le fonctionnement des prélèvements obligatoires et de rendre plus lisible l'utilisation de l'argent public. Ce n'est pas une prise de position politique. Le site peut contenir des erreurs ou des approximations. Pour une simulation officielle : [impots.gouv.fr](https://www.impots.gouv.fr/simulateurs).
 
 <!-- ![Capture d'écran](public/og-image.png) -->
 
@@ -47,7 +49,7 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 | Animations | Motion v12 | Barres animées, transitions fluides |
 | Data Viz | D3.js (tree-shaken) | Sankey (`d3-sankey` uniquement) |
 | Charts | Recharts | Aires empilées, barres horizontales |
-| Tests | Vitest | 51 tests unitaires sur le moteur fiscal |
+| Tests | Vitest | 204 tests unitaires sur le moteur fiscal |
 | OG Images | Satori + resvg | Génération statique au build |
 | Déploiement | Vercel | Export statique, CDN mondial |
 
@@ -66,9 +68,7 @@ Toutes les données proviennent de **sources officielles** et sont traçables :
 | Pensions moyennes | [DREES — Les retraités et les retraites](https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites) | 2025 |
 | Comparaison internationale | [OCDE Taxing Wages](https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html) + [Revenue Statistics](https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html) | 2024 / 2023 |
 
-Les calculs sont validés par **51 tests unitaires** couvrant le moteur fiscal, la ventilation par destination, et l'allocation budgétaire.
-
-> **Avertissement** : Cet outil est purement indicatif. Les montants sont des estimations basées sur le barème fiscal 2026. Ils ne constituent pas un avis fiscal. Pour une simulation officielle : [impots.gouv.fr](https://www.impots.gouv.fr/simulateurs).
+Les calculs sont validés par des tests unitaires couvrant le moteur fiscal, la ventilation par destination, et l'allocation budgétaire.
 
 ## Lancer le projet
 
@@ -77,7 +77,7 @@ git clone https://github.com/tichow/ou-vont-mes-impots.git
 cd ou-vont-mes-impots
 pnpm install
 pnpm dev       # Développement (Turbopack)
-pnpm test      # 51 tests unitaires
+pnpm test      # 204 tests unitaires
 pnpm build     # Build statique
 ```
 
