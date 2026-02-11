@@ -53,16 +53,16 @@ Toutes les données proviennent de **sources officielles françaises** :
 
 | Donnée | Source |
 |--------|--------|
-| Barème IR 2025 | [service-public.gouv.fr](https://www.service-public.gouv.fr/particuliers/vosdroits/F1419) |
-| Cotisations sociales | [URSSAF — Taux cotisations 2025](https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html) |
-| Budget de l'État | [data.gouv.fr — PLF 2025](https://www.data.gouv.fr/fr/datasets/plf-2025-depenses-2025-selon-destination/) |
-| Répartition par mission | [budget.gouv.fr](https://www.budget.gouv.fr/budget-etat) |
-| Sécurité sociale | [securite-sociale.fr — LFSS 2025](https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours) |
-| Comparaison internationale | [OCDE Taxing Wages 2024](https://www.oecd.org/en/publications/2024/04/taxing-wages-2024_f869da31.html), [Eurostat](https://ec.europa.eu/eurostat) |
+| Barème IR 2026 | [service-public.gouv.fr](https://www.service-public.gouv.fr/particuliers/vosdroits/F1419) |
+| Cotisations sociales | [URSSAF — Taux cotisations 2026](https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html) |
+| Budget de l'État (LFI 2026) | [budget.gouv.fr — Exercice 2026](https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026) |
+| Répartition par mission | [budget.gouv.fr](https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026) |
+| Sécurité sociale (LFSS 2026) | [vie-publique.fr — LFSS 2026](https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss) |
+| Comparaison internationale | [OCDE Taxing Wages 2025](https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html), [Revenue Statistics 2025](https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html) |
 
 Les calculs sont validés par **24 tests unitaires** qui vérifient la cohérence avec les simulateurs officiels.
 
-> **Avertissement** : Cet outil est purement indicatif. Les montants affichés sont des estimations basées sur le barème fiscal 2025 (revenus 2024). Ils ne constituent pas un avis fiscal. Consultez [impots.gouv.fr](https://www.impots.gouv.fr/simulateurs) pour une simulation officielle.
+> **Avertissement** : Cet outil est purement indicatif. Les montants affichés sont des estimations basées sur le barème fiscal 2026 (revenus 2025). Ils ne constituent pas un avis fiscal. Consultez [impots.gouv.fr](https://www.impots.gouv.fr/simulateurs) pour une simulation officielle.
 
 ---
 

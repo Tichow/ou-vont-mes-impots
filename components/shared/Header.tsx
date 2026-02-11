@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { BarChart3, ArrowLeft, Github } from "lucide-react";
 
 type Props = {
@@ -9,8 +8,6 @@ type Props = {
 };
 
 export function Header({ variant = "landing" }: Props) {
-  const router = useRouter();
-
   return (
     <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-border/50">
       <nav className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-2">
@@ -23,15 +20,15 @@ export function Header({ variant = "landing" }: Props) {
             </span>
           </Link>
         ) : (
-          <button
-            onClick={() => variant === "results" ? router.push("/") : undefined}
+          <Link
+            href="/"
             className="flex items-center gap-1.5 text-sm text-text-muted hover:text-text transition-colors flex-shrink-0"
           >
             <ArrowLeft size={16} />
             <span className="hidden sm:inline">
               {variant === "results" ? "Modifier" : "Accueil"}
             </span>
-          </button>
+          </Link>
         )}
 
         {/* Center — for non-landing */}

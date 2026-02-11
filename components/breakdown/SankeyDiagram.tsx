@@ -163,9 +163,9 @@ export function SankeyDiagram({ result }: Props) {
 
   const graph = useMemo(() => {
     const { nodes, links } = buildGraph(result);
-    // Responsive margins for labels
-    const sideMargin = dimensions.width < 500 ? 60 : dimensions.width < 700 ? 90 : 110;
-    const margin = { top: 24, right: sideMargin, bottom: 24, left: sideMargin };
+    // Responsive margins for labels — tight to reduce whitespace
+    const sideMargin = dimensions.width < 500 ? 45 : dimensions.width < 700 ? 65 : 80;
+    const margin = { top: 16, right: sideMargin, bottom: 16, left: sideMargin };
 
     const sankeyGenerator = d3Sankey<SNodeExtra, SLinkExtra>()
       .nodeWidth(NODE_WIDTH)

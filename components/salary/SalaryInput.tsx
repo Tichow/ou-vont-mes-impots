@@ -160,7 +160,7 @@ export function SalaryInput() {
 
       {/* Disclaimer */}
       <p className="text-xs text-text-muted text-center mt-4 max-w-sm mx-auto leading-relaxed">
-        Calculs basés sur le barème fiscal 2025 (revenus 2024) et la Loi de Finances 2025.
+        Calculs basés sur le barème fiscal 2026 (revenus 2025) et la Loi de Finances 2026.
         Outil indicatif — non contractuel.
       </p>
     </motion.div>

@@ -2,97 +2,97 @@
   "metadata": {
     "source_url": "https://www.oecd.org/en/topics/tax-wedge.html",
     "secondary_source": "https://ec.europa.eu/eurostat/databrowser/view/gov_10a_taxag/default/table",
-    "taxing_wages_report": "https://www.oecd.org/en/publications/2024/04/taxing-wages-2024_f869da31.html",
-    "revenue_statistics_report": "https://www.oecd.org/en/publications/revenue-statistics-2024_c87a3da5-en.html",
+    "taxing_wages_report": "https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html",
+    "revenue_statistics_report": "https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html",
     "last_verified": "2026-02-11",
-    "year_tax_wedge": 2023,
-    "year_tax_to_gdp": 2022,
-    "description": "Comparaison internationale. Coin fiscal : OCDE Taxing Wages 2024 (données 2023), célibataire sans enfant au salaire moyen. Recettes/PIB : OCDE Revenue Statistics 2024 (données 2022). Composantes du coin fiscal exprimées en % du coût total du travail (norme OCDE).",
+    "year_tax_wedge": 2024,
+    "year_tax_to_gdp": 2023,
+    "description": "Comparaison internationale. Coin fiscal : OCDE Taxing Wages 2025 (données 2024), célibataire sans enfant au salaire moyen. Recettes/PIB : OCDE Revenue Statistics 2025 (données 2023). Composantes du coin fiscal exprimées en % du coût total du travail (norme OCDE).",
     "note": "Les composantes du coin fiscal (income_tax, employee_social, employer_social) sont en % du coût total du travail (salaire brut + cotisations employeur), conformément à la méthodologie OCDE Taxing Wages."
   },
   "countries": [
     {
       "id": "france",
       "name": "France",
-      "flag": "🇫🇷",
-      "tax_wedge_pct": 46.8,
+      "flag": "\ud83c\uddeb\ud83c\uddf7",
+      "tax_wedge_pct": 47.2,
       "breakdown": {
-        "income_tax": 11.9,
-        "employee_social": 8.3,
-        "employer_social": 26.6,
+        "income_tax": 12.0,
+        "employee_social": 8.5,
+        "employer_social": 26.7,
         "vat_standard": 20.0
       },
-      "total_tax_revenue_pct_gdp": 46.1,
+      "total_tax_revenue_pct_gdp": 43.9,
       "highlights": "Cotisations employeur les plus élevées de l'OCDE. Système très redistributif."
     },
     {
       "id": "germany",
       "name": "Allemagne",
-      "flag": "🇩🇪",
+      "flag": "\ud83c\udde9\ud83c\uddea",
       "tax_wedge_pct": 47.9,
       "breakdown": {
-        "income_tax": 14.1,
-        "employee_social": 17.1,
-        "employer_social": 16.7,
+        "income_tax": 14.3,
+        "employee_social": 17.2,
+        "employer_social": 16.4,
         "vat_standard": 19.0
       },
-      "total_tax_revenue_pct_gdp": 39.6,
+      "total_tax_revenue_pct_gdp": 40.3,
       "highlights": "Coin fiscal le plus élevé de l'OCDE. Cotisations mieux réparties salarié/employeur qu'en France."
     },
     {
       "id": "uk",
       "name": "Royaume-Uni",
-      "flag": "🇬🇧",
-      "tax_wedge_pct": 31.3,
+      "flag": "\ud83c\uddec\ud83c\udde7",
+      "tax_wedge_pct": 29.4,
       "breakdown": {
-        "income_tax": 13.3,
-        "employee_social": 8.0,
-        "employer_social": 10.1,
+        "income_tax": 14.0,
+        "employee_social": 6.0,
+        "employer_social": 9.4,
         "vat_standard": 20.0
       },
-      "total_tax_revenue_pct_gdp": 35.4,
-      "highlights": "Coin fiscal nettement plus faible, mais protection sociale moins généreuse (NHS financé par l'impôt)."
+      "total_tax_revenue_pct_gdp": 35.3,
+      "highlights": "Coin fiscal bas grâce à la baisse des NIC en 2024. NHS financé par l'impôt, pas par des cotisations."
     },
     {
       "id": "sweden",
       "name": "Suède",
-      "flag": "🇸🇪",
-      "tax_wedge_pct": 42.2,
+      "flag": "\ud83c\uddf8\ud83c\uddea",
+      "tax_wedge_pct": 41.5,
       "breakdown": {
-        "income_tax": 12.9,
-        "employee_social": 5.3,
-        "employer_social": 23.9,
+        "income_tax": 12.5,
+        "employee_social": 5.2,
+        "employer_social": 23.8,
         "vat_standard": 25.0
       },
-      "total_tax_revenue_pct_gdp": 42.5,
+      "total_tax_revenue_pct_gdp": 42.6,
       "highlights": "Cotisations salariales faibles mais employeur élevées. TVA la plus haute. Modèle scandinave."
     },
     {
       "id": "usa",
       "name": "États-Unis",
-      "flag": "🇺🇸",
-      "tax_wedge_pct": 29.9,
+      "flag": "\ud83c\uddfa\ud83c\uddf8",
+      "tax_wedge_pct": 30.0,
       "breakdown": {
-        "income_tax": 15.3,
+        "income_tax": 15.4,
         "employee_social": 7.1,
         "employer_social": 7.5,
         "vat_standard": 0
       },
-      "total_tax_revenue_pct_gdp": 27.6,
+      "total_tax_revenue_pct_gdp": 25.6,
       "highlights": "Pas de TVA fédérale (sales tax locale). Faibles cotisations mais santé/retraite largement privées."
     },
     {
       "id": "japan",
       "name": "Japon",
-      "flag": "🇯🇵",
-      "tax_wedge_pct": 33.0,
+      "flag": "\ud83c\uddef\ud83c\uddf5",
+      "tax_wedge_pct": 32.6,
       "breakdown": {
-        "income_tax": 6.8,
-        "employee_social": 12.7,
-        "employer_social": 13.5,
+        "income_tax": 6.6,
+        "employee_social": 12.6,
+        "employer_social": 13.4,
         "vat_standard": 10.0
       },
-      "total_tax_revenue_pct_gdp": 34.4,
+      "total_tax_revenue_pct_gdp": 33.7,
       "highlights": "IR faible mais cotisations élevées et paritaires salarié/employeur. TVA basse. Dette record (~260% PIB)."
     }
   ]

@@ -74,7 +74,7 @@ describe("calculateSocialContributions", () => {
     const t2Line = result.details.find((d) => d.id === "retraite_t2");
     expect(t2Line).toBeDefined();
     expect(t2Line!.amount).toBeGreaterThan(0);
-    expect(t2Line!.base).toBeCloseTo(60_000 - 47_100, 0);
+    expect(t2Line!.base).toBeCloseTo(60_000 - 48_060, 0);
   });
 
   it("has no T2 contributions below PASS", () => {
@@ -150,8 +150,8 @@ describe("calculateIncomeTax", () => {
 
     // The advantage from children should be limited by QF cap
     const advantage = noKids.amount - threeKids.amount;
-    // 3 children = 0.5 + 0.5 + 1 = 2 extra parts = 4 half-parts, max = 4 × 1791 = 7164€
-    expect(advantage).toBeLessThanOrEqual(4 * 1791 + 1); // +1 for rounding
+    // 3 children = 0.5 + 0.5 + 1 = 2 extra parts = 4 half-parts, max = 4 × 1807 = 7228€
+    expect(advantage).toBeLessThanOrEqual(4 * 1807 + 1); // +1 for rounding
   });
 
   it("handles zero salary", () => {

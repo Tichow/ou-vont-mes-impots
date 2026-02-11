@@ -7,79 +7,79 @@
     "education": {
       "item": "livres scolaires",
       "unit_price": 12.00,
-      "emoji": "📚",
+      "emoji": "\ud83d\udcda",
       "source": "Prix moyen livre scolaire primaire/collège, SNE Repères statistiques 2024 (sne.fr)"
     },
     "defense": {
       "item": "heures de vol d'un Rafale",
       "unit_price": 20000,
-      "emoji": "✈️",
+      "emoji": "\u2708\ufe0f",
       "source": "Audition CEMAA Général Mille, commission Sénat, janvier 2024 (opex360.com)"
     },
     "health": {
       "item": "consultations chez un généraliste",
       "unit_price": 30.00,
-      "emoji": "🏥",
+      "emoji": "\ud83c\udfe5",
       "source": "Tarif conventionnel secteur 1 depuis le 22/12/2024, convention médicale 2024-2029 (ameli.fr)"
     },
     "retirement": {
       "item": "mois de pension moyenne",
-      "unit_price": 1626,
-      "emoji": "👴",
-      "source": "Pension moyenne brute de droit direct, France, fin 2022 — DREES « Les retraités et les retraites » édition 2024"
+      "unit_price": 1666,
+      "emoji": "\ud83d\udc74",
+      "source": "Pension moyenne brute de droit direct, France, fin 2023 — DREES « Les retraités et les retraites » édition 2025"
     },
     "justice": {
       "item": "jours de détention",
       "unit_price": 105,
-      "emoji": "⚖️",
+      "emoji": "\u2696\ufe0f",
       "source": "Coût moyen journée de détention ~105€, Observatoire International des Prisons (oip.org)"
     },
     "culture": {
       "item": "entrées au Louvre",
       "unit_price": 22,
-      "emoji": "🎭",
-      "source": "Tarif plein Louvre 2025 (louvre.fr)"
+      "emoji": "\ud83c\udfad",
+      "source": "Tarif plein Louvre 2026, résidents EEE (louvre.fr)"
     },
     "debt": {
       "item": "secondes d'intérêts de la dette",
-      "unit_price": 1728,
-      "emoji": "💸",
-      "source": "Calcul : charge de la dette ~54,5 Md€/an (LFI 2025) ÷ 31 536 000 secondes/an ≈ 1 728€/s"
+      "unit_price": 1880,
+      "emoji": "\ud83d\udcb8",
+      "source": "Calcul : charge de la dette ~59,3 Md€/an (LFI 2026) ÷ 31 536 000 secondes/an ≈ 1 880€/s"
     },
     "infrastructure": {
       "item": "mètres d'autoroute",
       "unit_price": 6000,
-      "emoji": "🛣️",
+      "emoji": "\ud83d\udee3\ufe0f",
       "source": "Coût moyen ~6 M€/km en terrain plat, SETRA / rapport Sénat 1998 (senat.fr)"
     },
     "security": {
       "item": "heures de patrouille police",
       "unit_price": 45,
-      "emoji": "🚔",
+      "emoji": "\ud83d\ude94",
       "source": "Estimation coût horaire chargé gardien de la paix (~2 400€ net/mois × 1,75 charges ÷ 151h)"
     },
     "research": {
       "item": "heures de chercheur CNRS",
       "unit_price": 55,
-      "emoji": "🔬",
+      "emoji": "\ud83d\udd2c",
       "source": "Estimation coût complet employeur chargé de recherche CNRS (~5 500€/mois chargé ÷ 151h)"
     },
     "aid": {
       "item": "repas distribués par le PAM",
       "unit_price": 0.43,
-      "emoji": "🌍",
+      "emoji": "\ud83c\udf0d",
       "source": "Coût moyen $0.43/repas, Programme Alimentaire Mondial (wfpusa.org)"
     },
     "admin": {
       "item": "allocations familiales journalières",
-      "unit_price": 4.48,
-      "emoji": "🏛️",
-      "source": "Allocations familiales 2 enfants : 141,99€/mois ÷ 30j ≈ 4,73€/j (service-public.fr, barème 2025)"
+      "unit_price": 5.04,
+      "emoji": "\ud83c\udfe1",
+      "source": "Allocations familiales 2 enfants tranche 1 : 151,05€/mois ÷ 30j ≈ 5,04€/j (service-public.fr, barème avril 2026)"
     },
     "generic": {
       "item": "pizzas",
       "unit_price": 10.00,
-      "emoji": "🍕",
+      "emoji": "\ud83c\udf55",
       "source": "Prix moyen constaté en pizzeria, France, ~10€ (GIRA Conseil / études de marché 2024)"
     }
   }

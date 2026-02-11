@@ -5,18 +5,19 @@
     "urssaf_url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html",
     "pass_url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/plafonds-securite-sociale.html",
     "agirc_arrco_url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/",
-    "law": "LFI 2025 — revalorisation +1.8% (revenus 2024)",
-    "year": 2025,
-    "fiscal_year_income": 2024,
+    "simulateur_officiel": "https://simulateur-ir-ifi.impots.gouv.fr/calcul_impot/2026/complet/index.htm",
+    "law": "LFI 2026 — revalorisation +0.9% (revenus 2025), adoptée le 2 février 2026 via 49.3",
+    "year": 2026,
+    "fiscal_year_income": 2025,
     "last_verified": "2026-02-11",
-    "description": "Barème de l'impôt sur le revenu 2025 et taux de cotisations sociales salariales"
+    "description": "Barème de l'impôt sur le revenu 2026 et taux de cotisations sociales salariales"
   },
   "income_tax_brackets": [
-    { "min": 0, "max": 11497, "rate": 0.00 },
-    { "min": 11497, "max": 29315, "rate": 0.11 },
-    { "min": 29315, "max": 83823, "rate": 0.30 },
-    { "min": 83823, "max": 180294, "rate": 0.41 },
-    { "min": 180294, "max": null, "rate": 0.45 }
+    { "min": 0, "max": 11600, "rate": 0.00 },
+    { "min": 11600, "max": 29579, "rate": 0.11 },
+    { "min": 29579, "max": 84577, "rate": 0.30 },
+    { "min": 84577, "max": 181917, "rate": 0.41 },
+    { "min": 181917, "max": null, "rate": 0.45 }
   ],
   "professional_deduction": {
     "rate": 0.10,
@@ -24,13 +25,13 @@
     "max": 14426
   },
   "quotient_familial": {
-    "cap_per_half_part": 1791,
+    "cap_per_half_part": 1807,
     "parts_single": 1,
     "parts_couple": 2,
     "parts_per_child_1_2": 0.5,
     "parts_per_child_3_plus": 1
   },
-  "pass": 47100,
+  "pass": 48060,
   "social_contributions": {
     "csg_deductible": {
       "rate": 0.068,

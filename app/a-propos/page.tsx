@@ -21,49 +21,49 @@ type SourceItem = {
 
 const PRIMARY_SOURCES: SourceItem[] = [
   {
-    name: "Loi de Finances 2025 (LFI)",
-    url: "https://www.budget.gouv.fr/budget-etat",
+    name: "Loi de Finances 2026 (LFI)",
+    url: "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026",
     description:
-      "Répartition officielle des dépenses de l'État par mission et programme. Base de nos pourcentages budgétaires.",
+      "Répartition officielle des dépenses de l'État par mission et programme (adoptée le 2 février 2026). Base de nos pourcentages budgétaires.",
   },
   {
-    name: "data.gouv.fr — PLF 2025 dépenses",
-    url: "https://www.data.gouv.fr/fr/datasets/plf-2025-depenses-2025-selon-destination/",
+    name: "Documents budgétaires — Exercice 2026",
+    url: "https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026",
     description:
-      "Jeux de données ouverts du PLF 2025 — dépenses selon destination. Licence Ouverte 2.0.",
+      "Documents budgétaires officiels de la LFI 2026 — crédits par mission et programme. Licence Ouverte 2.0.",
   },
   {
-    name: "URSSAF — Taux de cotisations 2025",
+    name: "URSSAF — Taux de cotisations 2026",
     url: "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html",
     description:
-      "Taux officiels 2025 des cotisations sociales salariales : CSG, CRDS, vieillesse, retraite complémentaire AGIRC-ARRCO.",
+      "Taux officiels 2026 des cotisations sociales salariales : CSG, CRDS, vieillesse, retraite complémentaire AGIRC-ARRCO. Taux inchangés vs 2025.",
   },
   {
-    name: "service-public.gouv.fr — Barème IR 2025",
+    name: "service-public.gouv.fr — Barème IR 2026",
     url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419",
     description:
-      "Barème progressif de l'impôt sur le revenu 2025 (revenus 2024), abattement forfaitaire de 10%, quotient familial.",
+      "Barème progressif de l'impôt sur le revenu 2026 (revenus 2025), revalorisation +0.9%, abattement forfaitaire de 10%, quotient familial.",
   },
   {
-    name: "LFSS 2025 — Sécurité sociale",
-    url: "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours",
+    name: "LFSS 2026 — Sécurité sociale",
+    url: "https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss",
     description:
-      "Objectifs de dépenses par branche (maladie/ONDAM, vieillesse, famille). Base des répartitions santé et retraites.",
+      "Objectifs de dépenses par branche (maladie/ONDAM 274,4 Md€, vieillesse 310,4 Md€, famille 59,7 Md€). Promulguée le 30 décembre 2025.",
   },
 ];
 
 const SECONDARY_SOURCES: SourceItem[] = [
   {
-    name: "OCDE — Taxing Wages 2024",
-    url: "https://www.oecd.org/en/publications/2024/04/taxing-wages-2024_f869da31.html",
+    name: "OCDE — Taxing Wages 2025",
+    url: "https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html",
     description:
-      "Coin fiscal par pays (données 2023). Décomposition IR / cotisations salarié / cotisations employeur.",
+      "Coin fiscal par pays (données 2024). Décomposition IR / cotisations salarié / cotisations employeur.",
   },
   {
-    name: "OCDE — Revenue Statistics 2024",
-    url: "https://www.oecd.org/en/publications/revenue-statistics-2024_c87a3da5-en.html",
+    name: "OCDE — Revenue Statistics 2025",
+    url: "https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html",
     description:
-      "Recettes fiscales en % du PIB par pays (données 2022). Base de la comparaison internationale.",
+      "Recettes fiscales en % du PIB par pays (données 2023). Base de la comparaison internationale.",
   },
   {
     name: "Eurostat — Government revenue",
@@ -173,8 +173,8 @@ export default function AProposPage() {
               </p>
               <p className="text-amber-800 mt-1 leading-relaxed">
                 Les montants affichés sont des <strong>estimations</strong> basées sur le
-                barème fiscal <strong>2025 (revenus 2024)</strong> et les données budgétaires
-                publiques (LFI 2025). Ils ne constituent en aucun cas un avis fiscal.
+                barème fiscal <strong>2026 (revenus 2025)</strong> et les données budgétaires
+                publiques (LFI 2026). Ils ne constituent en aucun cas un avis fiscal.
                 Pour une simulation précise et personnalisée, consultez{" "}
                 <a
                   href="https://www.impots.gouv.fr/simulateurs"
@@ -193,19 +193,20 @@ export default function AProposPage() {
         <Section title="Année fiscale" icon={BookOpen} delay={0}>
           <div className="bg-white rounded-2xl border border-border p-5 text-sm leading-relaxed text-text-muted space-y-3">
             <p>
-              Tous les calculs utilisent le <strong className="text-text">barème 2025</strong>,
-              applicable aux revenus perçus en <strong className="text-text">2024</strong>.
-              C'est le barème le plus récent officiellement publié et vérifié.
+              Tous les calculs utilisent le <strong className="text-text">barème 2026</strong>,
+              applicable aux revenus perçus en <strong className="text-text">2025</strong>.
+              C'est le barème le plus récent officiellement publié (LFI 2026 adoptée le 2 février 2026).
             </p>
             <p>
               Les taux de cotisations sociales sont ceux en vigueur au{" "}
-              <strong className="text-text">1er janvier 2025</strong>, tels que publiés par l'URSSAF.
+              <strong className="text-text">1er janvier 2026</strong>, tels que publiés par l'URSSAF (inchangés vs 2025).
               Le PASS (Plafond Annuel de la Sécurité Sociale) est fixé à{" "}
-              <strong className="text-text">47 100 €</strong> pour 2025.
+              <strong className="text-text">48 060 €</strong> pour 2026.
             </p>
             <p>
               La répartition budgétaire s'appuie sur la{" "}
-              <strong className="text-text">Loi de Finances Initiale (LFI) 2025</strong>.
+              <strong className="text-text">Loi de Finances Initiale (LFI) 2026</strong> et la{" "}
+              <strong className="text-text">LFSS 2026</strong>.
             </p>
           </div>
         </Section>

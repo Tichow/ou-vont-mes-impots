@@ -1,5 +1,5 @@
-import taxData from "@/data/tax-brackets-2025.json";
-import budgetData from "@/data/budget-2025.json";
+import taxData from "@/data/tax-brackets-2026.json";
+import budgetData from "@/data/budget-2026.json";
 import equivalencesData from "@/data/equivalences.json";
 import type {
   UserInput,

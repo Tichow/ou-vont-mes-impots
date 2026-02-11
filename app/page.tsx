@@ -61,7 +61,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="py-8 px-6 text-center text-xs text-text-muted space-y-2">
         <p>
-          Barème fiscal 2025 (revenus 2024) · LFI 2025 · Sources :{" "}
+          Barème fiscal 2026 (revenus 2025) · LFI 2026 · Sources :{" "}
           <a
             href="https://www.impots.gouv.fr"
             target="_blank"

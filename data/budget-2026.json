@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "source_url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026",
+    "secondary_source": "https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026",
+    "lfss_source": "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours",
+    "vie_publique_lfi": "https://www.vie-publique.fr/loi/300444-budget-de-letat-2026-projet-de-loi-de-finances-plf-2026",
+    "vie_publique_lfss": "https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss",
+    "year": 2026,
+    "total_public_spending_bn": 1200,
+    "total_state_budget_bn": 501,
+    "total_social_security_bn": 700,
+    "last_verified": "2026-02-11",
+    "description": "Dépenses publiques par secteur, combinant budget de l'État (LFI 2026, ~501 Md€, adoptée le 2 février 2026 via 49.3) et Sécurité sociale (LFSS 2026, ~700 Md€, promulguée le 30 décembre 2025). Pourcentages exprimés en part des dépenses publiques totales (État + Sécu), arrondis à des fins pédagogiques.",
+    "note": "Les pourcentages sont des approximations basées sur la classification COFOG (dépenses publiques par fonction) et les LFI/LFSS 2026. Ils représentent la part de chaque secteur dans les dépenses publiques combinées."
+  },
+  "sectors": [
+    {
+      "id": "retirement",
+      "name": "Retraites",
+      "icon": "Clock",
+      "color": "#F59E0B",
+      "percentage_of_total_taxes": 26.0,
+      "includes_social_security": true,
+      "missions": [
+        { "name": "Régimes sociaux et de retraite (budget État)", "budget_bn": 5.5, "source": "LFI 2026 — rapport Sénat commission des finances" },
+        { "name": "Branche vieillesse Sécurité sociale", "budget_bn": 310.4, "source": "LFSS 2026 — objectif branche vieillesse (vie-publique.fr)" }
+      ],
+      "description": "Pensions de retraite, minimum vieillesse"
+    },
+    {
+      "id": "health",
+      "name": "Santé",
+      "icon": "Heart",
+      "color": "#10B981",
+      "percentage_of_total_taxes": 24.0,
+      "includes_social_security": true,
+      "missions": [
+        { "name": "Santé (budget État)", "budget_bn": 1.5, "source": "LFI 2026" },
+        { "name": "Branche maladie — ONDAM", "budget_bn": 274.4, "source": "LFSS 2026 — ONDAM voté +3.1% (vie-publique.fr)" }
+      ],
+      "description": "Hôpitaux, médecins, médicaments, prévention"
+    },
+    {
+      "id": "education",
+      "name": "Éducation",
+      "icon": "GraduationCap",
+      "color": "#3B82F6",
+      "percentage_of_total_taxes": 9.0,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Enseignement scolaire", "budget_bn": 64.5, "source": "LFI 2026 — mission Enseignement scolaire, CP hors CAS Pensions (education.gouv.fr)" },
+        { "name": "Enseignement supérieur (programme 150)", "budget_bn": 15.5, "source": "LFI 2026 — MIRES, programme 150 (enseignementsup-recherche.gouv.fr)" }
+      ],
+      "description": "Écoles, collèges, lycées, universités, enseignants"
+    },
+    {
+      "id": "debt",
+      "name": "Dette publique",
+      "icon": "TrendingDown",
+      "color": "#6B7280",
+      "percentage_of_total_taxes": 5.0,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Charge de la dette de l'État (programme 117)", "budget_bn": 59.3, "source": "LFI 2026 — rapport Sénat, dépasse pour la première fois le budget défense" }
+      ],
+      "description": "Intérêts de la dette, charge de la dette"
+    },
+    {
+      "id": "defense",
+      "name": "Défense",
+      "icon": "Shield",
+      "color": "#EF4444",
+      "percentage_of_total_taxes": 5.0,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Défense", "budget_bn": 57.1, "source": "LFI 2026 — hors CAS Pensions, conforme LPM 2024-2030 + 3,5 Md€ supplémentaires (defense.gouv.fr)" }
+      ],
+      "description": "Armée, équipements militaires, dissuasion nucléaire"
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructures & écologie",
+      "icon": "Building2",
+      "color": "#8B5CF6",
+      "percentage_of_total_taxes": 3.5,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Écologie, développement et mobilité durables", "budget_bn": 16.2, "source": "LFI 2026 — CP, -1.7% vs 2025 (rapport Sénat)" },
+        { "name": "Cohésion des territoires", "budget_bn": 5.0, "source": "LFI 2026" }
+      ],
+      "description": "Transports, routes, écologie, transition énergétique"
+    },
+    {
+      "id": "security",
+      "name": "Sécurité",
+      "icon": "ShieldCheck",
+      "color": "#F97316",
+      "percentage_of_total_taxes": 3.0,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Sécurités", "budget_bn": 26.0, "source": "LFI 2026 — CP incluant CAS Pensions, +2.1% vs 2025 (rapport Sénat)" },
+        { "name": "Immigration, asile et intégration", "budget_bn": 2.3, "source": "LFI 2026" }
+      ],
+      "description": "Police, gendarmerie, sécurité civile"
+    },
+    {
+      "id": "research",
+      "name": "Recherche",
+      "icon": "FlaskConical",
+      "color": "#6366F1",
+      "percentage_of_total_taxes": 2.0,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Recherche (MIRES hors programme 150)", "budget_bn": 16.0, "source": "LFI 2026 — programmes 172, 193, 190, 186, 142 et autres (MIRES total 31,5 Md€ CP)" }
+      ],
+      "description": "CNRS, INSERM, recherche spatiale, innovation"
+    },
+    {
+      "id": "justice",
+      "name": "Justice",
+      "icon": "Scale",
+      "color": "#EC4899",
+      "percentage_of_total_taxes": 1.5,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Justice", "budget_bn": 10.6, "source": "LFI 2026 — CP hors CAS Pensions, +200 M€ et +1 600 postes (rapport Sénat)" }
+      ],
+      "description": "Tribunaux, prisons, aide juridictionnelle"
+    },
+    {
+      "id": "culture",
+      "name": "Culture",
+      "icon": "Palette",
+      "color": "#14B8A6",
+      "percentage_of_total_taxes": 1.5,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Culture", "budget_bn": 4.2, "source": "LFI 2026" },
+        { "name": "Médias, livre et industries culturelles", "budget_bn": 0.7, "source": "LFI 2026" }
+      ],
+      "description": "Musées, spectacle vivant, audiovisuel, patrimoine"
+    },
+    {
+      "id": "aid",
+      "name": "Aide au développement",
+      "icon": "Globe",
+      "color": "#84CC16",
+      "percentage_of_total_taxes": 1.0,
+      "includes_social_security": false,
+      "missions": [
+        { "name": "Aide publique au développement", "budget_bn": 5.5, "source": "LFI 2026 — en baisse vs 2025" }
+      ],
+      "description": "Aide internationale, coopération, humanitaire"
+    },
+    {
+      "id": "admin",
+      "name": "Solidarité, emploi & services publics",
+      "icon": "Landmark",
+      "color": "#A3A3A3",
+      "percentage_of_total_taxes": 18.5,
+      "includes_social_security": true,
+      "missions": [
+        { "name": "Branche famille Sécurité sociale", "budget_bn": 59.7, "source": "LFSS 2026 — objectif branche famille (vie-publique.fr)" },
+        { "name": "Assurance chômage (Unédic)", "budget_bn": 45.0, "source": "Convention Unédic 2024, prévisions 2026" },
+        { "name": "Travail et emploi (budget État)", "budget_bn": 17.7, "source": "LFI 2026 — CP, -11.8% vs 2025 (rapport Sénat)" },
+        { "name": "Solidarité, insertion et égalité des chances", "budget_bn": 29.5, "source": "LFI 2026 — CP (rapport Sénat)" },
+        { "name": "Gestion des finances publiques", "budget_bn": 10.2, "source": "LFI 2026" },
+        { "name": "Administration générale et territoriale de l'État", "budget_bn": 4.5, "source": "LFI 2026" },
+        { "name": "Autres missions", "budget_bn": 45.0, "source": "LFI 2026 — missions restantes agrégées" }
+      ],
+      "description": "Famille, chômage, RSA, handicap, logement, administration, autres services publics"
+    }
+  ]
+}

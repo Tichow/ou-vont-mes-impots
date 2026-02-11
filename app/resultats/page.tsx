@@ -84,11 +84,11 @@ function ResultsContent() {
           <div className="flex items-center gap-2 mb-2">
             <Clock size={20} className="text-primary" />
             <h2 className="text-2xl font-bold text-text heading-tight">
-              Évolution du budget (2015-2025)
+              Évolution du budget (2015-2026)
             </h2>
           </div>
           <p className="text-text-muted mb-6 text-sm">
-            Comment la répartition des dépenses a changé en 10 ans.
+            Comment la répartition des dépenses publiques a évolué sur 11 ans.
           </p>
           <div className="rounded-3xl border border-border bg-white p-6">
             <HistoryTimeline />
@@ -115,7 +115,7 @@ function ResultsContent() {
         <section className="text-xs text-text-muted leading-relaxed border-t border-border pt-8">
           <p>
             <strong>Outil indicatif.</strong> Les montants affichés sont des estimations basées sur
-            le barème fiscal 2025 (revenus 2024) et les données budgétaires publiques (LFI 2025).
+            le barème fiscal 2026 (revenus 2025) et les données budgétaires publiques (LFI 2026, LFSS 2026).
             Ils ne constituent pas un avis fiscal. Pour une simulation précise,
             consultez{" "}
             <a href="https://www.impots.gouv.fr/simulateurs" target="_blank" rel="noopener noreferrer" className="underline hover:text-text">
@@ -123,7 +123,7 @@ function ResultsContent() {
             </a>.
           </p>
           <p className="mt-2">
-            Sources : Loi de Finances 2025, data.gouv.fr, INSEE, budget.gouv.fr.
+            Sources : LFI 2026, LFSS 2026, data.gouv.fr, INSEE, budget.gouv.fr.
             Données ouvertes sous Licence Ouverte 2.0.
           </p>
           <p className="mt-2">

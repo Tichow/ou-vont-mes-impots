@@ -186,17 +186,17 @@ const VIEWS: { id: ViewMode; label: string; description: string }[] = [
   {
     id: "tax_wedge",
     label: "Coin fiscal",
-    description: "% prélevé sur le salaire brut moyen (célibataire sans enfant)",
+    description: `% prélevé sur le salaire brut moyen — OCDE Taxing Wages 2025 (données ${countriesData.metadata.year_tax_wedge}), célibataire sans enfant`,
   },
   {
     id: "breakdown",
     label: "Décomposition",
-    description: "Répartition entre IR, cotisations salarié/employeur et TVA",
+    description: `Répartition entre IR, cotisations salarié/employeur et TVA — données ${countriesData.metadata.year_tax_wedge}`,
   },
   {
     id: "revenue",
     label: "Recettes / PIB",
-    description: "Total des recettes fiscales en % du PIB (OCDE 2023)",
+    description: `Total des recettes fiscales en % du PIB — OCDE Revenue Statistics 2025 (données ${countriesData.metadata.year_tax_to_gdp})`,
   },
 ];
 
@@ -271,7 +271,7 @@ export function CountryCompare() {
 
       {/* Source */}
       <p className="text-[10px] text-text-muted/60 text-center">
-        Source : OCDE Taxing Wages 2024 (données {countriesData.metadata.year_tax_wedge}) · Célibataire
+        Source : OCDE Taxing Wages 2025 (données {countriesData.metadata.year_tax_wedge}) · Célibataire
         sans enfant au salaire moyen
       </p>
     </div>
