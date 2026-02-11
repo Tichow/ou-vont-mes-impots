@@ -93,7 +93,7 @@ export function TaxBreakdownTable({ result }: Props) {
     <div className="space-y-1">
       {isHouseholdDeclaration && (
         <div className="text-xs text-text-muted bg-primary/5 border border-primary/20 rounded-lg px-3 py-2 mb-2">
-          IR calculé sur le foyer fiscal (revenu imposable combiné : {formatEuros(result.incomeTax.householdNetImposable)})
+          Votre taux d&apos;IR est individualisé à partir de la déclaration commune du foyer (revenu combiné : {formatEuros(result.incomeTax.householdNetImposable)}, IR foyer : {formatEuros(result.incomeTax.householdTax)}). Le montant ci-dessous est votre part.
         </div>
       )}
       {rows.map((row, i) => (
