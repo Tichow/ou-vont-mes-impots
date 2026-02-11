@@ -74,6 +74,15 @@ export type Equivalence = {
   source: string;
 };
 
+/** A programme within a budget sector (PLF detail) */
+export type ProgrammeAllocation = {
+  code: string;
+  name: string;
+  mission: string;
+  amount: number;
+  percentageOfSector: number;
+};
+
 /** Budget sector allocation */
 export type BudgetSector = {
   id: string;
@@ -84,6 +93,8 @@ export type BudgetSector = {
   icon: string;
   description: string;
   equivalence: Equivalence;
+  includesSocialSecurity: boolean;
+  programmes: ProgrammeAllocation[];
 };
 
 /** Complete tax calculation result */

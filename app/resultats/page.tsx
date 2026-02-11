@@ -84,7 +84,7 @@ function ResultsContent() {
           <div className="flex items-center gap-2 mb-2">
             <Clock size={20} className="text-primary" />
             <h2 className="text-2xl font-bold text-text heading-tight">
-              Évolution du budget (2015-2026)
+              Évolution du budget de l'État (2015-2026)
             </h2>
           </div>
           <p className="text-text-muted mb-6 text-sm">
@@ -124,6 +124,7 @@ function ResultsContent() {
           </p>
           <p className="mt-2">
             Sources : LFI 2026, LFSS 2026, data.gouv.fr, INSEE, budget.gouv.fr.
+            Détail par programme : PLF 2025 (data.economie.gouv.fr).
             Données ouvertes sous Licence Ouverte 2.0.
           </p>
           <p className="mt-2">

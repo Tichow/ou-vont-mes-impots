@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import type { BudgetSector } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
+import { ProgrammeList } from "./ProgrammeList";
 
 type Props = {
   sectors: BudgetSector[];
@@ -15,16 +16,28 @@ const SMALL_SECTOR_THRESHOLD = 2;
 
 export function BudgetBreakdown({ sectors, totalTaxes }: Props) {
   const [showOthers, setShowOthers] = useState(false);
+  const [expandedSector, setExpandedSector] = useState<string | null>(null);
 
   const sorted = [...sectors].sort((a, b) => b.amount - a.amount);
   const mainSectors = sorted.filter((s) => s.percentage >= SMALL_SECTOR_THRESHOLD);
   const smallSectors = sorted.filter((s) => s.percentage < SMALL_SECTOR_THRESHOLD);
   const maxAmount = mainSectors[0]?.amount ?? 1;
 
+  function toggleSector(id: string) {
+    setExpandedSector((prev) => (prev === id ? null : id));
+  }
+
   return (
     <div className="space-y-3">
       {mainSectors.map((sector) => (
-        <SectorRow key={sector.id} sector={sector} maxAmount={maxAmount} totalTaxes={totalTaxes} />
+        <SectorRow
+          key={sector.id}
+          sector={sector}
+          maxAmount={maxAmount}
+          totalTaxes={totalTaxes}
+          expanded={expandedSector === sector.id}
+          onToggle={() => toggleSector(sector.id)}
+        />
       ))}
 
       {/* "Autres" expandable group */}
@@ -72,6 +85,8 @@ export function BudgetBreakdown({ sectors, totalTaxes }: Props) {
                       maxAmount={maxAmount}
                       totalTaxes={totalTaxes}
                       compact
+                      expanded={expandedSector === sector.id}
+                      onToggle={() => toggleSector(sector.id)}
                     />
                   ))}
                 </div>
@@ -89,48 +104,87 @@ type SectorRowProps = {
   maxAmount: number;
   totalTaxes: number;
   compact?: boolean;
+  expanded: boolean;
+  onToggle: () => void;
 };
 
-function SectorRow({ sector, maxAmount, totalTaxes, compact }: SectorRowProps) {
+function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle }: SectorRowProps) {
   const barWidth = maxAmount > 0 ? (sector.amount / maxAmount) * 100 : 0;
   const pctOfTotal = totalTaxes > 0 ? (sector.amount / totalTaxes) * 100 : 0;
+  const hasProgrammes = sector.programmes.length > 0;
 
   return (
-    <div className={`group rounded-2xl border border-border bg-white hover:shadow-md hover:border-border/80 transition-all duration-200 cursor-default ${compact ? "px-3 py-3" : "px-4 py-4"}`}>
-      {/* Top row: emoji + name + amount + % */}
-      <div className="flex items-center justify-between gap-3 mb-2">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <span className={compact ? "text-lg" : "text-xl"}>{sector.equivalence.emoji}</span>
-          <span className={`font-semibold text-text truncate ${compact ? "text-xs" : "text-sm"}`}>
-            {sector.name}
-          </span>
+    <div className={`rounded-2xl border border-border bg-white hover:shadow-md hover:border-border/80 transition-all duration-200 ${compact ? "px-3 py-3" : "px-4 py-4"}`}>
+      {/* Clickable header */}
+      <button
+        onClick={hasProgrammes ? onToggle : undefined}
+        className={`w-full text-left ${hasProgrammes ? "cursor-pointer" : "cursor-default"}`}
+        disabled={!hasProgrammes}
+      >
+        {/* Top row: emoji + name + amount + % + chevron */}
+        <div className="flex items-center justify-between gap-3 mb-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className={compact ? "text-lg" : "text-xl"}>{sector.equivalence.emoji}</span>
+            <span className={`font-semibold text-text truncate ${compact ? "text-xs" : "text-sm"}`}>
+              {sector.name}
+            </span>
+          </div>
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <span className={`font-bold tabular-nums ${compact ? "text-xs" : "text-sm"}`} style={{ color: sector.color }}>
+              {formatEuros(sector.amount)}
+            </span>
+            <span className={`text-text-muted tabular-nums ${compact ? "text-[10px]" : "text-xs"}`}>
+              {pctOfTotal.toFixed(1)}%
+            </span>
+            {hasProgrammes && (
+              <motion.div
+                animate={{ rotate: expanded ? 90 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ChevronRight size={14} className="text-text-muted" />
+              </motion.div>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <span className={`font-bold tabular-nums ${compact ? "text-xs" : "text-sm"}`} style={{ color: sector.color }}>
-            {formatEuros(sector.amount)}
-          </span>
-          <span className={`text-text-muted tabular-nums ${compact ? "text-[10px]" : "text-xs"}`}>
-            {pctOfTotal.toFixed(1)}%
-          </span>
+
+        {/* Proportional bar */}
+        <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+          <motion.div
+            className="h-full rounded-full"
+            style={{ backgroundColor: sector.color }}
+            initial={{ width: 0 }}
+            whileInView={{ width: `${barWidth}%` }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+          />
         </div>
-      </div>
 
-      {/* Proportional bar */}
-      <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
-        <motion.div
-          className="h-full rounded-full transition-[filter] duration-200 group-hover:brightness-110"
-          style={{ backgroundColor: sector.color }}
-          initial={{ width: 0 }}
-          whileInView={{ width: `${barWidth}%` }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-        />
-      </div>
+        {/* Equivalence text */}
+        <p className={`text-text-muted leading-snug mt-2 ${compact ? "text-[11px]" : "text-xs"}`}>
+          {sector.equivalence.description}
+        </p>
+      </button>
 
-      {/* Equivalence text */}
-      <p className={`text-text-muted leading-snug mt-2 ${compact ? "text-[11px]" : "text-xs"}`}>
-        {sector.equivalence.description}
-      </p>
+      {/* Expanded programme list */}
+      <AnimatePresence>
+        {expanded && hasProgrammes && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pt-4 mt-3 border-t border-border/50">
+              <ProgrammeList
+                programmes={sector.programmes}
+                color={sector.color}
+                includesSocialSecurity={sector.includesSocialSecurity}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

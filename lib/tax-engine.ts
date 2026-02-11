@@ -1,5 +1,6 @@
 import taxData from "@/data/tax-brackets-2026.json";
 import budgetData from "@/data/budget-2026.json";
+import budgetDetailData from "@/data/budget-detail-plf2025.json";
 import equivalencesData from "@/data/equivalences.json";
 import type {
   UserInput,
@@ -8,6 +9,7 @@ import type {
   IncomeTaxResult,
   EstimatedVATResult,
   BudgetSector,
+  ProgrammeAllocation,
   TaxResult,
 } from "./types";
 
@@ -208,6 +210,11 @@ export function calculateEstimatedVAT(
 // Step D — Budget Allocation
 // ---------------------------------------------------------------------------
 
+// Pre-index budget detail by sector_id for fast lookup
+const detailBySector = new Map(
+  budgetDetailData.sectors.map((s) => [s.sector_id, s.programmes])
+);
+
 export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
   const equivData = equivalencesData.equivalences as Record<
     string,
@@ -219,6 +226,16 @@ export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
     const equiv = equivData[sector.id] ?? equivData.generic;
     const quantity = equiv.unit_price > 0 ? amount / equiv.unit_price : 0;
 
+    // Distribute amount across PLF programmes proportionally
+    const detailProgrammes = detailBySector.get(sector.id) ?? [];
+    const programmes: ProgrammeAllocation[] = detailProgrammes.map((p) => ({
+      code: p.code,
+      name: p.name,
+      mission: p.mission,
+      amount: round2(amount * (p.percentage_of_sector / 100)),
+      percentageOfSector: p.percentage_of_sector,
+    }));
+
     return {
       id: sector.id,
       name: sector.name,
@@ -227,6 +244,8 @@ export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
       color: sector.color,
       icon: sector.icon,
       description: sector.description,
+      includesSocialSecurity: sector.includes_social_security ?? false,
+      programmes,
       equivalence: {
         description: `= ${formatQuantity(quantity)} ${equiv.item}`,
         quantity: Math.round(quantity * 100) / 100,

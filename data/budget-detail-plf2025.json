@@ -1,0 +1,1072 @@
+{
+  "metadata": {
+    "source": "PLF 2025 — Dépenses selon destination",
+    "source_url": "https://data.economie.gouv.fr/explore/dataset/plf25-depenses-2025-selon-destination/",
+    "api_url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/plf25-depenses-2025-selon-destination/records",
+    "last_fetched": "2026-02-11",
+    "year": 2025,
+    "description": "Répartition interne par programme au sein de chaque secteur budgétaire. Données du budget de l'État uniquement (hors Sécurité sociale). Les pourcentages globaux par secteur restent ceux de LFI 2026.",
+    "note": "Missions comptables exclues : remboursements, avances, prêts, participations financières, crédits non répartis."
+  },
+  "sectors": [
+    {
+      "sector_id": "education",
+      "total_cp": 104096812072,
+      "programmes": [
+        {
+          "code": "141",
+          "name": "Enseignement scolaire public du second degré",
+          "mission": "Enseignement scolaire",
+          "amount_euros": 39523106898,
+          "percentage_of_sector": 37.97
+        },
+        {
+          "code": "140",
+          "name": "Enseignement scolaire public du premier degré",
+          "mission": "Enseignement scolaire",
+          "amount_euros": 27490907364,
+          "percentage_of_sector": 26.41
+        },
+        {
+          "code": "150",
+          "name": "Formations supérieures et recherche universitaire",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 15279678402,
+          "percentage_of_sector": 14.68
+        },
+        {
+          "code": "139",
+          "name": "Enseignement privé du premier et du second degrés",
+          "mission": "Enseignement scolaire",
+          "amount_euros": 8938183839,
+          "percentage_of_sector": 8.59
+        },
+        {
+          "code": "230",
+          "name": "Vie de l'élève",
+          "mission": "Enseignement scolaire",
+          "amount_euros": 8153063307,
+          "percentage_of_sector": 7.83
+        },
+        {
+          "code": "214",
+          "name": "Soutien de la politique de l'éducation nationale",
+          "mission": "Enseignement scolaire",
+          "amount_euros": 2980819128,
+          "percentage_of_sector": 2.86
+        },
+        {
+          "code": "143",
+          "name": "Enseignement technique agricole",
+          "mission": "Enseignement scolaire",
+          "amount_euros": 1731053134,
+          "percentage_of_sector": 1.66
+        }
+      ]
+    },
+    {
+      "sector_id": "admin",
+      "total_cp": 86363644635,
+      "programmes": [
+        {
+          "code": "157",
+          "name": "Handicap et dépendance",
+          "mission": "Solidarité, insertion et égalité des chances",
+          "amount_euros": 16025571412,
+          "percentage_of_sector": 18.56
+        },
+        {
+          "code": "304",
+          "name": "Inclusion sociale et protection des personnes",
+          "mission": "Solidarité, insertion et égalité des chances",
+          "amount_euros": 14262913165,
+          "percentage_of_sector": 16.51
+        },
+        {
+          "code": "103",
+          "name": "Accompagnement des mutations économiques et développement de l'emploi",
+          "mission": "Travail, emploi et administration des ministères sociaux",
+          "amount_euros": 12318671994,
+          "percentage_of_sector": 14.26
+        },
+        {
+          "code": "156",
+          "name": "Gestion fiscale et financière de l'État et du secteur public local",
+          "mission": "Gestion des finances publiques",
+          "amount_euros": 8209484171,
+          "percentage_of_sector": 9.51
+        },
+        {
+          "code": "102",
+          "name": "Accès et retour à l'emploi",
+          "mission": "Travail, emploi et administration des ministères sociaux",
+          "amount_euros": 7208705543,
+          "percentage_of_sector": 8.35
+        },
+        {
+          "code": "119",
+          "name": "Concours financiers aux collectivités territoriales et à leurs groupements",
+          "mission": "Relations avec les collectivités territoriales",
+          "amount_euros": 3746208204,
+          "percentage_of_sector": 4.34
+        },
+        {
+          "code": "354",
+          "name": "Administration territoriale de l'État",
+          "mission": "Administration générale et territoriale de l'État",
+          "amount_euros": 2665652606,
+          "percentage_of_sector": 3.09
+        },
+        {
+          "code": "149",
+          "name": "Compétitivité et durabilité de l'agriculture, de l'agroalimentaire et de la forêt",
+          "mission": "Agriculture, alimentation, forêt et affaires rurales",
+          "amount_euros": 2458472665,
+          "percentage_of_sector": 2.85
+        },
+        {
+          "code": "134",
+          "name": "Développement des entreprises et régulations",
+          "mission": "Économie",
+          "amount_euros": 2457738414,
+          "percentage_of_sector": 2.85
+        },
+        {
+          "code": "216",
+          "name": "Conduite et pilotage des politiques de l'intérieur",
+          "mission": "Administration générale et territoriale de l'État",
+          "amount_euros": 2195028476,
+          "percentage_of_sector": 2.54
+        },
+        {
+          "code": "155",
+          "name": "Soutien des ministères sociaux",
+          "mission": "Travail, emploi et administration des ministères sociaux",
+          "amount_euros": 2022029266,
+          "percentage_of_sector": 2.34
+        },
+        {
+          "code": "138",
+          "name": "Emploi outre-mer",
+          "mission": "Outre-mer",
+          "amount_euros": 1949296450,
+          "percentage_of_sector": 2.26
+        },
+        {
+          "code": "302",
+          "name": "Facilitation et sécurisation des échanges",
+          "mission": "Gestion des finances publiques",
+          "amount_euros": 1778187883,
+          "percentage_of_sector": 2.06
+        },
+        {
+          "code": "218",
+          "name": "Conduite et pilotage des politiques économiques et financières",
+          "mission": "Gestion des finances publiques",
+          "amount_euros": 983840667,
+          "percentage_of_sector": 1.14
+        },
+        {
+          "code": "129",
+          "name": "Coordination du travail gouvernemental",
+          "mission": "Direction de l'action du Gouvernement",
+          "amount_euros": 924329528,
+          "percentage_of_sector": 1.07
+        },
+        {
+          "code": "206",
+          "name": "Sécurité et qualité sanitaires de l'alimentation",
+          "mission": "Agriculture, alimentation, forêt et affaires rurales",
+          "amount_euros": 860481527,
+          "percentage_of_sector": 1
+        },
+        {
+          "code": "305",
+          "name": "Stratégies économiques",
+          "mission": "Économie",
+          "amount_euros": 705919543,
+          "percentage_of_sector": 0.82
+        },
+        {
+          "code": "215",
+          "name": "Conduite et pilotage des politiques de l'agriculture",
+          "mission": "Agriculture, alimentation, forêt et affaires rurales",
+          "amount_euros": 668189597,
+          "percentage_of_sector": 0.77
+        },
+        {
+          "code": "511",
+          "name": "Assemblée nationale",
+          "mission": "Pouvoirs publics",
+          "amount_euros": 617977578,
+          "percentage_of_sector": 0.72
+        },
+        {
+          "code": "123",
+          "name": "Conditions de vie outre-mer",
+          "mission": "Outre-mer",
+          "amount_euros": 605759748,
+          "percentage_of_sector": 0.7
+        },
+        {
+          "code": "220",
+          "name": "Statistiques et études économiques",
+          "mission": "Économie",
+          "amount_euros": 473331347,
+          "percentage_of_sector": 0.55
+        },
+        {
+          "code": "381",
+          "name": "Allègements du coût du travail en agriculture (TODE-AG)",
+          "mission": "Agriculture, alimentation, forêt et affaires rurales",
+          "amount_euros": 448500000,
+          "percentage_of_sector": 0.52
+        },
+        {
+          "code": "348",
+          "name": "Performance et résilience des bâtiments de l'État et de ses opérateurs",
+          "mission": "Transformation et fonction publiques",
+          "amount_euros": 360300105,
+          "percentage_of_sector": 0.42
+        },
+        {
+          "code": "521",
+          "name": "Sénat",
+          "mission": "Pouvoirs publics",
+          "amount_euros": 359479900,
+          "percentage_of_sector": 0.42
+        },
+        {
+          "code": "122",
+          "name": "Concours spécifiques et administration",
+          "mission": "Relations avec les collectivités territoriales",
+          "amount_euros": 314420098,
+          "percentage_of_sector": 0.36
+        },
+        {
+          "code": "148",
+          "name": "Fonction publique",
+          "mission": "Transformation et fonction publiques",
+          "amount_euros": 276780163,
+          "percentage_of_sector": 0.32
+        },
+        {
+          "code": "343",
+          "name": "Plan France Très haut débit",
+          "mission": "Économie",
+          "amount_euros": 247829602,
+          "percentage_of_sector": 0.29
+        },
+        {
+          "code": "308",
+          "name": "Protection des droits et libertés",
+          "mission": "Direction de l'action du Gouvernement",
+          "amount_euros": 141455030,
+          "percentage_of_sector": 0.16
+        },
+        {
+          "code": "501",
+          "name": "Présidence de la République",
+          "mission": "Pouvoirs publics",
+          "amount_euros": 125662386,
+          "percentage_of_sector": 0.15
+        },
+        {
+          "code": "349",
+          "name": "Transformation publique",
+          "mission": "Transformation et fonction publiques",
+          "amount_euros": 109570076,
+          "percentage_of_sector": 0.13
+        },
+        {
+          "code": "624",
+          "name": "Pilotage et ressources humaines",
+          "mission": "Publications officielles et information administrative",
+          "amount_euros": 107828851,
+          "percentage_of_sector": 0.12
+        },
+        {
+          "code": "232",
+          "name": "Vie politique",
+          "mission": "Administration générale et territoriale de l'État",
+          "amount_euros": 100262544,
+          "percentage_of_sector": 0.12
+        },
+        {
+          "code": "362",
+          "name": "Écologie",
+          "mission": "Plan de relance",
+          "amount_euros": 100000000,
+          "percentage_of_sector": 0.12
+        },
+        {
+          "code": "137",
+          "name": "Égalité entre les femmes et les hommes",
+          "mission": "Solidarité, insertion et égalité des chances",
+          "amount_euros": 85116767,
+          "percentage_of_sector": 0.1
+        },
+        {
+          "code": "111",
+          "name": "Amélioration de la qualité de l'emploi et des relations du travail",
+          "mission": "Travail, emploi et administration des ministères sociaux",
+          "amount_euros": 83580596,
+          "percentage_of_sector": 0.1
+        },
+        {
+          "code": "776",
+          "name": "Recherche appliquée et innovation en agriculture",
+          "mission": "Développement agricole et rural",
+          "amount_euros": 78070000,
+          "percentage_of_sector": 0.09
+        },
+        {
+          "code": "363",
+          "name": "Compétitivité",
+          "mission": "Plan de relance",
+          "amount_euros": 69000000,
+          "percentage_of_sector": 0.08
+        },
+        {
+          "code": "775",
+          "name": "Développement et transfert en agriculture",
+          "mission": "Développement agricole et rural",
+          "amount_euros": 67930000,
+          "percentage_of_sector": 0.08
+        },
+        {
+          "code": "368",
+          "name": "Conduite et pilotage de la transformation et de la fonction publiques",
+          "mission": "Transformation et fonction publiques",
+          "amount_euros": 53928654,
+          "percentage_of_sector": 0.06
+        },
+        {
+          "code": "623",
+          "name": "Édition et diffusion",
+          "mission": "Publications officielles et information administrative",
+          "amount_euros": 42753257,
+          "percentage_of_sector": 0.05
+        },
+        {
+          "code": "541",
+          "name": "La Chaîne parlementaire",
+          "mission": "Pouvoirs publics",
+          "amount_euros": 35552822,
+          "percentage_of_sector": 0.04
+        },
+        {
+          "code": "531",
+          "name": "Conseil constitutionnel",
+          "mission": "Pouvoirs publics",
+          "amount_euros": 16850000,
+          "percentage_of_sector": 0.02
+        },
+        {
+          "code": "533",
+          "name": "Cour de justice de la République",
+          "mission": "Pouvoirs publics",
+          "amount_euros": 984000,
+          "percentage_of_sector": 0
+        }
+      ]
+    },
+    {
+      "sector_id": "retirement",
+      "total_cp": 74478646084,
+      "programmes": [
+        {
+          "code": "741",
+          "name": "Pensions civiles et militaires de retraite et allocations temporaires d'invalidité",
+          "mission": "Pensions",
+          "amount_euros": 65143656244,
+          "percentage_of_sector": 87.47
+        },
+        {
+          "code": "198",
+          "name": "Régimes sociaux et de retraite des transports terrestres",
+          "mission": "Régimes sociaux et de retraite",
+          "amount_euros": 4182014643,
+          "percentage_of_sector": 5.62
+        },
+        {
+          "code": "742",
+          "name": "Ouvriers des établissements industriels de l'État",
+          "mission": "Pensions",
+          "amount_euros": 2090010904,
+          "percentage_of_sector": 2.81
+        },
+        {
+          "code": "743",
+          "name": "Pensions militaires d'invalidité et des victimes de guerre et autres pensions",
+          "mission": "Pensions",
+          "amount_euros": 1249961691,
+          "percentage_of_sector": 1.68
+        },
+        {
+          "code": "195",
+          "name": "Régimes de retraite des mines, de la SEITA, et divers",
+          "mission": "Régimes sociaux et de retraite",
+          "amount_euros": 1034139621,
+          "percentage_of_sector": 1.39
+        },
+        {
+          "code": "197",
+          "name": "Régimes de retraite et de sécurité sociale des marins",
+          "mission": "Régimes sociaux et de retraite",
+          "amount_euros": 778862981,
+          "percentage_of_sector": 1.05
+        }
+      ]
+    },
+    {
+      "sector_id": "defense",
+      "total_cp": 61909515550,
+      "programmes": [
+        {
+          "code": "212",
+          "name": "Soutien de la politique de la défense",
+          "mission": "Défense",
+          "amount_euros": 24919730428,
+          "percentage_of_sector": 40.25
+        },
+        {
+          "code": "146",
+          "name": "Équipement des forces",
+          "mission": "Défense",
+          "amount_euros": 18689519719,
+          "percentage_of_sector": 30.19
+        },
+        {
+          "code": "178",
+          "name": "Préparation et emploi des forces",
+          "mission": "Défense",
+          "amount_euros": 14318070053,
+          "percentage_of_sector": 23.13
+        },
+        {
+          "code": "144",
+          "name": "Environnement et prospective de la politique de défense",
+          "mission": "Défense",
+          "amount_euros": 2076223248,
+          "percentage_of_sector": 3.35
+        },
+        {
+          "code": "169",
+          "name": "Reconnaissance et réparation en faveur du monde combattant, mémoire et liens avec la Nation",
+          "mission": "Anciens combattants, mémoire et liens avec la Nation",
+          "amount_euros": 1820618043,
+          "percentage_of_sector": 2.94
+        },
+        {
+          "code": "158",
+          "name": "Indemnisation des victimes des persécutions antisémites et des actes de barbarie pendant la seconde guerre mondiale",
+          "mission": "Anciens combattants, mémoire et liens avec la Nation",
+          "amount_euros": 85354059,
+          "percentage_of_sector": 0.14
+        }
+      ]
+    },
+    {
+      "sector_id": "debt",
+      "total_cp": 61338164329,
+      "programmes": [
+        {
+          "code": "117",
+          "name": "Charge de la dette et trésorerie de l'État (crédits évaluatifs)",
+          "mission": "Engagements financiers de l'État",
+          "amount_euros": 54207000000,
+          "percentage_of_sector": 88.37
+        },
+        {
+          "code": "369",
+          "name": "Amortissement de la dette de l'État liée à la covid-19",
+          "mission": "Engagements financiers de l'État",
+          "amount_euros": 5153480084,
+          "percentage_of_sector": 8.4
+        },
+        {
+          "code": "114",
+          "name": "Appels en garantie de l'État (crédits évaluatifs)",
+          "mission": "Engagements financiers de l'État",
+          "amount_euros": 985272597,
+          "percentage_of_sector": 1.61
+        },
+        {
+          "code": "355",
+          "name": "Charge de la dette de SNCF Réseau reprise par l'État (crédits évaluatifs)",
+          "mission": "Engagements financiers de l'État",
+          "amount_euros": 692000000,
+          "percentage_of_sector": 1.13
+        },
+        {
+          "code": "344",
+          "name": "Fonds de soutien relatif aux prêts et contrats financiers structurés à risque",
+          "mission": "Engagements financiers de l'État",
+          "amount_euros": 181036599,
+          "percentage_of_sector": 0.3
+        },
+        {
+          "code": "145",
+          "name": "Épargne",
+          "mission": "Engagements financiers de l'État",
+          "amount_euros": 119375049,
+          "percentage_of_sector": 0.19
+        }
+      ]
+    },
+    {
+      "sector_id": "infrastructure",
+      "total_cp": 46649791350,
+      "programmes": [
+        {
+          "code": "109",
+          "name": "Aide à l'accès au logement",
+          "mission": "Cohésion des territoires",
+          "amount_euros": 17015584000,
+          "percentage_of_sector": 36.48
+        },
+        {
+          "code": "345",
+          "name": "Service public de l'énergie",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 6663500000,
+          "percentage_of_sector": 14.28
+        },
+        {
+          "code": "203",
+          "name": "Infrastructures et services de transports",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 4475237369,
+          "percentage_of_sector": 9.59
+        },
+        {
+          "code": "217",
+          "name": "Conduite et pilotage des politiques de l'écologie, du développement et de la mobilité durables",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 3215309878,
+          "percentage_of_sector": 6.89
+        },
+        {
+          "code": "135",
+          "name": "Urbanisme, territoires et amélioration de l'habitat",
+          "mission": "Cohésion des territoires",
+          "amount_euros": 2995823013,
+          "percentage_of_sector": 6.42
+        },
+        {
+          "code": "177",
+          "name": "Hébergement, parcours vers le logement et insertion des personnes vulnérables",
+          "mission": "Cohésion des territoires",
+          "amount_euros": 2930899369,
+          "percentage_of_sector": 6.28
+        },
+        {
+          "code": "174",
+          "name": "Énergie, climat et après-mines",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 2108014491,
+          "percentage_of_sector": 4.52
+        },
+        {
+          "code": "613",
+          "name": "Soutien aux prestations de l'aviation civile",
+          "mission": "Contrôle et exploitation aériens",
+          "amount_euros": 1635908782,
+          "percentage_of_sector": 3.51
+        },
+        {
+          "code": "181",
+          "name": "Prévention des risques",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 1308665346,
+          "percentage_of_sector": 2.81
+        },
+        {
+          "code": "380",
+          "name": "Fonds d'accélération de la transition écologique dans les territoires",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 1142916832,
+          "percentage_of_sector": 2.45
+        },
+        {
+          "code": "612",
+          "name": "Navigation aérienne",
+          "mission": "Contrôle et exploitation aériens",
+          "amount_euros": 675584168,
+          "percentage_of_sector": 1.45
+        },
+        {
+          "code": "147",
+          "name": "Politique de la ville",
+          "mission": "Cohésion des territoires",
+          "amount_euros": 549579643,
+          "percentage_of_sector": 1.18
+        },
+        {
+          "code": "159",
+          "name": "Expertise, information géographique et météorologie",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 519344473,
+          "percentage_of_sector": 1.11
+        },
+        {
+          "code": "113",
+          "name": "Paysages, eau et biodiversité",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 445589709,
+          "percentage_of_sector": 0.96
+        },
+        {
+          "code": "235",
+          "name": "Sûreté nucléaire et radioprotection",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 365194224,
+          "percentage_of_sector": 0.78
+        },
+        {
+          "code": "205",
+          "name": "Affaires maritimes, pêche et aquaculture",
+          "mission": "Écologie, développement et mobilité durables",
+          "amount_euros": 260671777,
+          "percentage_of_sector": 0.56
+        },
+        {
+          "code": "112",
+          "name": "Impulsion et coordination de la politique d'aménagement du territoire",
+          "mission": "Cohésion des territoires",
+          "amount_euros": 211745312,
+          "percentage_of_sector": 0.45
+        },
+        {
+          "code": "162",
+          "name": "Interventions territoriales de l'État",
+          "mission": "Cohésion des territoires",
+          "amount_euros": 77597672,
+          "percentage_of_sector": 0.17
+        },
+        {
+          "code": "614",
+          "name": "Transports aériens, surveillance et certification",
+          "mission": "Contrôle et exploitation aériens",
+          "amount_euros": 52625292,
+          "percentage_of_sector": 0.11
+        }
+      ]
+    },
+    {
+      "sector_id": "security",
+      "total_cp": 27263163116,
+      "programmes": [
+        {
+          "code": "176",
+          "name": "Police nationale",
+          "mission": "Sécurités",
+          "amount_euros": 13370101484,
+          "percentage_of_sector": 49.04
+        },
+        {
+          "code": "152",
+          "name": "Gendarmerie nationale",
+          "mission": "Sécurités",
+          "amount_euros": 10930839118,
+          "percentage_of_sector": 40.09
+        },
+        {
+          "code": "303",
+          "name": "Immigration et asile",
+          "mission": "Immigration, asile et intégration",
+          "amount_euros": 1681331079,
+          "percentage_of_sector": 6.17
+        },
+        {
+          "code": "161",
+          "name": "Sécurité civile",
+          "mission": "Sécurités",
+          "amount_euros": 831353452,
+          "percentage_of_sector": 3.05
+        },
+        {
+          "code": "104",
+          "name": "Intégration et accès à la nationalité française",
+          "mission": "Immigration, asile et intégration",
+          "amount_euros": 366422831,
+          "percentage_of_sector": 1.34
+        },
+        {
+          "code": "207",
+          "name": "Sécurité et éducation routières",
+          "mission": "Sécurités",
+          "amount_euros": 83115152,
+          "percentage_of_sector": 0.3
+        }
+      ]
+    },
+    {
+      "sector_id": "research",
+      "total_cp": 21806029520,
+      "programmes": [
+        {
+          "code": "172",
+          "name": "Recherches scientifiques et technologiques pluridisciplinaires",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 8259807441,
+          "percentage_of_sector": 37.88
+        },
+        {
+          "code": "424",
+          "name": "Financement des investissements stratégiques",
+          "mission": "Investir pour la France de 2030",
+          "amount_euros": 4373405899,
+          "percentage_of_sector": 20.06
+        },
+        {
+          "code": "231",
+          "name": "Vie étudiante",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 3249641878,
+          "percentage_of_sector": 14.9
+        },
+        {
+          "code": "193",
+          "name": "Recherche spatiale",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 1915679541,
+          "percentage_of_sector": 8.79
+        },
+        {
+          "code": "190",
+          "name": "Recherche dans les domaines de l'énergie, du développement et de la mobilité durables",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 1628195137,
+          "percentage_of_sector": 7.47
+        },
+        {
+          "code": "425",
+          "name": "Financement structurel des écosystèmes d'innovation",
+          "mission": "Investir pour la France de 2030",
+          "amount_euros": 778634101,
+          "percentage_of_sector": 3.57
+        },
+        {
+          "code": "142",
+          "name": "Enseignement supérieur et recherche agricoles",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 431527757,
+          "percentage_of_sector": 1.98
+        },
+        {
+          "code": "192",
+          "name": "Recherche et enseignement supérieur en matière économique et industrielle",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 371158599,
+          "percentage_of_sector": 1.7
+        },
+        {
+          "code": "422",
+          "name": "Valorisation de la recherche",
+          "mission": "Investir pour la France de 2030",
+          "amount_euros": 243200000,
+          "percentage_of_sector": 1.12
+        },
+        {
+          "code": "421",
+          "name": "Soutien des progrès de l'enseignement et de la recherche",
+          "mission": "Investir pour la France de 2030",
+          "amount_euros": 219000000,
+          "percentage_of_sector": 1
+        },
+        {
+          "code": "423",
+          "name": "Accélération de la modernisation des entreprises",
+          "mission": "Investir pour la France de 2030",
+          "amount_euros": 185760000,
+          "percentage_of_sector": 0.85
+        },
+        {
+          "code": "191",
+          "name": "Recherche duale (civile et militaire)",
+          "mission": "Recherche et enseignement supérieur",
+          "amount_euros": 150019167,
+          "percentage_of_sector": 0.69
+        }
+      ]
+    },
+    {
+      "sector_id": "justice",
+      "total_cp": 13358818562,
+      "programmes": [
+        {
+          "code": "107",
+          "name": "Administration pénitentiaire",
+          "mission": "Justice",
+          "amount_euros": 5242413691,
+          "percentage_of_sector": 39.24
+        },
+        {
+          "code": "166",
+          "name": "Justice judiciaire",
+          "mission": "Justice",
+          "amount_euros": 4567111867,
+          "percentage_of_sector": 34.19
+        },
+        {
+          "code": "182",
+          "name": "Protection judiciaire de la jeunesse",
+          "mission": "Justice",
+          "amount_euros": 1140954285,
+          "percentage_of_sector": 8.54
+        },
+        {
+          "code": "101",
+          "name": "Accès au droit et à la justice",
+          "mission": "Justice",
+          "amount_euros": 798130559,
+          "percentage_of_sector": 5.97
+        },
+        {
+          "code": "310",
+          "name": "Conduite et pilotage de la politique de la justice",
+          "mission": "Justice",
+          "amount_euros": 704566938,
+          "percentage_of_sector": 5.27
+        },
+        {
+          "code": "165",
+          "name": "Conseil d'État et autres juridictions administratives",
+          "mission": "Conseil et contrôle de l'État",
+          "amount_euros": 603980812,
+          "percentage_of_sector": 4.52
+        },
+        {
+          "code": "164",
+          "name": "Cour des comptes et autres juridictions financières",
+          "mission": "Conseil et contrôle de l'État",
+          "amount_euros": 260889772,
+          "percentage_of_sector": 1.95
+        },
+        {
+          "code": "126",
+          "name": "Conseil économique, social et environnemental",
+          "mission": "Conseil et contrôle de l'État",
+          "amount_euros": 34855389,
+          "percentage_of_sector": 0.26
+        },
+        {
+          "code": "335",
+          "name": "Conseil supérieur de la magistrature",
+          "mission": "Justice",
+          "amount_euros": 5915249,
+          "percentage_of_sector": 0.04
+        }
+      ]
+    },
+    {
+      "sector_id": "culture",
+      "total_cp": 10250553602,
+      "programmes": [
+        {
+          "code": "372",
+          "name": "France Télévisions",
+          "mission": "Audiovisuel public",
+          "amount_euros": 2548827000,
+          "percentage_of_sector": 24.87
+        },
+        {
+          "code": "175",
+          "name": "Patrimoines",
+          "mission": "Culture",
+          "amount_euros": 1201068066,
+          "percentage_of_sector": 11.72
+        },
+        {
+          "code": "131",
+          "name": "Création",
+          "mission": "Culture",
+          "amount_euros": 1041181797,
+          "percentage_of_sector": 10.16
+        },
+        {
+          "code": "163",
+          "name": "Jeunesse et vie associative",
+          "mission": "Sport, jeunesse et vie associative",
+          "amount_euros": 937301987,
+          "percentage_of_sector": 9.14
+        },
+        {
+          "code": "224",
+          "name": "Soutien aux politiques du ministère de la culture",
+          "mission": "Culture",
+          "amount_euros": 869340472,
+          "percentage_of_sector": 8.48
+        },
+        {
+          "code": "361",
+          "name": "Transmission des savoirs et démocratisation de la culture",
+          "mission": "Culture",
+          "amount_euros": 807484029,
+          "percentage_of_sector": 7.88
+        },
+        {
+          "code": "374",
+          "name": "Radio France",
+          "mission": "Audiovisuel public",
+          "amount_euros": 660133908,
+          "percentage_of_sector": 6.44
+        },
+        {
+          "code": "219",
+          "name": "Sport",
+          "mission": "Sport, jeunesse et vie associative",
+          "amount_euros": 593149632,
+          "percentage_of_sector": 5.79
+        },
+        {
+          "code": "180",
+          "name": "Presse et médias",
+          "mission": "Médias, livre et industries culturelles",
+          "amount_euros": 365664636,
+          "percentage_of_sector": 3.57
+        },
+        {
+          "code": "334",
+          "name": "Livre et industries culturelles",
+          "mission": "Médias, livre et industries culturelles",
+          "amount_euros": 357994738,
+          "percentage_of_sector": 3.49
+        },
+        {
+          "code": "375",
+          "name": "France Médias Monde",
+          "mission": "Audiovisuel public",
+          "amount_euros": 302883551,
+          "percentage_of_sector": 2.95
+        },
+        {
+          "code": "373",
+          "name": "ARTE France",
+          "mission": "Audiovisuel public",
+          "amount_euros": 298114886,
+          "percentage_of_sector": 2.91
+        },
+        {
+          "code": "376",
+          "name": "Institut national de l'audiovisuel",
+          "mission": "Audiovisuel public",
+          "amount_euros": 104961144,
+          "percentage_of_sector": 1.02
+        },
+        {
+          "code": "377",
+          "name": "TV5 Monde",
+          "mission": "Audiovisuel public",
+          "amount_euros": 84242456,
+          "percentage_of_sector": 0.82
+        },
+        {
+          "code": "350",
+          "name": "Jeux olympiques et paralympiques 2024",
+          "mission": "Sport, jeunesse et vie associative",
+          "amount_euros": 48205300,
+          "percentage_of_sector": 0.47
+        },
+        {
+          "code": "383",
+          "name": "Programme de transformation",
+          "mission": "Audiovisuel public",
+          "amount_euros": 30000000,
+          "percentage_of_sector": 0.29
+        }
+      ]
+    },
+    {
+      "sector_id": "aid",
+      "total_cp": 8686476356,
+      "programmes": [
+        {
+          "code": "105",
+          "name": "Action de la France en Europe et dans le monde",
+          "mission": "Action extérieure de l'État",
+          "amount_euros": 2699644119,
+          "percentage_of_sector": 31.08
+        },
+        {
+          "code": "209",
+          "name": "Solidarité à l'égard des pays en développement",
+          "mission": "Aide publique au développement",
+          "amount_euros": 2409963376,
+          "percentage_of_sector": 27.74
+        },
+        {
+          "code": "110",
+          "name": "Aide économique et financière au développement",
+          "mission": "Aide publique au développement",
+          "amount_euros": 1720674817,
+          "percentage_of_sector": 19.81
+        },
+        {
+          "code": "384",
+          "name": "Fonds de solidarité pour le développement",
+          "mission": "Aide publique au développement",
+          "amount_euros": 738000000,
+          "percentage_of_sector": 8.5
+        },
+        {
+          "code": "185",
+          "name": "Diplomatie culturelle et d'influence",
+          "mission": "Action extérieure de l'État",
+          "amount_euros": 675935494,
+          "percentage_of_sector": 7.78
+        },
+        {
+          "code": "151",
+          "name": "Français à l'étranger et affaires consulaires",
+          "mission": "Action extérieure de l'État",
+          "amount_euros": 156930800,
+          "percentage_of_sector": 1.81
+        },
+        {
+          "code": "365",
+          "name": "Renforcement des fonds propres de l'Agence française de développement",
+          "mission": "Aide publique au développement",
+          "amount_euros": 145000000,
+          "percentage_of_sector": 1.67
+        },
+        {
+          "code": "370",
+          "name": "Restitution des « biens mal acquis »",
+          "mission": "Aide publique au développement",
+          "amount_euros": 140327750,
+          "percentage_of_sector": 1.62
+        }
+      ]
+    },
+    {
+      "sector_id": "health",
+      "total_cp": 1643321770,
+      "programmes": [
+        {
+          "code": "183",
+          "name": "Protection maladie",
+          "mission": "Santé",
+          "amount_euros": 1327592126,
+          "percentage_of_sector": 80.79
+        },
+        {
+          "code": "204",
+          "name": "Prévention, sécurité sanitaire et offre de soins",
+          "mission": "Santé",
+          "amount_euros": 221729644,
+          "percentage_of_sector": 13.49
+        },
+        {
+          "code": "379",
+          "name": "Reversement à la sécurité sociale des recettes de la Facilité pour la Relance et la Résilience (FRR) européenne au titre du volet « Ségur investissement » du plan national de relance et de résilience (PNRR)",
+          "mission": "Santé",
+          "amount_euros": 94000000,
+          "percentage_of_sector": 5.72
+        }
+      ]
+    }
+  ]
+}
