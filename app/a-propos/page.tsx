@@ -12,7 +12,6 @@ import {
   GitBranch,
 } from "lucide-react";
 import { Header } from "@/components/shared/Header";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
 
 type SourceItem = {
   name: string;
@@ -100,7 +99,7 @@ const SECONDARY_SOURCES: SourceItem[] = [
     name: "INSEE Première n°1749 : consommation par quintile (BDF 2017)",
     url: "https://www.insee.fr/fr/statistiques/4127596",
     description:
-      "Publication officielle de l'enquête Budget de famille 2017 : dépenses de consommation détaillées par quintile de niveau de vie (les 20% les plus aisés consomment 2,6× plus que les 20% les plus modestes). Base de nos tranches d'épargne.",
+      "Publication officielle de l'enquête Budget de famille 2017 : dépenses de consommation détaillées par quintile de niveau de vie (les 20% les plus aisés consomment 2,6x plus que les 20% les plus modestes). Base de nos tranches d'épargne.",
   },
   {
     name: "economie.gouv.fr : taux de TVA en France",
@@ -138,13 +137,13 @@ const SIMPLIFICATIONS: SimplificationItem[] = [
     detail:
       "Nous calculons uniquement les cotisations salariales (prélevées sur le brut). Les cotisations employeur (~27% du brut en France) ne sont pas affichées car elles ne figurent pas sur la fiche de paie standard.",
     impact:
-      "Sous-estime le coût total du travail. Le \"super-brut\" est ~1.45× le brut affiché.",
+      "Sous-estime le coût total du travail. Le \"super-brut\" est ~1.45x le brut affiché.",
   },
   {
     icon: PieChart,
     title: "TVA estimée, pas calculée",
     detail:
-      "La TVA dépend de vos habitudes de consommation. Voici notre méthode : (1) on part de votre revenu net (après cotisations et IR) ; (2) on en déduit l'épargne moyenne de votre tranche de revenu (source : INSEE, Enquête Budget de famille 2017 + Comptes nationaux 2024, taux agrégé 17,7%), par exemple 4% pour un net < 15 k€, 14% entre 25-35 k€, 23% au-delà de 50 k€ ; (3) le reste est la consommation estimée ; (4) on applique un taux de TVA effectif moyen de 12,5% (source : DGFiP, moyenne pondérée des taux 20%, 10%, 5,5% et 2,1% sur le panier de consommation national). Formule : TVA = consommation × 12,5% ÷ 1,125. Les ménages modestes consomment une part plus grande de leurs revenus et paient donc proportionnellement plus de TVA.",
+      "La TVA dépend de vos habitudes de consommation. Voici notre méthode : (1) on part de votre revenu net (après cotisations et IR) ; (2) on en déduit l'épargne moyenne de votre tranche de revenu (source : INSEE, Enquête Budget de famille 2017 + Comptes nationaux 2024, taux agrégé 17,7%), par exemple 4% pour un net < 15 k€, 14% entre 25-35 k€, 23% au-delà de 50 k€ ; (3) le reste est la consommation estimée ; (4) on applique un taux de TVA effectif moyen de 12,5% (source : DGFiP, moyenne pondérée des taux 20%, 10%, 5,5% et 2,1% sur le panier de consommation national). Formule : TVA = consommation x 12,5% / 1,125. Les ménages modestes consomment une part plus grande de leurs revenus et paient donc proportionnellement plus de TVA.",
     impact:
       "La TVA réelle varie selon le profil de consommation (alimentation vs loisirs) et le lieu de résidence. Nos tranches d'épargne sont des moyennes nationales par quintile de niveau de vie.",
   },
@@ -170,25 +169,45 @@ function Section({
   title,
   icon: Icon,
   children,
-  delay = 0,
 }: {
   title: string;
   icon: typeof BookOpen;
   children: React.ReactNode;
-  delay?: number;
 }) {
   return (
-    <ScrollReveal variant="fade-up" delay={delay}>
-      <section>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="p-2 rounded-lg bg-primary/10">
-            <Icon size={18} className="text-primary" />
-          </div>
-          <h2 className="text-xl font-bold text-text heading-tight">{title}</h2>
+    <section>
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 rounded-xl bg-primary/10">
+          <Icon size={18} className="text-primary" />
         </div>
-        {children}
-      </section>
-    </ScrollReveal>
+        <h2 className="text-xl font-bold text-text heading-tight">{title}</h2>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function SourceCard({ source }: { source: SourceItem }) {
+  return (
+    <a
+      href={source.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-start gap-3 bg-white rounded-2xl border border-border p-5 hover:border-primary/40 transition-colors group"
+    >
+      <ExternalLink
+        size={15}
+        className="text-text-muted group-hover:text-primary mt-0.5 flex-shrink-0"
+      />
+      <div>
+        <p className="text-sm font-semibold text-text group-hover:text-primary transition-colors">
+          {source.name}
+        </p>
+        <p className="text-sm text-text-muted mt-1 leading-relaxed">
+          {source.description}
+        </p>
+      </div>
+    </a>
   );
 }
 
@@ -197,65 +216,63 @@ export default function AProposPage() {
     <main className="min-h-screen bg-surface-alt">
       <Header />
 
-      <div className="max-w-4xl mx-auto px-6 py-10 space-y-16 md:space-y-20">
+      <div className="max-w-4xl mx-auto px-6 py-10 space-y-12 md:space-y-16">
         {/* Title */}
-        <ScrollReveal variant="fade-up">
+        <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">
             Sources & Méthodologie
           </h1>
           <p className="text-text-muted mt-2 text-lg">
             Transparence sur nos calculs, nos sources et nos limites.
           </p>
-        </ScrollReveal>
+        </div>
 
         {/* Disclaimer box */}
-        <ScrollReveal variant="scale">
-          <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-5">
-            <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-            <div className="text-sm space-y-2">
-              <p className="font-semibold text-amber-900">
-                Projet personnel à visée pédagogique
-              </p>
-              <p className="text-amber-800 leading-relaxed">
-                Ceci n&apos;est <strong>pas un outil officiel</strong> de l&apos;administration fiscale.
-                L&apos;objectif est de vulgariser le fonctionnement des prélèvements obligatoires
-                et de rendre plus lisible l&apos;utilisation de l&apos;argent public.
-                Ce n&apos;est pas une prise de position politique.
-              </p>
-              <p className="text-amber-800 leading-relaxed">
-                Les montants affichés sont des <strong>estimations</strong> basées sur le
-                barème fiscal <strong>2026 (revenus 2025)</strong> et les données budgétaires
-                publiques (LFI 2026). Le site peut contenir des erreurs ou des approximations.
-                Pour une simulation officielle et personnalisée, consultez{" "}
-                <a
-                  href="https://www.impots.gouv.fr/simulateurs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline font-medium"
-                >
-                  impots.gouv.fr
-                </a>.
-              </p>
-            </div>
+        <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-5">
+          <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="text-sm space-y-2">
+            <p className="font-semibold text-amber-900">
+              Projet personnel à visée pédagogique
+            </p>
+            <p className="text-amber-800 leading-relaxed">
+              Ceci n&apos;est <strong>pas un outil officiel</strong> de l&apos;administration fiscale.
+              L&apos;objectif est de vulgariser le fonctionnement des prélèvements obligatoires
+              et de rendre plus lisible l&apos;utilisation de l&apos;argent public.
+              Ce n&apos;est pas une prise de position politique.
+            </p>
+            <p className="text-amber-800 leading-relaxed">
+              Les montants affichés sont des <strong>estimations</strong> basées sur le
+              barème fiscal <strong>2026 (revenus 2025)</strong> et les données budgétaires
+              publiques (LFI 2026). Le site peut contenir des erreurs ou des approximations.
+              Pour une simulation officielle et personnalisée, consultez{" "}
+              <a
+                href="https://www.impots.gouv.fr/simulateurs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline font-medium"
+              >
+                impots.gouv.fr
+              </a>.
+            </p>
           </div>
-        </ScrollReveal>
+        </div>
 
         {/* Fiscal year */}
-        <Section title="Année fiscale" icon={BookOpen} delay={0}>
-          <div className="bg-white rounded-2xl border border-border p-5 text-sm leading-relaxed text-text-muted space-y-3">
+        <Section title="Année fiscale" icon={BookOpen}>
+          <div className="bg-white rounded-2xl border border-border p-6 text-sm leading-relaxed text-text-muted space-y-3">
             <p>
               Tous les calculs utilisent le <strong className="text-text">barème 2026</strong>,
               applicable aux revenus perçus en <strong className="text-text">2025</strong>.
-              C'est le barème le plus récent officiellement publié (LFI 2026 adoptée le 2 février 2026).
+              C&apos;est le barème le plus récent officiellement publié (LFI 2026 adoptée le 2 février 2026).
             </p>
             <p>
               Les taux de cotisations sociales sont ceux en vigueur au{" "}
-              <strong className="text-text">1er janvier 2026</strong>, tels que publiés par l'URSSAF (inchangés vs 2025).
+              <strong className="text-text">1er janvier 2026</strong>, tels que publiés par l&apos;URSSAF (inchangés vs 2025).
               Le PASS (Plafond Annuel de la Sécurité Sociale) est fixé à{" "}
               <strong className="text-text">48 060 €</strong> pour 2026.
             </p>
             <p>
-              La répartition budgétaire s'appuie sur la{" "}
+              La répartition budgétaire s&apos;appuie sur la{" "}
               <strong className="text-text">Loi de Finances Initiale (LFI) 2026</strong> et la{" "}
               <strong className="text-text">LFSS 2026</strong>.
               Les pourcentages par secteur du budget de l&apos;État sont calculés à partir des crédits de paiement
@@ -265,33 +282,33 @@ export default function AProposPage() {
         </Section>
 
         {/* Two circuits */}
-        <Section title="Le principe : deux circuits" icon={GitBranch} delay={0}>
-          <div className="bg-white rounded-2xl border border-border p-5 text-sm leading-relaxed text-text-muted space-y-3">
+        <Section title="Le principe : deux circuits" icon={GitBranch}>
+          <div className="bg-white rounded-2xl border border-border p-6 text-sm leading-relaxed text-text-muted space-y-4">
             <p>
-              En France, l'argent prélevé sur votre salaire emprunte <strong className="text-text">deux chemins distincts</strong> :
+              En France, l&apos;argent prélevé sur votre salaire emprunte <strong className="text-text">deux chemins distincts</strong> :
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 mt-2">
-              <div className="rounded-xl border border-social/30 bg-social/5 p-4">
-                <p className="font-semibold text-text text-sm mb-1">Circuit 1 : protection sociale</p>
-                <p className="text-xs leading-relaxed">
-                  Vos <strong>cotisations sociales</strong> (CSG, CRDS, vieillesse, retraite complémentaire)
-                  sont <strong>fléchées</strong> : elles vont directement aux caisses qui gèrent
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-social/30 bg-social/5 p-5">
+                <p className="font-semibold text-text mb-2">Circuit 1 : protection sociale</p>
+                <p className="text-sm text-text-muted leading-relaxed">
+                  Vos <strong className="text-text">cotisations sociales</strong> (CSG, CRDS, vieillesse, retraite complémentaire)
+                  sont fléchées : elles vont directement aux caisses qui gèrent
                   votre protection. La CSG est répartie entre CNAM, CNAF, CNSA, CADES et FSV
-                  selon des points fixés par l'article L136-8 du Code de la Sécurité sociale.
-                  Elles ne transitent pas par le budget de l'État.
+                  selon des points fixés par l&apos;article L136-8 du Code de la Sécurité sociale.
+                  Elles ne transitent pas par le budget de l&apos;État.
                 </p>
               </div>
-              <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
-                <p className="font-semibold text-text text-sm mb-1">Circuit 2 : budget de l&apos;État</p>
-                <p className="text-xs leading-relaxed">
-                  Votre <strong>impôt sur le revenu</strong> (IR) et la <strong>TVA</strong> que vous payez
-                  sur vos achats alimentent le budget général de l'État (~500 Md€).
+              <div className="rounded-xl border border-primary/30 bg-primary/5 p-5">
+                <p className="font-semibold text-text mb-2">Circuit 2 : budget de l&apos;État</p>
+                <p className="text-sm text-text-muted leading-relaxed">
+                  Votre <strong className="text-text">impôt sur le revenu</strong> (IR) et la <strong className="text-text">TVA</strong> que vous payez
+                  sur vos achats alimentent le budget général de l&apos;État (~500 Md€).
                   Ce budget est voté chaque année (LFI) et réparti entre les missions :
                   éducation, défense, charge de la dette, sécurité, etc.
                 </p>
               </div>
             </div>
-            <p className="mt-2">
+            <p>
               Beaucoup de simulateurs mélangent ces deux circuits dans un seul « pot commun ».
               Nous les séparons pour être <strong className="text-text">fidèles à la réalité</strong> :
               vos cotisations retraite financent directement la CNAV, pas les chasseurs alpins.
@@ -300,42 +317,40 @@ export default function AProposPage() {
         </Section>
 
         {/* Simplifications */}
-        <Section title="Hypothèses et simplifications" icon={AlertTriangle} delay={0}>
+        <Section title="Hypothèses et simplifications" icon={AlertTriangle}>
           <div className="space-y-3">
-            {SIMPLIFICATIONS.map((item, i) => (
-              <ScrollReveal key={item.title} variant="fade-left" delay={i * 0.05}>
-                <div className="bg-white rounded-2xl border border-border p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="p-1.5 rounded-lg bg-amber-50 flex-shrink-0">
-                      <item.icon size={16} className="text-amber-600" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <h3 className="font-semibold text-text text-sm">
-                        {item.title}
-                      </h3>
-                      <p className="text-xs text-text-muted leading-relaxed">
-                        {item.detail}
-                      </p>
-                      <div className="text-xs bg-surface-alt rounded-lg px-3 py-1.5 inline-block text-text-muted">
-                        <strong className="text-text">Impact :</strong> {item.impact}
-                      </div>
-                    </div>
+            {SIMPLIFICATIONS.map((item) => (
+              <div key={item.title} className="bg-white rounded-2xl border border-border p-5">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-xl bg-amber-50 flex-shrink-0">
+                    <item.icon size={16} className="text-amber-600" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="font-semibold text-text">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-text-muted leading-relaxed">
+                      {item.detail}
+                    </p>
+                    <p className="text-sm bg-surface-alt rounded-xl px-4 py-2 text-text-muted">
+                      <strong className="text-text">Impact :</strong> {item.impact}
+                    </p>
                   </div>
                 </div>
-              </ScrollReveal>
+              </div>
             ))}
           </div>
         </Section>
 
         {/* What's NOT included */}
-        <Section title="Ce que l'outil ne couvre pas" icon={Scale} delay={0}>
-          <div className="bg-white rounded-2xl border border-border p-5 text-sm">
-            <ul className="space-y-2 text-text-muted">
+        <Section title="Ce que l'outil ne couvre pas" icon={Scale}>
+          <div className="bg-white rounded-2xl border border-border p-6">
+            <ul className="space-y-3 text-sm text-text-muted">
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Impôts locaux</strong> : taxe foncière,
-                  ancienne taxe d'habitation (résidences secondaires), CFE, etc.
+                  ancienne taxe d&apos;habitation (résidences secondaires), CFE, etc.
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -349,7 +364,7 @@ export default function AProposPage() {
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Niches fiscales</strong> : réductions et
-                  crédits d'impôt (Pinel, dons, emploi à domicile, etc.).
+                  crédits d&apos;impôt (Pinel, dons, emploi à domicile, etc.).
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -363,7 +378,7 @@ export default function AProposPage() {
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Mutuelle obligatoire</strong> : cotisations
-                  complémentaires santé (variables selon l'employeur).
+                  complémentaires santé (variables selon l&apos;employeur).
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -377,64 +392,26 @@ export default function AProposPage() {
         </Section>
 
         {/* Primary Sources */}
-        <Section title="Sources primaires" icon={BookOpen} delay={0}>
+        <Section title="Sources primaires" icon={BookOpen}>
           <div className="space-y-2">
             {PRIMARY_SOURCES.map((source) => (
-              <a
-                key={source.name}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-start gap-3 bg-white rounded-2xl border border-border p-4 hover:border-primary/40 transition-colors group"
-              >
-                <ExternalLink
-                  size={14}
-                  className="text-text-muted group-hover:text-primary mt-0.5 flex-shrink-0"
-                />
-                <div>
-                  <p className="text-sm font-semibold text-text group-hover:text-primary transition-colors">
-                    {source.name}
-                  </p>
-                  <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
-                    {source.description}
-                  </p>
-                </div>
-              </a>
+              <SourceCard key={source.name} source={source} />
             ))}
           </div>
         </Section>
 
         {/* Secondary Sources */}
-        <Section title="Sources secondaires" icon={Database} delay={0}>
+        <Section title="Sources secondaires" icon={Database}>
           <div className="space-y-2">
             {SECONDARY_SOURCES.map((source) => (
-              <a
-                key={source.name}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-start gap-3 bg-white rounded-2xl border border-border p-4 hover:border-primary/40 transition-colors group"
-              >
-                <ExternalLink
-                  size={14}
-                  className="text-text-muted group-hover:text-primary mt-0.5 flex-shrink-0"
-                />
-                <div>
-                  <p className="text-sm font-semibold text-text group-hover:text-primary transition-colors">
-                    {source.name}
-                  </p>
-                  <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
-                    {source.description}
-                  </p>
-                </div>
-              </a>
+              <SourceCard key={source.name} source={source} />
             ))}
           </div>
         </Section>
 
         {/* Open source & license */}
-        <Section title="Open source" icon={BookOpen} delay={0}>
-          <div className="bg-white rounded-2xl border border-border p-5 text-sm text-text-muted leading-relaxed space-y-2">
+        <Section title="Open source" icon={BookOpen}>
+          <div className="bg-white rounded-2xl border border-border p-6 text-sm text-text-muted leading-relaxed space-y-3">
             <p>
               Ce projet est <strong className="text-text">open source</strong> sous licence MIT.
               Le code source est disponible sur{" "}
@@ -461,8 +438,7 @@ export default function AProposPage() {
                 className="underline hover:text-text font-medium"
               >
                 Ouvrez une issue sur GitHub
-              </a>{" "}
-              , les corrections sont les bienvenues.
+              </a>, les corrections sont les bienvenues.
             </p>
           </div>
         </Section>
