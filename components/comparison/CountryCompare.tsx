@@ -186,17 +186,17 @@ const VIEWS: { id: ViewMode; label: string; description: string }[] = [
   {
     id: "tax_wedge",
     label: "Coin fiscal",
-    description: `% prélevé sur le salaire brut moyen — OCDE Taxing Wages 2025 (données ${countriesData.metadata.year_tax_wedge}), célibataire sans enfant`,
+    description: `% prélevé sur le salaire brut moyen. OCDE Taxing Wages 2025 (données ${countriesData.metadata.year_tax_wedge}), célibataire sans enfant`,
   },
   {
     id: "breakdown",
     label: "Décomposition",
-    description: `Répartition entre IR, cotisations salarié/employeur et TVA — données ${countriesData.metadata.year_tax_wedge}`,
+    description: `Répartition entre IR, cotisations salarié/employeur et TVA. Données ${countriesData.metadata.year_tax_wedge}`,
   },
   {
     id: "revenue",
     label: "Recettes / PIB",
-    description: `Total des recettes fiscales en % du PIB — OCDE Revenue Statistics 2025 (données ${countriesData.metadata.year_tax_to_gdp})`,
+    description: `Total des recettes fiscales en % du PIB. OCDE Revenue Statistics 2025 (données ${countriesData.metadata.year_tax_to_gdp})`,
   },
 ];
 

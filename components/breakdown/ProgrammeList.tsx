@@ -83,7 +83,7 @@ export function ProgrammeList({ programmes, color, sectorId, includesSocialSecur
         <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 mb-2 text-[11px] text-amber-900 leading-relaxed">
           <span className="font-semibold">Ce secteur est financé majoritairement par la Sécurité sociale.</span>{" "}
           Le détail ci-dessous ne couvre que la part du budget de l&apos;État
-          — les pourcentages sont relatifs à cette seule part, pas au total du secteur.
+          Les pourcentages sont relatifs à cette seule part, pas au total du secteur.
         </div>
       )}
       <ExpandableOverflow
@@ -157,7 +157,7 @@ export function ProgrammeList({ programmes, color, sectorId, includesSocialSecur
       />
 
       <p className="text-[10px] text-text-muted/70 pt-1">
-        Source : PLF 2025 (data.economie.gouv.fr) — budget de l&apos;État uniquement.
+        Source : PLF 2025 (data.economie.gouv.fr), budget de l&apos;État uniquement.
       </p>
     </div>
   );

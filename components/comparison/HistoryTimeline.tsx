@@ -178,7 +178,7 @@ export function HistoryTimeline() {
                   : "bg-white border-border text-text-muted hover:border-primary/50 hover:text-text"
               }`}
             >
-              {event.year} — {event.label}
+              {event.year} : {event.label}
             </button>
           ))}
         </div>
@@ -195,7 +195,7 @@ export function HistoryTimeline() {
                 <Info size={16} className="text-primary flex-shrink-0 mt-0.5" />
                 <div>
                   <span className="font-semibold text-text">
-                    {selectedEvent.year} — {selectedEvent.label}
+                    {selectedEvent.year} : {selectedEvent.label}
                   </span>
                   <p className="text-text-muted mt-0.5 text-xs">
                     {selectedEvent.description}

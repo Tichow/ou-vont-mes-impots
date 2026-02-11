@@ -33,7 +33,7 @@ function ResultsContent() {
 
   return (
     <main className="min-h-screen bg-surface-alt">
-      <Header variant="results" />
+      <Header />
 
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-16 md:space-y-20">
         {/* Page title */}
@@ -84,7 +84,7 @@ function ResultsContent() {
         <section>
           <div className="flex items-center gap-2 mb-1">
             <ShieldCheck size={20} className="text-social" />
-            <p className="text-xs font-semibold text-social uppercase tracking-wider">Circuit 1 — Cotisations fléchées</p>
+            <p className="text-xs font-semibold text-social uppercase tracking-wider">Circuit 1 : cotisations fléchées</p>
           </div>
           <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
             Votre protection sociale
@@ -99,7 +99,7 @@ function ResultsContent() {
           </p>
           <p className="text-text-muted mb-6 text-xs">
             C&apos;est aussi ici que va l&apos;essentiel du financement de la <strong className="text-text">santé</strong> et
-            des <strong className="text-text">retraites</strong> en France — pas dans le budget de l&apos;État.
+            des <strong className="text-text">retraites</strong> en France, pas dans le budget de l&apos;État.
           </p>
           <SocialProtection destinations={result.cotisationsByDestination} />
           <p className="text-[11px] text-text-muted/60 mt-3">
@@ -111,14 +111,14 @@ function ResultsContent() {
         <section>
           <div className="flex items-center gap-2 mb-1">
             <Landmark size={20} className="text-primary" />
-            <p className="text-xs font-semibold text-primary uppercase tracking-wider">Circuit 2 — Impôts</p>
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider">Circuit 2 : impôts</p>
           </div>
           <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
             Votre contribution au budget de l&apos;État
           </h2>
           <p className="text-text-muted mb-4 text-sm max-w-2xl">
-            Contrairement aux cotisations, vos impôts — impôt sur le revenu ({formatEuros(ir)}) et
-            TVA ({formatEuros(tva)}) — sont versés au <strong className="text-text">budget général de l&apos;État</strong>.
+            Contrairement aux cotisations, vos impôts (impôt sur le revenu : {formatEuros(ir)},
+            TVA : {formatEuros(tva)}) sont versés au <strong className="text-text">budget général de l&apos;État</strong>.
             Ils ne sont pas fléchés : c&apos;est le Parlement qui décide chaque année de leur
             répartition entre les missions, via la loi de finances (LFI&nbsp;2026).
             Voici comment votre contribution de {formatEuros(result.stateTaxes)} serait
@@ -130,7 +130,7 @@ function ResultsContent() {
             (section ci-dessus), pas par l&apos;impôt. Le budget de l&apos;État ne finance que la
             prévention et la sécurité sanitaire.
             De même, les <strong className="text-text">retraites</strong> ici (14%) ne couvrent que les pensions
-            des fonctionnaires — les retraites du privé sont financées par vos cotisations.
+            des fonctionnaires. Les retraites du privé sont financées par vos cotisations.
           </p>
           <BudgetBreakdown sectors={result.stateBudgetAllocation} totalTaxes={result.stateTaxes} />
           <p className="text-[11px] text-text-muted/60 mt-3">
@@ -145,7 +145,7 @@ function ResultsContent() {
           </h2>
           <p className="text-text-muted mb-6 text-sm max-w-2xl">
             Voici chaque ligne de prélèvement, de votre salaire brut à votre net.
-            Ces montants correspondent à la <strong className="text-text">part salariale</strong> uniquement — votre
+            Ces montants correspondent à la <strong className="text-text">part salariale</strong> uniquement. Votre
             employeur paie également des cotisations patronales (environ 30% du brut)
             qui n&apos;apparaissent pas sur votre bulletin de salaire.
           </p>
@@ -202,13 +202,13 @@ function ResultsContent() {
           </div>
           <p className="text-text-muted mb-4 text-sm max-w-2xl">
             Le « coin fiscal » mesure l&apos;écart entre ce que coûte un salarié à son employeur
-            et ce qu&apos;il reçoit en net. En France, il atteint 47,2% — l&apos;un des plus élevés
+            et ce qu&apos;il reçoit en net. En France, il atteint 47,2%, l&apos;un des plus élevés
             de l&apos;OCDE, principalement à cause des cotisations patronales (26,7% du coût du travail).
           </p>
           <p className="text-text-muted mb-6 text-xs max-w-2xl">
             En contrepartie, la France offre une protection sociale parmi les plus larges au monde
             (santé universelle, retraite par répartition, allocations familiales, chômage)
-            — financée précisément par ces cotisations élevées.
+            financée précisément par ces cotisations élevées.
           </p>
           <div className="rounded-3xl border border-border bg-white p-6">
             <CountryCompare />
@@ -233,7 +233,14 @@ function ResultsContent() {
             Données ouvertes sous Licence Ouverte 2.0.
           </p>
           <p className="mt-2">
-            <Link href="/a-propos" className="inline-flex items-center gap-1 underline hover:text-text">
+            <Link
+              href={`/a-propos?${new URLSearchParams({
+                salary: input.grossAnnualSalary.toString(),
+                status: input.familyStatus,
+                children: input.numberOfChildren.toString(),
+              }).toString()}`}
+              className="inline-flex items-center gap-1 underline hover:text-text"
+            >
               <BookOpen size={12} />
               Sources, méthodologie et limites
             </Link>

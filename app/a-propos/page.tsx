@@ -28,37 +28,37 @@ const PRIMARY_SOURCES: SourceItem[] = [
       "Répartition officielle des dépenses de l'État par mission et programme (adoptée le 2 février 2026). Base de nos pourcentages budgétaires État-seul.",
   },
   {
-    name: "Documents budgétaires — Exercice 2026",
+    name: "Documents budgétaires : exercice 2026",
     url: "https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026",
     description:
-      "Documents budgétaires officiels de la LFI 2026 — crédits par mission et programme. Licence Ouverte 2.0.",
+      "Documents budgétaires officiels de la LFI 2026, crédits par mission et programme. Licence Ouverte 2.0.",
   },
   {
-    name: "PLF 2025 — Dépenses par destination",
+    name: "PLF 2025 : dépenses par destination",
     url: "https://data.economie.gouv.fr/explore/dataset/plf25-depenses-2025-selon-destination/",
     description:
       "Répartition détaillée des crédits de paiement par programme, action et sous-action. Utilisé pour le drill-down par programme dans la section « Budget de l'État » et le calcul des pourcentages État-seul.",
   },
   {
-    name: "URSSAF — Taux de cotisations 2026",
+    name: "URSSAF : taux de cotisations 2026",
     url: "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html",
     description:
       "Taux officiels 2026 des cotisations sociales salariales : CSG, CRDS, vieillesse, retraite complémentaire AGIRC-ARRCO. Taux inchangés vs 2025.",
   },
   {
-    name: "service-public.gouv.fr — Barème IR 2026",
+    name: "service-public.gouv.fr : barème IR 2026",
     url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419",
     description:
       "Barème progressif de l'impôt sur le revenu 2026 (revenus 2025), revalorisation +0.9%, abattement forfaitaire de 10%, quotient familial.",
   },
   {
-    name: "LFSS 2026 — Sécurité sociale",
+    name: "LFSS 2026 : Sécurité sociale",
     url: "https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss",
     description:
       "Objectifs de dépenses par branche (maladie/ONDAM 274,4 Md€, vieillesse 310,4 Md€, famille 59,7 Md€). Promulguée le 30 décembre 2025.",
   },
   {
-    name: "CSS art. L136-8 — Répartition de la CSG",
+    name: "CSS art. L136-8 : répartition de la CSG",
     url: "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173099",
     description:
       "Article du Code de la Sécurité sociale définissant la répartition des 9,2 points de CSG entre organismes : CNAM (6,45 pts), CNAF (0,95 pts), FSV (0,7 pts), CNSA (0,6 pts) et CADES (0,5 pts). Base du circuit « Protection sociale ».",
@@ -67,49 +67,49 @@ const PRIMARY_SOURCES: SourceItem[] = [
 
 const SECONDARY_SOURCES: SourceItem[] = [
   {
-    name: "AGIRC-ARRCO — Calcul des cotisations",
+    name: "AGIRC-ARRCO : calcul des cotisations",
     url: "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/",
     description:
       "Taux de cotisations retraite complémentaire par tranche (T1 sous le PASS, T2 au-delà). Partie salariale : 3,15% T1 et 8,64% T2.",
   },
   {
-    name: "OCDE — Taxing Wages 2025",
+    name: "OCDE : Taxing Wages 2025",
     url: "https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html",
     description:
       "Coin fiscal par pays (données 2024). Décomposition IR / cotisations salarié / cotisations employeur.",
   },
   {
-    name: "OCDE — Revenue Statistics 2025",
+    name: "OCDE : Revenue Statistics 2025",
     url: "https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html",
     description:
       "Recettes fiscales en % du PIB par pays (données 2023). Base de la comparaison internationale.",
   },
   {
-    name: "Eurostat — Government revenue",
+    name: "Eurostat : Government revenue",
     url: "https://ec.europa.eu/eurostat/databrowser/view/gov_10a_taxag/default/table",
     description:
       "Données complémentaires européennes sur la pression fiscale.",
   },
   {
-    name: "Banque de France — Épargne des ménages T4 2024",
+    name: "Banque de France : épargne des ménages T4 2024",
     url: "https://www.banque-france.fr/fr/statistiques/epargne/epargne-des-menages-2024-q4",
     description:
       "Taux d'épargne agrégé des ménages : 17,7% du revenu disponible en 2024. Sert de point de calibrage macro pour notre estimation de TVA.",
   },
   {
-    name: "INSEE Première n°1749 — Consommation par quintile (BDF 2017)",
+    name: "INSEE Première n°1749 : consommation par quintile (BDF 2017)",
     url: "https://www.insee.fr/fr/statistiques/4127596",
     description:
       "Publication officielle de l'enquête Budget de famille 2017 : dépenses de consommation détaillées par quintile de niveau de vie (les 20% les plus aisés consomment 2,6× plus que les 20% les plus modestes). Base de nos tranches d'épargne.",
   },
   {
-    name: "economie.gouv.fr — Taux de TVA en France",
+    name: "economie.gouv.fr : taux de TVA en France",
     url: "https://www.economie.gouv.fr/particuliers/impots-et-fiscalite/gerer-mes-autres-impots-et-taxes/tva-quels-sont-les-taux-de-votre-quotidien",
     description:
       "Les quatre taux de TVA (20%, 10%, 5,5%, 2,1%) et les produits/services concernés. Nous en dérivons un taux effectif moyen pondéré de ~12,5% sur le panier de consommation.",
   },
   {
-    name: "DREES — Les retraités et les retraites, édition 2025",
+    name: "DREES : les retraités et les retraites, édition 2025",
     url: "https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites",
     description:
       "Pension moyenne brute de droit direct : 1 666 €/mois (fin 2023). Utilisée pour l'équivalence « X mois de pension moyenne » dans le circuit retraite.",
@@ -144,7 +144,7 @@ const SIMPLIFICATIONS: SimplificationItem[] = [
     icon: PieChart,
     title: "TVA estimée, pas calculée",
     detail:
-      "La TVA dépend de vos habitudes de consommation. Voici notre méthode : (1) on part de votre revenu net (après cotisations et IR) ; (2) on en déduit l'épargne moyenne de votre tranche de revenu (source : INSEE, Enquête Budget de famille 2017 + Comptes nationaux 2024, taux agrégé 17,7%) — par exemple 4% pour un net < 15 k€, 14% entre 25-35 k€, 23% au-delà de 50 k€ ; (3) le reste est la consommation estimée ; (4) on applique un taux de TVA effectif moyen de 12,5% (source : DGFiP — moyenne pondérée des taux 20%, 10%, 5,5% et 2,1% sur le panier de consommation national). Formule : TVA = consommation × 12,5% ÷ 1,125. Les ménages modestes consomment une part plus grande de leurs revenus et paient donc proportionnellement plus de TVA.",
+      "La TVA dépend de vos habitudes de consommation. Voici notre méthode : (1) on part de votre revenu net (après cotisations et IR) ; (2) on en déduit l'épargne moyenne de votre tranche de revenu (source : INSEE, Enquête Budget de famille 2017 + Comptes nationaux 2024, taux agrégé 17,7%), par exemple 4% pour un net < 15 k€, 14% entre 25-35 k€, 23% au-delà de 50 k€ ; (3) le reste est la consommation estimée ; (4) on applique un taux de TVA effectif moyen de 12,5% (source : DGFiP, moyenne pondérée des taux 20%, 10%, 5,5% et 2,1% sur le panier de consommation national). Formule : TVA = consommation × 12,5% ÷ 1,125. Les ménages modestes consomment une part plus grande de leurs revenus et paient donc proportionnellement plus de TVA.",
     impact:
       "La TVA réelle varie selon le profil de consommation (alimentation vs loisirs) et le lieu de résidence. Nos tranches d'épargne sont des moyennes nationales par quintile de niveau de vie.",
   },
@@ -195,7 +195,7 @@ function Section({
 export default function AProposPage() {
   return (
     <main className="min-h-screen bg-surface-alt">
-      <Header variant="about" />
+      <Header />
 
       <div className="max-w-4xl mx-auto px-6 py-10 space-y-16 md:space-y-20">
         {/* Title */}
@@ -266,7 +266,7 @@ export default function AProposPage() {
             </p>
             <div className="grid sm:grid-cols-2 gap-4 mt-2">
               <div className="rounded-xl border border-social/30 bg-social/5 p-4">
-                <p className="font-semibold text-text text-sm mb-1">Circuit 1 — Protection sociale</p>
+                <p className="font-semibold text-text text-sm mb-1">Circuit 1 : protection sociale</p>
                 <p className="text-xs leading-relaxed">
                   Vos <strong>cotisations sociales</strong> (CSG, CRDS, vieillesse, retraite complémentaire)
                   sont <strong>fléchées</strong> : elles vont directement aux caisses qui gèrent
@@ -276,7 +276,7 @@ export default function AProposPage() {
                 </p>
               </div>
               <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
-                <p className="font-semibold text-text text-sm mb-1">Circuit 2 — Budget de l&apos;État</p>
+                <p className="font-semibold text-text text-sm mb-1">Circuit 2 : budget de l&apos;État</p>
                 <p className="text-xs leading-relaxed">
                   Votre <strong>impôt sur le revenu</strong> (IR) et la <strong>TVA</strong> que vous payez
                   sur vos achats alimentent le budget général de l'État (~500 Md€).
@@ -328,42 +328,42 @@ export default function AProposPage() {
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
-                  <strong className="text-text">Impôts locaux</strong> — Taxe foncière,
+                  <strong className="text-text">Impôts locaux</strong> : taxe foncière,
                   ancienne taxe d'habitation (résidences secondaires), CFE, etc.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
-                  <strong className="text-text">Revenus non-salariaux</strong> — Revenus
+                  <strong className="text-text">Revenus non-salariaux</strong> : revenus
                   fonciers, plus-values, dividendes (PFU/flat tax), BIC/BNC.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
-                  <strong className="text-text">Niches fiscales</strong> — Réductions et
+                  <strong className="text-text">Niches fiscales</strong> : réductions et
                   crédits d'impôt (Pinel, dons, emploi à domicile, etc.).
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
-                  <strong className="text-text">Taxes spécifiques</strong> — TICPE (carburants),
+                  <strong className="text-text">Taxes spécifiques</strong> : TICPE (carburants),
                   droits de succession, ISF/IFI, taxes sur le tabac/alcool.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
-                  <strong className="text-text">Mutuelle obligatoire</strong> — Cotisations
+                  <strong className="text-text">Mutuelle obligatoire</strong> : cotisations
                   complémentaires santé (variables selon l'employeur).
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
-                  <strong className="text-text">Cotisations patronales</strong> — ~27% du brut, non visibles sur la fiche de paie standard.
+                  <strong className="text-text">Cotisations patronales</strong> : ~27% du brut, non visibles sur la fiche de paie standard.
                 </span>
               </li>
             </ul>
@@ -456,7 +456,7 @@ export default function AProposPage() {
               >
                 Ouvrez une issue sur GitHub
               </a>{" "}
-              — les corrections sont les bienvenues.
+              , les corrections sont les bienvenues.
             </p>
           </div>
         </Section>
@@ -465,7 +465,7 @@ export default function AProposPage() {
         <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
           <Link
             href="/"
-            className="flex-1 text-center text-sm bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all font-medium"
+            className="flex-1 text-center text-sm bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all font-medium"
           >
             Calculer mes impôts
           </Link>

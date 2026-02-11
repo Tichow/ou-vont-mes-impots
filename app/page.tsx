@@ -10,7 +10,7 @@ import { DecorativeShapes } from "@/components/shared/DecorativeShapes";
 export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col">
-      <Header variant="landing" />
+      <Header />
 
       {/* Hero */}
       <section className="relative flex-1 flex flex-col items-center justify-center px-6 py-20 md:py-28">
@@ -25,13 +25,13 @@ export default function HomePage() {
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-text leading-[1.05] mb-6 heading-tight">
             Chaque euro compte.
             <br />
-            <span className="gradient-text">
+            <span className="text-primary">
               Découvrez où vont les vôtres.
             </span>
           </h1>
           <p className="text-lg md:text-xl text-text-muted max-w-xl mx-auto leading-relaxed">
             Entrez votre salaire brut et visualisez le trajet de chaque euro
-            prélevé — de votre fiche de paie jusqu&apos;aux missions de l&apos;État.
+            prélevé, de votre fiche de paie jusqu&apos;aux missions de l&apos;État.
           </p>
         </motion.div>
 
@@ -44,7 +44,7 @@ export default function HomePage() {
       <ScrollReveal variant="fade-up" className="py-10 px-6 border-t border-border/50 bg-surface-warm">
         <div className="max-w-3xl mx-auto flex flex-wrap items-center justify-center gap-8 text-sm text-text-muted">
           <span className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-accent" />
+            <span className="w-2.5 h-2.5 rounded-full bg-primary" />
             Données officielles (data.gouv.fr)
           </span>
           <span className="flex items-center gap-2">
@@ -53,7 +53,7 @@ export default function HomePage() {
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-social" />
-            Calculs côté client — aucune donnée collectée
+            Calculs côté client, aucune donnée collectée
           </span>
         </div>
       </ScrollReveal>

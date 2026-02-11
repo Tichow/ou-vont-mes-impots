@@ -58,8 +58,8 @@ export function SalaryInput() {
       className="w-full max-w-lg mx-auto"
     >
       <div className="relative rounded-3xl bg-white p-8 md:p-10 shadow-primary-lg border border-border overflow-hidden">
-        {/* Gradient accent bar */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent" />
+        {/* Accent bar */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
         {/* Salary input */}
         <label className="block text-sm font-medium text-text-muted mb-2">
           Salaire brut annuel
@@ -151,7 +151,7 @@ export function SalaryInput() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSubmit}
-          className="w-full py-4 px-6 bg-gradient-to-r from-primary to-primary-dark text-white font-semibold rounded-full flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/30 transition-all shadow-primary-sm"
+          className="w-full py-4 px-6 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/30 transition-all shadow-primary-sm"
         >
           Voir où vont mes impôts
           <ArrowRight size={20} />
@@ -161,7 +161,7 @@ export function SalaryInput() {
       {/* Disclaimer */}
       <p className="text-xs text-text-muted text-center mt-4 max-w-sm mx-auto leading-relaxed">
         Calculs basés sur le barème fiscal 2026 (revenus 2025) et la Loi de Finances 2026.
-        Outil indicatif — non contractuel.
+        Outil indicatif, non contractuel.
       </p>
     </motion.div>
   );
