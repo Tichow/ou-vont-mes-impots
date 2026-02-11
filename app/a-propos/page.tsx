@@ -9,6 +9,7 @@ import {
   Calculator,
   Database,
   PieChart,
+  GitBranch,
 } from "lucide-react";
 import { Header } from "@/components/shared/Header";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
@@ -24,13 +25,19 @@ const PRIMARY_SOURCES: SourceItem[] = [
     name: "Loi de Finances 2026 (LFI)",
     url: "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026",
     description:
-      "Répartition officielle des dépenses de l'État par mission et programme (adoptée le 2 février 2026). Base de nos pourcentages budgétaires.",
+      "Répartition officielle des dépenses de l'État par mission et programme (adoptée le 2 février 2026). Base de nos pourcentages budgétaires État-seul.",
   },
   {
     name: "Documents budgétaires — Exercice 2026",
     url: "https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026",
     description:
       "Documents budgétaires officiels de la LFI 2026 — crédits par mission et programme. Licence Ouverte 2.0.",
+  },
+  {
+    name: "PLF 2025 — Dépenses par destination",
+    url: "https://data.economie.gouv.fr/explore/dataset/plf25-depenses-2025-selon-destination/",
+    description:
+      "Répartition détaillée des crédits de paiement par programme, action et sous-action. Utilisé pour le drill-down par programme dans la section « Budget de l'État » et le calcul des pourcentages État-seul.",
   },
   {
     name: "URSSAF — Taux de cotisations 2026",
@@ -50,9 +57,21 @@ const PRIMARY_SOURCES: SourceItem[] = [
     description:
       "Objectifs de dépenses par branche (maladie/ONDAM 274,4 Md€, vieillesse 310,4 Md€, famille 59,7 Md€). Promulguée le 30 décembre 2025.",
   },
+  {
+    name: "CSS art. L136-8 — Répartition de la CSG",
+    url: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036385822/",
+    description:
+      "Article du Code de la Sécurité sociale définissant la répartition des 9,2 points de CSG entre organismes : CNAM (6,45 pts), CNAF (0,95 pts), FSV (0,7 pts), CNSA (0,6 pts) et CADES (0,5 pts). Base du circuit « Protection sociale ».",
+  },
 ];
 
 const SECONDARY_SOURCES: SourceItem[] = [
+  {
+    name: "AGIRC-ARRCO — Calcul des cotisations",
+    url: "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/",
+    description:
+      "Taux de cotisations retraite complémentaire par tranche (T1 sous le PASS, T2 au-delà). Partie salariale : 3,15% T1 et 8,64% T2.",
+  },
   {
     name: "OCDE — Taxing Wages 2025",
     url: "https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html",
@@ -72,10 +91,28 @@ const SECONDARY_SOURCES: SourceItem[] = [
       "Données complémentaires européennes sur la pression fiscale.",
   },
   {
-    name: "INSEE — Comptes nationaux",
-    url: "https://www.insee.fr/fr/statistiques/2830252",
+    name: "Banque de France — Épargne des ménages T4 2024",
+    url: "https://www.banque-france.fr/fr/statistiques/epargne/epargne-des-menages-2024-q4",
     description:
-      "Comptes nationaux annuels (PIB, taux d'épargne, consommation des ménages) utilisés pour l'estimation de la TVA.",
+      "Taux d'épargne agrégé des ménages : 17,7% du revenu disponible en 2024. Sert de point de calibrage macro pour notre estimation de TVA.",
+  },
+  {
+    name: "INSEE Première n°1749 — Consommation par quintile (BDF 2017)",
+    url: "https://www.insee.fr/fr/statistiques/4127596",
+    description:
+      "Publication officielle de l'enquête Budget de famille 2017 : dépenses de consommation détaillées par quintile de niveau de vie (les 20% les plus aisés consomment 2,6× plus que les 20% les plus modestes). Base de nos tranches d'épargne.",
+  },
+  {
+    name: "economie.gouv.fr — Taux de TVA en France",
+    url: "https://www.economie.gouv.fr/particuliers/impots-et-fiscalite/gerer-mes-autres-impots-et-taxes/tva-quels-sont-les-taux-de-votre-quotidien",
+    description:
+      "Les quatre taux de TVA (20%, 10%, 5,5%, 2,1%) et les produits/services concernés. Nous en dérivons un taux effectif moyen pondéré de ~12,5% sur le panier de consommation.",
+  },
+  {
+    name: "DREES — Les retraités et les retraites, édition 2025",
+    url: "https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse/panoramas-de-la-drees/les-retraites-et-les-retraites",
+    description:
+      "Pension moyenne brute de droit direct : 1 666 €/mois (fin 2023). Utilisée pour l'équivalence « X mois de pension moyenne » dans le circuit retraite.",
   },
 ];
 
@@ -88,6 +125,14 @@ type SimplificationItem = {
 
 const SIMPLIFICATIONS: SimplificationItem[] = [
   {
+    icon: GitBranch,
+    title: "Deux circuits séparés : cotisations et impôts",
+    detail:
+      "L'argent prélevé sur votre salaire suit deux chemins distincts. Les cotisations sociales (CSG, CRDS, vieillesse, complémentaire) sont fléchées : elles vont directement aux caisses de Sécurité sociale (CNAV, CNAM, CNAF, CADES). Elles ne passent pas par le budget de l'État. Vos impôts (IR et TVA), eux, financent le budget de l'État, qui est réparti entre éducation, défense, dette, etc. Nous affichons ces deux circuits séparément pour être 100% honnêtes sur la destination de chaque euro. La répartition de la CSG entre organismes suit l'article L136-8 du Code de la Sécurité sociale.",
+    impact:
+      "Ce modèle est plus fidèle à la réalité que le mélange cotisations + impôts dans un pot commun. En contrepartie, les montants par secteur dans le « Budget de l'État » sont plus petits (basés sur IR+TVA seulement, pas sur les cotisations).",
+  },
+  {
     icon: Calculator,
     title: "Cotisations patronales non incluses",
     detail:
@@ -99,17 +144,17 @@ const SIMPLIFICATIONS: SimplificationItem[] = [
     icon: PieChart,
     title: "TVA estimée, pas calculée",
     detail:
-      "La TVA dépend de vos habitudes de consommation réelles. Nous estimons un taux effectif moyen de ~12.5% basé sur la moyenne nationale (mix de TVA à 20%, 10%, 5.5% et 2.1%), avec un taux d'épargne de 15% du revenu disponible (source INSEE).",
+      "La TVA dépend de vos habitudes de consommation. Voici notre méthode : (1) on part de votre revenu net (après cotisations et IR) ; (2) on en déduit l'épargne moyenne de votre tranche de revenu (source : INSEE, Enquête Budget de famille 2017 + Comptes nationaux 2024, taux agrégé 17,7%) — par exemple 4% pour un net < 15 k€, 14% entre 25-35 k€, 23% au-delà de 50 k€ ; (3) le reste est la consommation estimée ; (4) on applique un taux de TVA effectif moyen de 12,5% (source : DGFiP — moyenne pondérée des taux 20%, 10%, 5,5% et 2,1% sur le panier de consommation national). Formule : TVA = consommation × 12,5% ÷ 1,125. Les ménages modestes consomment une part plus grande de leurs revenus et paient donc proportionnellement plus de TVA.",
     impact:
-      "La TVA réelle varie selon le profil : plus de dépenses en alimentation = moins de TVA ; plus de loisirs = plus de TVA.",
+      "La TVA réelle varie selon le profil de consommation (alimentation vs loisirs) et le lieu de résidence. Nos tranches d'épargne sont des moyennes nationales par quintile de niveau de vie.",
   },
   {
     icon: Database,
-    title: "Budget simplifié en 12 secteurs",
+    title: "Budget de l'État en 12 secteurs",
     detail:
-      "Le budget de l'État comprend 32 missions et 130+ programmes. Nous les regroupons en 12 secteurs compréhensibles. La Sécurité sociale (santé, retraites) est estimée séparément car financée par les cotisations.",
+      "Le budget de l'État comprend 32 missions et 130+ programmes. Nous les regroupons en 12 secteurs compréhensibles. Les pourcentages État-seul sont calculés à partir des crédits de paiement (CP) du PLF 2025 par secteur, normalisés à 100%. Chaque secteur peut être exploré programme par programme.",
     impact:
-      "Certains programmes sont répartis entre plusieurs secteurs. Les pourcentages sont des approximations pédagogiques.",
+      "Certains programmes sont répartis entre plusieurs secteurs. Les pourcentages sont des approximations pédagogiques. Le drill-down par programme utilise les données PLF 2025 (les plus récentes disponibles en open data).",
   },
   {
     icon: Scale,
@@ -207,12 +252,49 @@ export default function AProposPage() {
               La répartition budgétaire s'appuie sur la{" "}
               <strong className="text-text">Loi de Finances Initiale (LFI) 2026</strong> et la{" "}
               <strong className="text-text">LFSS 2026</strong>.
+              Les pourcentages par secteur du budget de l&apos;État sont calculés à partir des crédits de paiement
+              du <strong className="text-text">PLF 2025</strong> (data.economie.gouv.fr), les plus récents en open data.
+            </p>
+          </div>
+        </Section>
+
+        {/* Two circuits */}
+        <Section title="Le principe : deux circuits" icon={GitBranch} delay={0}>
+          <div className="bg-white rounded-2xl border border-border p-5 text-sm leading-relaxed text-text-muted space-y-3">
+            <p>
+              En France, l'argent prélevé sur votre salaire emprunte <strong className="text-text">deux chemins distincts</strong> :
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4 mt-2">
+              <div className="rounded-xl border border-social/30 bg-social/5 p-4">
+                <p className="font-semibold text-text text-sm mb-1">Circuit 1 — Protection sociale</p>
+                <p className="text-xs leading-relaxed">
+                  Vos <strong>cotisations sociales</strong> (CSG, CRDS, vieillesse, retraite complémentaire)
+                  sont <strong>fléchées</strong> : elles vont directement aux caisses qui gèrent
+                  votre protection. La CSG est répartie entre CNAM, CNAF, CNSA, CADES et FSV
+                  selon des points fixés par l'article L136-8 du Code de la Sécurité sociale.
+                  Elles ne transitent pas par le budget de l'État.
+                </p>
+              </div>
+              <div className="rounded-xl border border-primary/30 bg-primary/5 p-4">
+                <p className="font-semibold text-text text-sm mb-1">Circuit 2 — Budget de l&apos;État</p>
+                <p className="text-xs leading-relaxed">
+                  Votre <strong>impôt sur le revenu</strong> (IR) et la <strong>TVA</strong> que vous payez
+                  sur vos achats alimentent le budget général de l'État (~500 Md€).
+                  Ce budget est voté chaque année (LFI) et réparti entre les missions :
+                  éducation, défense, charge de la dette, sécurité, etc.
+                </p>
+              </div>
+            </div>
+            <p className="mt-2">
+              Beaucoup de simulateurs mélangent ces deux circuits dans un seul « pot commun ».
+              Nous les séparons pour être <strong className="text-text">fidèles à la réalité</strong> :
+              vos cotisations retraite financent directement la CNAV, pas les chasseurs alpins.
             </p>
           </div>
         </Section>
 
         {/* Simplifications */}
-        <Section title="Hypothèses simplificatrices" icon={AlertTriangle} delay={0}>
+        <Section title="Hypothèses et simplifications" icon={AlertTriangle} delay={0}>
           <div className="space-y-3">
             {SIMPLIFICATIONS.map((item, i) => (
               <ScrollReveal key={item.title} variant="fade-left" delay={i * 0.05}>
@@ -244,38 +326,44 @@ export default function AProposPage() {
           <div className="bg-white rounded-2xl border border-border p-5 text-sm">
             <ul className="space-y-2 text-text-muted">
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">•</span>
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Impôts locaux</strong> — Taxe foncière,
                   ancienne taxe d'habitation (résidences secondaires), CFE, etc.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">•</span>
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Revenus non-salariaux</strong> — Revenus
                   fonciers, plus-values, dividendes (PFU/flat tax), BIC/BNC.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">•</span>
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Niches fiscales</strong> — Réductions et
                   crédits d'impôt (Pinel, dons, emploi à domicile, etc.).
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">•</span>
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Taxes spécifiques</strong> — TICPE (carburants),
                   droits de succession, ISF/IFI, taxes sur le tabac/alcool.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">•</span>
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Mutuelle obligatoire</strong> — Cotisations
                   complémentaires santé (variables selon l'employeur).
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span>
+                  <strong className="text-text">Cotisations patronales</strong> — ~27% du brut, non visibles sur la fiche de paie standard.
                 </span>
               </li>
             </ul>

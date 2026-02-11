@@ -9,9 +9,9 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Où Vont Mes Impôts — Suis tes euros, centime par centime",
+  title: "Où Vont Mes Impôts — Suivez vos euros, centime par centime",
   description:
-    "Découvre exactement où vont tes impôts. Entre ton salaire et visualise la répartition de chaque euro. Données officielles, 100% open source.",
+    "Découvrez exactement où vont vos impôts. Entrez votre salaire et visualisez la répartition de chaque euro. Données officielles, 100% open source.",
 };
 
 export default function RootLayout({

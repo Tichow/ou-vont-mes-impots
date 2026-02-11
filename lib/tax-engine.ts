@@ -9,7 +9,10 @@ import type {
   IncomeTaxResult,
   EstimatedVATResult,
   BudgetSector,
+  CotisationDestination,
   ProgrammeAllocation,
+  ActionAllocation,
+  SousActionAllocation,
   TaxResult,
 } from "./types";
 
@@ -90,6 +93,122 @@ export function calculateSocialContributions(gross: number): SocialContributions
 }
 
 // ---------------------------------------------------------------------------
+// Step A2 — Cotisations by Destination (Circuit 1)
+// ---------------------------------------------------------------------------
+
+/**
+ * Ventile les cotisations sociales par destination :
+ * - Retraite : vieillesse + complémentaire + CEG + CSG part FSV
+ * - Santé : CSG part CNAM
+ * - Famille & autonomie : CSG part CNAF + CNSA
+ * - Dette sociale : CRDS + CSG part CADES
+ */
+export function calculateCotisationsByDestination(
+  gross: number,
+  sc: SocialContributionsBreakdown
+): CotisationDestination[] {
+  const csgBase = computeCsgBase(gross);
+  const totalCSG = csgBase * taxData.social_contributions.csg_allocation._total;
+  const alloc = taxData.social_contributions.csg_allocation;
+
+  // CSG allocation by organism (proportional to their share of the 9.2 points)
+  const csgCNAM = totalCSG * (alloc.cnam / alloc._total);
+  const csgCNSA = totalCSG * (alloc.cnsa / alloc._total);
+  const csgCNAF = totalCSG * (alloc.cnaf / alloc._total);
+  const csgCADES = totalCSG * (alloc.cades / alloc._total);
+  const csgFSV = totalCSG * (alloc.fsv / alloc._total);
+
+  // Find retirement-related contributions from details
+  const retirementIds = ["vieillesse_plafonnee", "vieillesse_deplafonnee", "retraite_t1", "retraite_t2", "ceg_t1", "ceg_t2"];
+  const retirementBase = sc.details
+    .filter((d) => retirementIds.includes(d.id))
+    .reduce((sum, d) => sum + d.amount, 0);
+
+  // Retraite = cotisations vieillesse + complémentaire + CEG + CSG part FSV (finance le minimum vieillesse)
+  const retraite = round2(retirementBase + csgFSV);
+
+  // Santé = CSG part CNAM
+  const sante = round2(csgCNAM);
+
+  // Famille & autonomie = CSG part CNAF + CNSA
+  const famille = round2(csgCNAF + csgCNSA);
+
+  // Dette sociale = CRDS + CSG part CADES
+  const detteSociale = round2(sc.crds + csgCADES);
+
+  const total = retraite + sante + famille + detteSociale;
+
+  const equivData = equivalencesData.equivalences as Record<
+    string,
+    { item: string; unit_price: number; emoji: string; source: string }
+  >;
+
+  const destinations: CotisationDestination[] = [
+    {
+      id: "retraite",
+      label: "Retraite",
+      organism: "CNAV + AGIRC-ARRCO",
+      description: "Finance les pensions des retraités actuels",
+      amount: retraite,
+      percentage: total > 0 ? round2((retraite / total) * 100) : 0,
+      color: "#F59E0B",
+      emoji: "\uD83C\uDFE6",
+      equivalence: buildEquivalence(retraite, equivData.retirement),
+    },
+    {
+      id: "sante",
+      label: "Santé",
+      organism: "CNAM (assurance maladie)",
+      description: "Finance les remboursements de soins et l\u2019h\u00F4pital",
+      amount: sante,
+      percentage: total > 0 ? round2((sante / total) * 100) : 0,
+      color: "#10B981",
+      emoji: "\uD83C\uDFE5",
+      equivalence: buildEquivalence(sante, equivData.health),
+    },
+    {
+      id: "famille",
+      label: "Famille & autonomie",
+      organism: "CNAF + CNSA",
+      description: "Allocations familiales, aide \u00E0 l\u2019autonomie",
+      amount: famille,
+      percentage: total > 0 ? round2((famille / total) * 100) : 0,
+      color: "#3B82F6",
+      emoji: "\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67",
+      equivalence: buildEquivalence(famille, equivData.admin),
+    },
+    {
+      id: "dette_sociale",
+      label: "Dette sociale",
+      organism: "CADES",
+      description: "Rembourse la dette de la S\u00E9curit\u00E9 sociale",
+      amount: detteSociale,
+      percentage: total > 0 ? round2((detteSociale / total) * 100) : 0,
+      color: "#6B7280",
+      emoji: "\uD83D\uDCC9",
+      equivalence: buildEquivalence(detteSociale, equivData.debt),
+    },
+  ];
+
+  return destinations;
+}
+
+function buildEquivalence(
+  amount: number,
+  equiv: { item: string; unit_price: number; emoji: string; source: string }
+) {
+  const quantity = equiv.unit_price > 0 ? amount / equiv.unit_price : 0;
+  return {
+    description: `= ${formatQuantity(quantity)} ${equiv.item}`,
+    quantity: Math.round(quantity * 100) / 100,
+    unit: equiv.item,
+    unitPrice: equiv.unit_price,
+    emoji: equiv.emoji,
+    source: equiv.source,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Step B — Income Tax (IR)
 // ---------------------------------------------------------------------------
 
@@ -142,7 +261,7 @@ export function calculateIncomeTax(
   // Net imposable = gross - total social contributions
   // But only CSG déductible reduces the net imposable for IR purposes
   // Actually: net imposable = gross - all social contributions that are deductible
-  // In practice for salarié: net imposable ≈ gross - cotisations sociales (hors CSG non-déductible et CRDS)
+  // In practice for salarié: net imposable = gross - cotisations sociales (hors CSG non-déductible et CRDS)
   // Simplified: net imposable = gross - (total contributions - CSG non-déductible - CRDS)
   const deductibleContributions = socialContributions.total - socialContributions.csgNonDeductible - socialContributions.crds;
   const netImposable = gross - deductibleContributions;
@@ -187,12 +306,24 @@ export function calculateIncomeTax(
 // Step C — Estimated VAT
 // ---------------------------------------------------------------------------
 
+/** Look up savings rate from income-dependent brackets */
+function getSavingsRate(netAnnual: number): number {
+  const brackets = taxData.estimated_vat.savings_rate_brackets;
+  for (const bracket of brackets) {
+    if (bracket.max_net_annual === null || netAnnual <= bracket.max_net_annual) {
+      return bracket.rate;
+    }
+  }
+  return brackets[brackets.length - 1].rate;
+}
+
 export function calculateEstimatedVAT(
   netTakeHome: number
 ): EstimatedVATResult {
   const vatConfig = taxData.estimated_vat;
   const netAfterTax = netTakeHome;
-  const estimatedSavings = netAfterTax * vatConfig.savings_rate;
+  const savingsRate = getSavingsRate(netAfterTax);
+  const estimatedSavings = netAfterTax * savingsRate;
   const estimatedConsumption = netAfterTax - estimatedSavings;
   // VAT is included in prices, so: TVA = consumption × rate / (1 + rate)
   const vatAmount = estimatedConsumption * vatConfig.effective_vat_rate / (1 + vatConfig.effective_vat_rate);
@@ -207,7 +338,7 @@ export function calculateEstimatedVAT(
 }
 
 // ---------------------------------------------------------------------------
-// Step D — Budget Allocation
+// Step D — Budget Allocation (combined État + Sécu — legacy)
 // ---------------------------------------------------------------------------
 
 // Pre-index budget detail by sector_id for fast lookup
@@ -226,15 +357,39 @@ export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
     const equiv = equivData[sector.id] ?? equivData.generic;
     const quantity = equiv.unit_price > 0 ? amount / equiv.unit_price : 0;
 
-    // Distribute amount across PLF programmes proportionally
+    // Distribute amount across PLF programmes → actions → sous-actions
     const detailProgrammes = detailBySector.get(sector.id) ?? [];
-    const programmes: ProgrammeAllocation[] = detailProgrammes.map((p) => ({
-      code: p.code,
-      name: p.name,
-      mission: p.mission,
-      amount: round2(amount * (p.percentage_of_sector / 100)),
-      percentageOfSector: p.percentage_of_sector,
-    }));
+    const programmes: ProgrammeAllocation[] = detailProgrammes.map((p) => {
+      const progAmount = round2(amount * (p.percentage_of_sector / 100));
+
+      const actions: ActionAllocation[] = p.actions.map((a) => {
+        const actAmount = round2(progAmount * (a.percentage_of_programme / 100));
+
+        const sousActions: SousActionAllocation[] = a.sous_actions.map((sa) => ({
+          code: sa.code,
+          name: sa.name,
+          amount: round2(actAmount * (sa.percentage_of_action / 100)),
+          percentageOfAction: sa.percentage_of_action,
+        }));
+
+        return {
+          code: a.code,
+          name: a.name,
+          amount: actAmount,
+          percentageOfProgramme: a.percentage_of_programme,
+          sousActions,
+        };
+      });
+
+      return {
+        code: p.code,
+        name: p.name,
+        mission: p.mission,
+        amount: progAmount,
+        percentageOfSector: p.percentage_of_sector,
+        actions,
+      };
+    });
 
     return {
       id: sector.id,
@@ -245,6 +400,78 @@ export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
       icon: sector.icon,
       description: sector.description,
       includesSocialSecurity: sector.includes_social_security ?? false,
+      programmes,
+      equivalence: {
+        description: `= ${formatQuantity(quantity)} ${equiv.item}`,
+        quantity: Math.round(quantity * 100) / 100,
+        unit: equiv.item,
+        unitPrice: equiv.unit_price,
+        emoji: equiv.emoji,
+        source: equiv.source,
+      },
+    };
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Step D2 — State Budget Allocation (Circuit 2 — État seul, IR+TVA)
+// ---------------------------------------------------------------------------
+
+export function calculateStateBudgetAllocation(stateTaxes: number): BudgetSector[] {
+  const equivData = equivalencesData.equivalences as Record<
+    string,
+    { item: string; unit_price: number; emoji: string; source: string }
+  >;
+
+  return budgetData.sectors.map((sector) => {
+    const pct = (sector as { percentage_of_state_budget?: number }).percentage_of_state_budget ?? 0;
+    const amount = round2(stateTaxes * (pct / 100));
+    const equiv = equivData[sector.id] ?? equivData.generic;
+    const quantity = equiv.unit_price > 0 ? amount / equiv.unit_price : 0;
+
+    // Distribute amount across PLF programmes → actions → sous-actions
+    const detailProgrammes = detailBySector.get(sector.id) ?? [];
+    const programmes: ProgrammeAllocation[] = detailProgrammes.map((p) => {
+      const progAmount = round2(amount * (p.percentage_of_sector / 100));
+
+      const actions: ActionAllocation[] = p.actions.map((a) => {
+        const actAmount = round2(progAmount * (a.percentage_of_programme / 100));
+
+        const sousActions: SousActionAllocation[] = a.sous_actions.map((sa) => ({
+          code: sa.code,
+          name: sa.name,
+          amount: round2(actAmount * (sa.percentage_of_action / 100)),
+          percentageOfAction: sa.percentage_of_action,
+        }));
+
+        return {
+          code: a.code,
+          name: a.name,
+          amount: actAmount,
+          percentageOfProgramme: a.percentage_of_programme,
+          sousActions,
+        };
+      });
+
+      return {
+        code: p.code,
+        name: p.name,
+        mission: p.mission,
+        amount: progAmount,
+        percentageOfSector: p.percentage_of_sector,
+        actions,
+      };
+    });
+
+    return {
+      id: sector.id,
+      name: sector.name,
+      amount,
+      percentage: pct,
+      color: sector.color,
+      icon: sector.icon,
+      description: sector.description,
+      includesSocialSecurity: false,
       programmes,
       equivalence: {
         description: `= ${formatQuantity(quantity)} ${equiv.item}`,
@@ -290,8 +517,15 @@ export function calculateTaxes(input: UserInput): TaxResult {
   const totalTaxes = round2(directTaxes + estimatedVAT.amount);
   const overallTaxRate = grossAnnualSalary > 0 ? round4(totalTaxes / grossAnnualSalary) : 0;
 
-  // Step D
+  // Step D — Legacy combined budget allocation
   const budgetAllocation = calculateBudgetAllocation(totalTaxes);
+
+  // Circuit 1: cotisations ventilées par destination
+  const cotisationsByDestination = calculateCotisationsByDestination(grossAnnualSalary, socialContributions);
+
+  // Circuit 2: État seul (IR + TVA)
+  const stateTaxes = round2(incomeTax.amount + estimatedVAT.amount);
+  const stateBudgetAllocation = calculateStateBudgetAllocation(stateTaxes);
 
   return {
     input,
@@ -304,6 +538,9 @@ export function calculateTaxes(input: UserInput): TaxResult {
     directTaxRate,
     overallTaxRate,
     budgetAllocation,
+    cotisationsByDestination,
+    stateBudgetAllocation,
+    stateTaxes,
   };
 }
 

@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import type { TaxResult } from "@/lib/types";
 import { formatEuros, formatPercent } from "@/lib/formatting";
+import { GlossaryTerm } from "@/components/ui/GlossaryTerm";
 
 type Props = {
   result: TaxResult;
@@ -10,6 +11,8 @@ type Props = {
 
 type RowData = {
   label: string;
+  glossaryId?: string;
+  suffix?: string;
   amount: number;
   rate: string;
   color: string;
@@ -25,6 +28,7 @@ function buildRows(result: TaxResult): RowData[] {
     if (detail.amount === 0) continue;
     rows.push({
       label: detail.label,
+      glossaryId: detail.id,
       amount: detail.amount,
       rate: formatPercent(detail.rate),
       color: "#F59E0B",
@@ -33,6 +37,7 @@ function buildRows(result: TaxResult): RowData[] {
 
   rows.push({
     label: "Total cotisations",
+    glossaryId: "cotisations",
     amount: result.socialContributions.total,
     rate: formatPercent(result.socialContributions.total / gross),
     color: "#F59E0B",
@@ -42,7 +47,9 @@ function buildRows(result: TaxResult): RowData[] {
   // Income tax
   if (result.incomeTax.amount > 0) {
     rows.push({
-      label: `Impôt sur le revenu (TMI ${formatPercent(result.incomeTax.marginalRate, 0)})`,
+      label: "Impôt sur le revenu",
+      glossaryId: "ir",
+      suffix: ` (TMI ${formatPercent(result.incomeTax.marginalRate, 0)})`,
       amount: result.incomeTax.amount,
       rate: formatPercent(result.incomeTax.effectiveRate),
       color: "#3B82F6",
@@ -50,6 +57,7 @@ function buildRows(result: TaxResult): RowData[] {
   } else {
     rows.push({
       label: "Impôt sur le revenu",
+      glossaryId: "ir",
       amount: 0,
       rate: "non imposable",
       color: "#3B82F6",
@@ -59,6 +67,7 @@ function buildRows(result: TaxResult): RowData[] {
   // Total direct
   rows.push({
     label: "Total prélevé sur fiche de paie",
+    glossaryId: "fiche_de_paie",
     amount: result.directTaxes,
     rate: formatPercent(result.directTaxRate),
     color: "#EF4444",
@@ -99,7 +108,16 @@ export function TaxBreakdownTable({ result }: Props) {
                 style={{ backgroundColor: row.color }}
               />
             )}
-            <span className="truncate">{row.label}</span>
+            <span className="truncate">
+              {row.glossaryId ? (
+                <>
+                  <GlossaryTerm termId={row.glossaryId}>{row.label}</GlossaryTerm>
+                  {row.suffix && <span className="text-text-muted">{row.suffix}</span>}
+                </>
+              ) : (
+                row.label
+              )}
+            </span>
           </span>
 
           {/* Bar */}

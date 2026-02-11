@@ -1,10 +1,19 @@
-/** Format a number as euros with French locale */
-export function formatEuros(amount: number, decimals = 0): string {
+/** Format a number as euros with French locale.
+ *  Adapts decimals so small amounts never display as "0 €". */
+export function formatEuros(amount: number, decimals?: number): string {
+  const d =
+    decimals !== undefined
+      ? decimals
+      : amount !== 0 && Math.abs(amount) < 1
+        ? 2
+        : Math.abs(amount) < 10
+          ? 1
+          : 0;
   return new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: "EUR",
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
+    minimumFractionDigits: d,
+    maximumFractionDigits: d,
   }).format(amount);
 }
 

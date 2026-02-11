@@ -74,6 +74,23 @@ export type Equivalence = {
   source: string;
 };
 
+/** A sous-action within a budget action (PLF finest granularity) */
+export type SousActionAllocation = {
+  code: string;
+  name: string;
+  amount: number;
+  percentageOfAction: number;
+};
+
+/** An action within a budget programme (PLF detail) */
+export type ActionAllocation = {
+  code: string;
+  name: string;
+  amount: number;
+  percentageOfProgramme: number;
+  sousActions: SousActionAllocation[];
+};
+
 /** A programme within a budget sector (PLF detail) */
 export type ProgrammeAllocation = {
   code: string;
@@ -81,6 +98,20 @@ export type ProgrammeAllocation = {
   mission: string;
   amount: number;
   percentageOfSector: number;
+  actions: ActionAllocation[];
+};
+
+/** Cotisations ventilées par destination (circuit 1 — protection sociale) */
+export type CotisationDestination = {
+  id: string;
+  label: string;
+  organism: string;
+  description: string;
+  amount: number;
+  percentage: number;
+  color: string;
+  emoji: string;
+  equivalence: Equivalence;
 };
 
 /** Budget sector allocation */
@@ -113,4 +144,10 @@ export type TaxResult = {
   /** Overall rate including TVA estimate */
   overallTaxRate: number;
   budgetAllocation: BudgetSector[];
+  /** Circuit 1: cotisations ventilées par destination (protection sociale) */
+  cotisationsByDestination: CotisationDestination[];
+  /** Circuit 2: budget État seul, ventilé IR+TVA uniquement */
+  stateBudgetAllocation: BudgetSector[];
+  /** IR + TVA total */
+  stateTaxes: number;
 };

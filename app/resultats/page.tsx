@@ -3,10 +3,12 @@
 import { useSearchParams } from "next/navigation";
 import { useMemo, Suspense } from "react";
 import Link from "next/link";
-import { Clock, Globe, BookOpen } from "lucide-react";
+import { Clock, Globe, BookOpen, ShoppingCart, ShieldCheck, Landmark } from "lucide-react";
 import { calculateTaxes } from "@/lib/tax-engine";
+import { formatEuros } from "@/lib/formatting";
 import { SankeyDiagram } from "@/components/breakdown/SankeyDiagram";
 import { BudgetBreakdown } from "@/components/breakdown/BudgetBreakdown";
+import { SocialProtection } from "@/components/breakdown/SocialProtection";
 import { SummaryCards } from "@/components/breakdown/SummaryCards";
 import { TaxBreakdownTable } from "@/components/breakdown/TaxBreakdownTable";
 import { HistoryTimeline } from "@/components/comparison/HistoryTimeline";
@@ -25,6 +27,10 @@ function ResultsContent() {
 
   const result = useMemo(() => calculateTaxes(input), [input]);
 
+  const cotisations = result.socialContributions.total;
+  const ir = result.incomeTax.amount;
+  const tva = result.estimatedVAT.amount;
+
   return (
     <main className="min-h-screen bg-surface-alt">
       <Header variant="results" />
@@ -33,10 +39,10 @@ function ResultsContent() {
         {/* Page title */}
         <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">
-            Tes résultats
+            Vos résultats
           </h1>
           <p className="text-text-muted mt-2 text-lg">
-            Voici où vont tes prélèvements, euro par euro.
+            Voici où vont vos prélèvements, euro par euro.
           </p>
         </div>
 
@@ -47,32 +53,64 @@ function ResultsContent() {
 
         {/* Sankey */}
         <section>
-          <h2 className="text-2xl font-bold text-text mb-6 heading-tight">
-            Le trajet de ton argent
+          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+            Le trajet de votre argent
           </h2>
+          <p className="text-text-muted mb-6 text-sm">
+            Ce que votre employeur prélève chaque mois sur votre salaire brut.
+            Vos cotisations sont fléchées vers votre protection sociale.
+            {ir > 0 && " Votre IR finance le budget de l\u2019\u00C9tat."}
+          </p>
           <div className="rounded-3xl border border-border bg-white p-4 md:p-6 overflow-hidden">
             <SankeyDiagram result={result} />
           </div>
+
+          {/* TVA annotation */}
+          <div className="mt-4 flex items-start gap-3 rounded-2xl border border-infrastructure/20 bg-infrastructure/5 px-4 py-3">
+            <ShoppingCart size={18} className="text-infrastructure mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-text-muted leading-relaxed">
+              <span className="font-semibold text-text">+ {formatEuros(tva)} de TVA estimée</span> sur votre consommation annuelle.
+              Cette taxe indirecte n&apos;apparaît pas sur votre fiche de paie
+              mais finance aussi le budget de l&apos;État.
+            </p>
+          </div>
         </section>
 
-        {/* Budget Breakdown */}
+        {/* Circuit 1 — Protection sociale (cotisations fléchées) */}
         <section>
-          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
-            Où va ton argent
-          </h2>
+          <div className="flex items-center gap-2 mb-2">
+            <ShieldCheck size={20} className="text-social" />
+            <h2 className="text-2xl font-bold text-text heading-tight">
+              Votre protection sociale
+            </h2>
+          </div>
           <p className="text-text-muted mb-6 text-sm">
-            Chaque secteur de dépense, avec son équivalent concret.
+            Vos cotisations ({formatEuros(cotisations)}) sont fléchées : chaque euro va directement à sa caisse.
           </p>
-          <BudgetBreakdown sectors={result.budgetAllocation} totalTaxes={result.totalTaxes} />
+          <SocialProtection destinations={result.cotisationsByDestination} />
+        </section>
+
+        {/* Circuit 2 — Budget de l'État (IR + TVA) */}
+        <section>
+          <div className="flex items-center gap-2 mb-2">
+            <Landmark size={20} className="text-primary" />
+            <h2 className="text-2xl font-bold text-text heading-tight">
+              Le budget de l&apos;État
+            </h2>
+          </div>
+          <p className="text-text-muted mb-6 text-sm">
+            Vos impôts (IR {formatEuros(ir)} + TVA {formatEuros(tva)} = {formatEuros(result.stateTaxes)}) financent le budget de l&apos;État.
+          </p>
+          <BudgetBreakdown sectors={result.stateBudgetAllocation} totalTaxes={result.stateTaxes} />
         </section>
 
         {/* Detailed breakdown */}
         <section>
           <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
-            Détail de ta fiche de paie
+            Détail de votre fiche de paie
           </h2>
           <p className="text-text-muted mb-6 text-sm">
-            Chaque ligne de cotisation, de ton brut à ton net.
+            Chaque ligne de cotisation, de votre brut à votre net.
           </p>
           <div className="rounded-3xl border border-border bg-white p-6">
             <TaxBreakdownTable result={result} />
@@ -84,7 +122,7 @@ function ResultsContent() {
           <div className="flex items-center gap-2 mb-2">
             <Clock size={20} className="text-primary" />
             <h2 className="text-2xl font-bold text-text heading-tight">
-              Évolution du budget de l'État (2015-2026)
+              Évolution du budget de l&apos;État (2015-2026)
             </h2>
           </div>
           <p className="text-text-muted mb-6 text-sm">
@@ -125,6 +163,7 @@ function ResultsContent() {
           <p className="mt-2">
             Sources : LFI 2026, LFSS 2026, data.gouv.fr, INSEE, budget.gouv.fr.
             Détail par programme : PLF 2025 (data.economie.gouv.fr).
+            Répartition CSG : CSS art. L136-8.
             Données ouvertes sous Licence Ouverte 2.0.
           </p>
           <p className="mt-2">

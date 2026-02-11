@@ -1,6 +1,7 @@
 /**
- * Fetch PLF 2025 budget detail at programme level from data.economie.gouv.fr
- * Maps 46 PLF missions to our 12 budget sectors, computes intra-sector percentages.
+ * Fetch PLF 2025 budget detail from data.economie.gouv.fr
+ * Fetches at the finest granularity (action + sous-action), then nests:
+ *   sector → programme → action → sous-action (when available)
  *
  * Usage: npx tsx scripts/fetch-budget-detail.ts
  */
@@ -18,51 +19,27 @@ const PAGE_SIZE = 100;
 // ---------------------------------------------------------------------------
 
 const MISSION_TO_SECTOR: Record<string, string> = {
-  // Education
   "Enseignement scolaire": "education",
-  // MIRES handled specially: programme 150 → education, rest → research
-
-  // Retirement
   Pensions: "retirement",
   "Régimes sociaux et de retraite": "retirement",
-
-  // Debt
   "Engagements financiers de l'État": "debt",
-
-  // Defense
   Défense: "defense",
   "Anciens combattants, mémoire et liens avec la Nation": "defense",
-
-  // Health
   Santé: "health",
-
-  // Research (MIRES programmes except 150 go here too)
   "Investir pour la France de 2030": "research",
-
-  // Security
   Sécurités: "security",
   "Immigration, asile et intégration": "security",
-
-  // Justice
   Justice: "justice",
   "Conseil et contrôle de l'État": "justice",
-
-  // Infrastructure & ecology
   "Écologie, développement et mobilité durables": "infrastructure",
   "Cohésion des territoires": "infrastructure",
   "Contrôle et exploitation aériens": "infrastructure",
-
-  // Culture
   Culture: "culture",
   "Médias, livre et industries culturelles": "culture",
   "Audiovisuel public": "culture",
   "Sport, jeunesse et vie associative": "culture",
-
-  // Aid
   "Aide publique au développement": "aid",
   "Action extérieure de l'État": "aid",
-
-  // Admin / social / employment (catch-all)
   "Solidarité, insertion et égalité des chances": "admin",
   "Travail, emploi et administration des ministères sociaux": "admin",
   "Gestion des finances publiques": "admin",
@@ -79,7 +56,6 @@ const MISSION_TO_SECTOR: Record<string, string> = {
   "Développement agricole et rural": "admin",
 };
 
-// Missions excluded from the mapping (accounting operations, not real spending)
 const EXCLUDED_MISSIONS = new Set([
   "Remboursements et dégrèvements",
   "Avances aux collectivités territoriales et aux collectivités régies par les articles 73, 74 et 76 de la Constitution",
@@ -93,7 +69,6 @@ const EXCLUDED_MISSIONS = new Set([
   "Prêts et avances à des particuliers ou à des organismes privés",
 ]);
 
-// MIRES mission — programme 150 goes to education, rest to research
 const MIRES_MISSION = "Recherche et enseignement supérieur";
 const MIRES_EDUCATION_PROGRAMME = "150";
 
@@ -101,47 +76,57 @@ const MIRES_EDUCATION_PROGRAMME = "150";
 // Types
 // ---------------------------------------------------------------------------
 
-type ApiRecord = {
+type RawRecord = {
   programme: string;
   libelle_programme: string;
   libelle_mission: string;
-  total_cp: number;
+  action: string;
+  libelle_action: string;
+  sous_action: string | null;
+  libelle_sous_action: string | null;
+  credit_de_paiement: number;
 };
 
-type ProgrammeEntry = {
+type SousActionOut = {
+  code: string;
+  name: string;
+  amount_euros: number;
+  percentage_of_action: number;
+};
+
+type ActionOut = {
+  code: string;
+  name: string;
+  amount_euros: number;
+  percentage_of_programme: number;
+  sous_actions: SousActionOut[];
+};
+
+type ProgrammeOut = {
   code: string;
   name: string;
   mission: string;
-  sector: string;
   amount_euros: number;
+  percentage_of_sector: number;
+  actions: ActionOut[];
 };
 
-type SectorDetail = {
+type SectorOut = {
   sector_id: string;
   total_cp: number;
-  programmes: {
-    code: string;
-    name: string;
-    mission: string;
-    amount_euros: number;
-    percentage_of_sector: number;
-  }[];
+  programmes: ProgrammeOut[];
 };
 
 // ---------------------------------------------------------------------------
-// Fetch with pagination
+// Fetch all raw records with pagination
 // ---------------------------------------------------------------------------
 
-async function fetchAllProgrammes(): Promise<ApiRecord[]> {
-  const allRecords: ApiRecord[] = [];
+async function fetchAllRecords(): Promise<RawRecord[]> {
+  const allRecords: RawRecord[] = [];
   let offset = 0;
   let totalCount = Infinity;
 
   const params = new URLSearchParams({
-    select:
-      "programme,libelle_programme,libelle_mission,sum(credit_de_paiement) as total_cp",
-    group_by: "programme,libelle_programme,libelle_mission",
-    order_by: "total_cp desc",
     limit: String(PAGE_SIZE),
   });
 
@@ -155,7 +140,7 @@ async function fetchAllProgrammes(): Promise<ApiRecord[]> {
 
     const json = (await res.json()) as {
       total_count: number;
-      results: ApiRecord[];
+      results: RawRecord[];
     };
 
     totalCount = json.total_count;
@@ -163,89 +148,183 @@ async function fetchAllProgrammes(): Promise<ApiRecord[]> {
     offset += PAGE_SIZE;
   }
 
-  console.log(`Fetched ${allRecords.length} programme-level records (total_count=${totalCount})`);
+  console.log(`Fetched ${allRecords.length} raw records (total_count=${totalCount})`);
   return allRecords;
 }
 
 // ---------------------------------------------------------------------------
-// Map & aggregate
+// Resolve sector for a record
 // ---------------------------------------------------------------------------
 
-function mapToSectors(records: ApiRecord[]): Map<string, ProgrammeEntry[]> {
-  const sectorMap = new Map<string, ProgrammeEntry[]>();
+function resolveSector(rec: RawRecord): string | null {
+  const mission = rec.libelle_mission;
+  if (EXCLUDED_MISSIONS.has(mission)) return null;
+
+  if (mission === MIRES_MISSION) {
+    return rec.programme === MIRES_EDUCATION_PROGRAMME ? "education" : "research";
+  }
+
+  return MISSION_TO_SECTOR[mission] ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// Build nested structure
+// ---------------------------------------------------------------------------
+
+function pct(part: number, total: number): number {
+  return total > 0 ? Math.round((part / total) * 10000) / 100 : 0;
+}
+
+function buildNested(records: RawRecord[]): SectorOut[] {
+  // Accumulate into a nested map: sector → programme → action → sous_action[]
+  const sectorMap = new Map<
+    string,
+    Map<
+      string,
+      {
+        name: string;
+        mission: string;
+        actions: Map<
+          string,
+          {
+            name: string;
+            sousActions: Map<string, { name: string; amount: number }>;
+            directAmount: number; // amount from records without sous_action
+          }
+        >;
+      }
+    >
+  >();
+
   const unmapped: string[] = [];
 
   for (const rec of records) {
-    const mission = rec.libelle_mission;
-
-    // Skip excluded missions
-    if (EXCLUDED_MISSIONS.has(mission)) continue;
-
-    // Determine sector
-    let sector: string | undefined;
-
-    if (mission === MIRES_MISSION) {
-      // Special case: MIRES split
-      sector =
-        rec.programme === MIRES_EDUCATION_PROGRAMME ? "education" : "research";
-    } else {
-      sector = MISSION_TO_SECTOR[mission];
-    }
-
-    if (!sector) {
-      unmapped.push(`${mission} (programme ${rec.programme}: ${rec.libelle_programme})`);
+    const sector = resolveSector(rec);
+    if (sector === null) {
+      if (!EXCLUDED_MISSIONS.has(rec.libelle_mission)) {
+        unmapped.push(`${rec.libelle_mission} (${rec.programme})`);
+      }
       continue;
     }
 
-    // Skip negative or zero amounts
-    if (rec.total_cp <= 0) continue;
+    const cp = rec.credit_de_paiement;
+    if (cp <= 0) continue;
 
-    const entry: ProgrammeEntry = {
-      code: rec.programme,
-      name: rec.libelle_programme,
-      mission,
-      sector,
-      amount_euros: rec.total_cp,
-    };
+    // Ensure sector
+    if (!sectorMap.has(sector)) sectorMap.set(sector, new Map());
+    const progMap = sectorMap.get(sector)!;
 
-    const existing = sectorMap.get(sector) ?? [];
-    existing.push(entry);
-    sectorMap.set(sector, existing);
+    // Ensure programme
+    if (!progMap.has(rec.programme)) {
+      progMap.set(rec.programme, {
+        name: rec.libelle_programme,
+        mission: rec.libelle_mission,
+        actions: new Map(),
+      });
+    }
+    const prog = progMap.get(rec.programme)!;
+
+    // Ensure action
+    if (!prog.actions.has(rec.action)) {
+      prog.actions.set(rec.action, {
+        name: rec.libelle_action,
+        sousActions: new Map(),
+        directAmount: 0,
+      });
+    }
+    const action = prog.actions.get(rec.action)!;
+
+    // Sous-action or direct
+    if (rec.sous_action && rec.libelle_sous_action) {
+      const saKey = rec.sous_action;
+      const existing = action.sousActions.get(saKey);
+      if (existing) {
+        existing.amount += cp;
+      } else {
+        action.sousActions.set(saKey, {
+          name: rec.libelle_sous_action,
+          amount: cp,
+        });
+      }
+    } else {
+      action.directAmount += cp;
+    }
   }
 
   if (unmapped.length > 0) {
-    console.warn(`\nUnmapped missions (${unmapped.length}):`);
-    for (const m of unmapped) console.warn(`  - ${m}`);
+    const unique = [...new Set(unmapped)];
+    console.warn(`\nUnmapped missions (${unique.length}):`);
+    for (const m of unique) console.warn(`  - ${m}`);
   }
 
-  return sectorMap;
-}
+  // Convert maps → sorted arrays
+  const output: SectorOut[] = [];
 
-function buildOutput(sectorMap: Map<string, ProgrammeEntry[]>): SectorDetail[] {
-  const output: SectorDetail[] = [];
+  for (const [sectorId, progMap] of sectorMap) {
+    const programmes: ProgrammeOut[] = [];
 
-  for (const [sectorId, programmes] of sectorMap) {
-    // Sort by amount descending
+    for (const [progCode, prog] of progMap) {
+      const actions: ActionOut[] = [];
+
+      for (const [actCode, act] of prog.actions) {
+        // Action total = directAmount + sum of sous-actions
+        const saTotal = [...act.sousActions.values()].reduce(
+          (s, sa) => s + sa.amount,
+          0
+        );
+        const actionTotal = act.directAmount + saTotal;
+
+        // Build sous-actions array (sorted, skip if none)
+        const sousActions: SousActionOut[] = [...act.sousActions.entries()]
+          .map(([code, sa]) => ({
+            code,
+            name: sa.name,
+            amount_euros: sa.amount,
+            percentage_of_action: pct(sa.amount, actionTotal),
+          }))
+          .sort((a, b) => b.amount_euros - a.amount_euros);
+
+        actions.push({
+          code: actCode,
+          name: act.name,
+          amount_euros: actionTotal,
+          percentage_of_programme: 0, // computed after
+          sous_actions: sousActions,
+        });
+      }
+
+      // Compute programme total and action percentages
+      const progTotal = actions.reduce((s, a) => s + a.amount_euros, 0);
+      for (const a of actions) {
+        a.percentage_of_programme = pct(a.amount_euros, progTotal);
+      }
+      actions.sort((a, b) => b.amount_euros - a.amount_euros);
+
+      programmes.push({
+        code: progCode,
+        name: prog.name,
+        mission: prog.mission,
+        amount_euros: progTotal,
+        percentage_of_sector: 0, // computed after
+        actions,
+      });
+    }
+
+    // Compute sector total and programme percentages
+    const sectorTotal = programmes.reduce((s, p) => s + p.amount_euros, 0);
+    for (const p of programmes) {
+      p.percentage_of_sector = pct(p.amount_euros, sectorTotal);
+    }
     programmes.sort((a, b) => b.amount_euros - a.amount_euros);
-
-    const totalCp = programmes.reduce((sum, p) => sum + p.amount_euros, 0);
 
     output.push({
       sector_id: sectorId,
-      total_cp: totalCp,
-      programmes: programmes.map((p) => ({
-        code: p.code,
-        name: p.name,
-        mission: p.mission,
-        amount_euros: p.amount_euros,
-        percentage_of_sector: Math.round((p.amount_euros / totalCp) * 10000) / 100,
-      })),
+      total_cp: sectorTotal,
+      programmes,
     });
   }
 
-  // Sort sectors by total_cp descending
   output.sort((a, b) => b.total_cp - a.total_cp);
-
   return output;
 }
 
@@ -254,18 +333,29 @@ function buildOutput(sectorMap: Map<string, ProgrammeEntry[]>): SectorDetail[] {
 // ---------------------------------------------------------------------------
 
 async function main() {
-  console.log("Fetching PLF 2025 budget detail at programme level...\n");
+  console.log("Fetching PLF 2025 budget detail (all granularity levels)...\n");
 
-  const records = await fetchAllProgrammes();
-  const sectorMap = mapToSectors(records);
-  const sectors = buildOutput(sectorMap);
+  const records = await fetchAllRecords();
+  const sectors = buildNested(records);
 
   // Summary
+  let totalActions = 0;
+  let totalSousActions = 0;
   console.log("\nSector summary:");
   for (const s of sectors) {
     const bn = (s.total_cp / 1e9).toFixed(1);
-    console.log(`  ${s.sector_id}: ${bn} Md€ (${s.programmes.length} programmes)`);
+    const nActions = s.programmes.reduce((sum, p) => sum + p.actions.length, 0);
+    const nSA = s.programmes.reduce(
+      (sum, p) => sum + p.actions.reduce((sa, a) => sa + a.sous_actions.length, 0),
+      0
+    );
+    totalActions += nActions;
+    totalSousActions += nSA;
+    console.log(
+      `  ${s.sector_id}: ${bn} Md€ — ${s.programmes.length} prog, ${nActions} actions, ${nSA} sous-actions`
+    );
   }
+  console.log(`\nTotal: ${totalActions} actions, ${totalSousActions} sous-actions`);
 
   const result = {
     metadata: {
@@ -276,7 +366,7 @@ async function main() {
       last_fetched: new Date().toISOString().slice(0, 10),
       year: 2025,
       description:
-        "Répartition interne par programme au sein de chaque secteur budgétaire. " +
+        "Répartition interne par programme, action et sous-action au sein de chaque secteur budgétaire. " +
         "Données du budget de l'État uniquement (hors Sécurité sociale). " +
         "Les pourcentages globaux par secteur restent ceux de LFI 2026.",
       note:

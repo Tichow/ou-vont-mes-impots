@@ -160,8 +160,12 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
         </div>
 
         {/* Equivalence text */}
-        <p className={`text-text-muted leading-snug mt-2 ${compact ? "text-[11px]" : "text-xs"}`}>
+        <p
+          className={`text-text-muted leading-snug mt-2 ${compact ? "text-[11px]" : "text-xs"}`}
+          title={sector.equivalence.source}
+        >
           {sector.equivalence.description}
+          <span className="inline-block ml-1 text-text-muted/50 cursor-help" title={sector.equivalence.source}>ⓘ</span>
         </p>
       </button>
 
@@ -179,7 +183,8 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
               <ProgrammeList
                 programmes={sector.programmes}
                 color={sector.color}
-                includesSocialSecurity={sector.includesSocialSecurity}
+                sectorId={sector.id}
+                includesSocialSecurity={false}
               />
             </div>
           </motion.div>

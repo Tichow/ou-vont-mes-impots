@@ -5,6 +5,8 @@ import {
   calculateEstimatedVAT,
   calculateTaxes,
   computeFiscalParts,
+  calculateCotisationsByDestination,
+  calculateStateBudgetAllocation,
 } from "@/lib/tax-engine";
 
 // ---------------------------------------------------------------------------
@@ -167,11 +169,11 @@ describe("calculateIncomeTax", () => {
 
 describe("calculateEstimatedVAT", () => {
   it("estimates VAT from actual disposable income", () => {
-    const result = calculateEstimatedVAT(28_000); // net take-home
+    const result = calculateEstimatedVAT(28_000); // net take-home (25-35k bracket → 14% savings)
 
     expect(result.netAfterTax).toBe(28_000);
-    expect(result.estimatedSavings).toBeCloseTo(28_000 * 0.15, 0);
-    expect(result.estimatedConsumption).toBeCloseTo(28_000 * 0.85, 0);
+    expect(result.estimatedSavings).toBeCloseTo(28_000 * 0.14, 0);
+    expect(result.estimatedConsumption).toBeCloseTo(28_000 * 0.86, 0);
     expect(result.amount).toBeGreaterThan(0);
     expect(result.amount).toBeLessThan(5_000);
   });
@@ -179,6 +181,109 @@ describe("calculateEstimatedVAT", () => {
   it("handles zero income", () => {
     const result = calculateEstimatedVAT(0);
     expect(result.amount).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Cotisations by destination (Circuit 1)
+// ---------------------------------------------------------------------------
+
+describe("calculateCotisationsByDestination", () => {
+  it("sums to total cotisations for 35k gross", () => {
+    const sc = calculateSocialContributions(35_000);
+    const destinations = calculateCotisationsByDestination(35_000, sc);
+
+    const total = destinations.reduce((sum, d) => sum + d.amount, 0);
+    // Allow small rounding tolerance
+    expect(total).toBeCloseTo(sc.total, 0);
+  });
+
+  it("returns 4 destinations", () => {
+    const sc = calculateSocialContributions(35_000);
+    const destinations = calculateCotisationsByDestination(35_000, sc);
+
+    expect(destinations).toHaveLength(4);
+    expect(destinations.map((d) => d.id)).toEqual(["retraite", "sante", "famille", "dette_sociale"]);
+  });
+
+  it("retraite is the largest destination", () => {
+    const sc = calculateSocialContributions(35_000);
+    const destinations = calculateCotisationsByDestination(35_000, sc);
+
+    const retraite = destinations.find((d) => d.id === "retraite")!;
+    const others = destinations.filter((d) => d.id !== "retraite");
+
+    for (const d of others) {
+      expect(retraite.amount).toBeGreaterThan(d.amount);
+    }
+  });
+
+  it("percentages sum to ~100%", () => {
+    const sc = calculateSocialContributions(35_000);
+    const destinations = calculateCotisationsByDestination(35_000, sc);
+
+    const totalPct = destinations.reduce((sum, d) => sum + d.percentage, 0);
+    expect(totalPct).toBeCloseTo(100, 0);
+  });
+
+  it("all destinations have equivalences", () => {
+    const sc = calculateSocialContributions(35_000);
+    const destinations = calculateCotisationsByDestination(35_000, sc);
+
+    for (const d of destinations) {
+      expect(d.equivalence.emoji).toBeTruthy();
+      expect(d.equivalence.quantity).toBeGreaterThan(0);
+    }
+  });
+
+  it("handles zero salary", () => {
+    const sc = calculateSocialContributions(0);
+    const destinations = calculateCotisationsByDestination(0, sc);
+
+    const total = destinations.reduce((sum, d) => sum + d.amount, 0);
+    expect(total).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// State budget allocation (Circuit 2)
+// ---------------------------------------------------------------------------
+
+describe("calculateStateBudgetAllocation", () => {
+  it("sums to total state taxes", () => {
+    const stateTaxes = 4064;
+    const sectors = calculateStateBudgetAllocation(stateTaxes);
+
+    const total = sectors.reduce((sum, s) => sum + s.amount, 0);
+    expect(total).toBeCloseTo(stateTaxes, 0);
+  });
+
+  it("percentages sum to ~100%", () => {
+    const sectors = calculateStateBudgetAllocation(4064);
+
+    const totalPct = sectors.reduce((sum, s) => sum + s.percentage, 0);
+    expect(totalPct).toBeCloseTo(100, 0);
+  });
+
+  it("education is the largest sector", () => {
+    const sectors = calculateStateBudgetAllocation(4064);
+    const sorted = [...sectors].sort((a, b) => b.amount - a.amount);
+
+    expect(sorted[0].id).toBe("education");
+  });
+
+  it("all sectors have includesSocialSecurity = false", () => {
+    const sectors = calculateStateBudgetAllocation(4064);
+
+    for (const s of sectors) {
+      expect(s.includesSocialSecurity).toBe(false);
+    }
+  });
+
+  it("handles zero state taxes", () => {
+    const sectors = calculateStateBudgetAllocation(0);
+    const total = sectors.reduce((sum, s) => sum + s.amount, 0);
+    expect(total).toBe(0);
   });
 });
 
@@ -214,6 +319,38 @@ describe("calculateTaxes (integration)", () => {
       expect(sector.equivalence.quantity).toBeGreaterThan(0);
       expect(sector.equivalence.emoji).toBeTruthy();
     }
+  });
+
+  it("has cotisationsByDestination summing to total cotisations", () => {
+    const result = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "single",
+      numberOfChildren: 0,
+    });
+
+    const destTotal = result.cotisationsByDestination.reduce((s, d) => s + d.amount, 0);
+    expect(destTotal).toBeCloseTo(result.socialContributions.total, 0);
+  });
+
+  it("has stateTaxes = IR + TVA", () => {
+    const result = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "single",
+      numberOfChildren: 0,
+    });
+
+    expect(result.stateTaxes).toBeCloseTo(result.incomeTax.amount + result.estimatedVAT.amount, 1);
+  });
+
+  it("has stateBudgetAllocation summing to stateTaxes", () => {
+    const result = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "single",
+      numberOfChildren: 0,
+    });
+
+    const stateTotal = result.stateBudgetAllocation.reduce((s, b) => s + b.amount, 0);
+    expect(stateTotal).toBeCloseTo(result.stateTaxes, 0);
   });
 
   it("computes full breakdown for median French salary (~29,000€)", () => {

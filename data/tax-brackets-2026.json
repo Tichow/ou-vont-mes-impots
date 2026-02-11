@@ -82,11 +82,30 @@
       "min": "PASS",
       "cap": "8xPASS",
       "description": "Contribution d'équilibre général T2"
+    },
+    "csg_allocation": {
+      "cnam": 0.0645,
+      "cnsa": 0.006,
+      "cnaf": 0.0095,
+      "cades": 0.005,
+      "fsv": 0.007,
+      "_total": 0.092,
+      "_source": "CSS art. L136-8, répartition inchangée depuis 2019"
     }
   },
   "estimated_vat": {
-    "savings_rate": 0.15,
     "effective_vat_rate": 0.125,
-    "description": "TVA estimée via consommation (taux moyen effectif ~12.5%, taux épargne INSEE ~15%)"
+    "savings_rate_brackets": [
+      { "max_net_annual": 15000, "rate": 0.04, "label": "< 15 k€ net" },
+      { "max_net_annual": 25000, "rate": 0.09, "label": "15-25 k€ net" },
+      { "max_net_annual": 35000, "rate": 0.14, "label": "25-35 k€ net" },
+      { "max_net_annual": 50000, "rate": 0.18, "label": "35-50 k€ net" },
+      { "max_net_annual": null, "rate": 0.23, "label": "> 50 k€ net" }
+    ],
+    "sources": {
+      "savings_rate": "Banque de France T4 2024 (taux agrégé 17,7%) ; répartition par quintile dérivée de l'INSEE Première n°1749 (Enquête Budget de famille 2017) — Q1 ~3%, Q2 ~5%, Q3 ~10%, Q4 ~11%, Q5 ~28%",
+      "effective_vat_rate": "Taux effectif moyen ~12,5% calculé à partir du mix des 4 taux légaux (20%, 10%, 5,5%, 2,1%) pondéré par la structure de consommation des ménages (economie.gouv.fr)"
+    },
+    "description": "TVA estimée en fonction du revenu net : les ménages modestes épargnent moins et consomment une part plus importante de leurs revenus."
   }
 }

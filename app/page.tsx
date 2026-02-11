@@ -26,12 +26,12 @@ export default function HomePage() {
             Chaque euro compte.
             <br />
             <span className="gradient-text">
-              Découvre où vont les tiens.
+              Découvrez où vont les vôtres.
             </span>
           </h1>
           <p className="text-lg md:text-xl text-text-muted max-w-xl mx-auto leading-relaxed">
-            Entre ton salaire brut et visualise le trajet de chaque euro
-            prélevé — de ta fiche de paie jusqu&apos;aux missions de l&apos;État.
+            Entrez votre salaire brut et visualisez le trajet de chaque euro
+            prélevé — de votre fiche de paie jusqu&apos;aux missions de l&apos;État.
           </p>
         </motion.div>
 

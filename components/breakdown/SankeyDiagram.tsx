@@ -35,107 +35,72 @@ type TooltipData = {
 
 type LinkInput = SLinkExtra & { source: number; target: number; value: number };
 
+/**
+ * Build a Sankey showing the two circuits:
+ *
+ * Column 1: Salaire brut
+ * Column 2: Cotisations | IR | Net en poche
+ * Column 3a: Retraite | Santé | Famille | Dette sociale (from cotisations — orange)
+ * Column 3b: Budget de l'État (single node, from IR + TVA annotation — blue)
+ */
 function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[] } {
   const nodes: SNodeExtra[] = [];
   const links: LinkInput[] = [];
   const totalGross = result.input.grossAnnualSalary;
 
-  // 0: Salaire brut
-  nodes.push({ id: "gross", label: `Salaire brut`, shortLabel: "Brut", amount: totalGross, color: "#0F172A" });
-
-  // 1: Cotisations sociales
-  nodes.push({ id: "social", label: `Cotisations`, shortLabel: "Cotis.", amount: result.socialContributions.total, color: "#F59E0B" });
-
-  // 2: Impôt sur le revenu
-  nodes.push({ id: "ir", label: `Impôt sur le revenu`, shortLabel: "IR", amount: result.incomeTax.amount, color: "#3B82F6" });
-
-  // 3: TVA estimée
-  nodes.push({ id: "vat", label: `TVA estimée`, shortLabel: "TVA", amount: result.estimatedVAT.amount, color: "#8B5CF6" });
-
-  // 4: Salaire net
-  nodes.push({ id: "net", label: `Net disponible`, shortLabel: "Net", amount: result.netTakeHome, color: "#10B981" });
-
-  // Budget destination nodes (5+)
-  const topSectors = result.budgetAllocation
-    .filter((s) => s.percentage >= 2)
-    .sort((a, b) => b.amount - a.amount);
-
-  const otherSectors = result.budgetAllocation.filter((s) => s.percentage < 2);
-  const otherTotal = otherSectors.reduce((sum, s) => sum + s.amount, 0);
-
-  for (const sector of topSectors) {
-    nodes.push({ id: sector.id, label: sector.name, shortLabel: sector.name, amount: sector.amount, color: sector.color });
-  }
-  if (otherTotal > 0) {
-    nodes.push({ id: "other", label: `Autres`, shortLabel: "Autres", amount: otherTotal, color: "#A3A3A3" });
-  }
-
-  const nodeIndex = (id: string) => nodes.findIndex((n) => n.id === id);
-
-  const makeLinkMeta = (sourceName: string, targetName: string, value: number, color: string): Omit<LinkInput, "source" | "target" | "value"> => ({
-    color,
-    sourceName,
-    targetName,
-    amount: value,
+  const idx = (id: string) => nodes.findIndex((n) => n.id === id);
+  const meta = (sourceName: string, targetName: string, value: number, color: string): Omit<LinkInput, "source" | "target" | "value"> => ({
+    color, sourceName, targetName, amount: value,
     percentage: totalGross > 0 ? value / totalGross : 0,
   });
 
-  // Gross → branches
-  links.push({ source: 0, target: nodeIndex("social"), value: result.socialContributions.total, ...makeLinkMeta("Salaire brut", "Cotisations", result.socialContributions.total, "#F59E0B") });
+  // ── Column 1: Source ──────────────────────────────────────────────
+  nodes.push({ id: "gross", label: "Salaire brut", shortLabel: "Brut", amount: totalGross, color: "#0F172A" });
+
+  // ── Column 2: Types de prélèvement ────────────────────────────────
+  nodes.push({ id: "social", label: "Cotisations sociales", shortLabel: "Cotis.", amount: result.socialContributions.total, color: "#F59E0B" });
   if (result.incomeTax.amount > 0) {
-    links.push({ source: 0, target: nodeIndex("ir"), value: result.incomeTax.amount, ...makeLinkMeta("Salaire brut", "Impôt sur le revenu", result.incomeTax.amount, "#3B82F6") });
+    nodes.push({ id: "ir", label: "Impôt sur le revenu", shortLabel: "IR", amount: result.incomeTax.amount, color: "#3B82F6" });
   }
-  links.push({ source: 0, target: nodeIndex("vat"), value: result.estimatedVAT.amount, ...makeLinkMeta("Salaire brut", "TVA estimée", result.estimatedVAT.amount, "#8B5CF6") });
-  links.push({ source: 0, target: nodeIndex("net"), value: result.netTakeHome, ...makeLinkMeta("Salaire brut", "Net disponible", result.netTakeHome, "#10B981") });
+  nodes.push({ id: "net", label: "Net en poche", shortLabel: "Net", amount: result.netTakeHome, color: "#10B981" });
 
-  // Social contributions → sectors
-  const retirementIdx = nodeIndex("retirement");
-  const healthIdx = nodeIndex("health");
+  // ── Column 3a: Protection sociale by destination (from cotisations — orange) ──
+  for (const dest of result.cotisationsByDestination) {
+    if (dest.amount <= 0) continue;
+    nodes.push({
+      id: `sp_${dest.id}`,
+      label: dest.label,
+      shortLabel: dest.label,
+      amount: dest.amount,
+      color: dest.color,
+    });
+  }
 
-  if (retirementIdx >= 0) {
-    links.push({ source: nodeIndex("social"), target: retirementIdx, value: result.socialContributions.retirement, ...makeLinkMeta("Cotisations", "Retraites", result.socialContributions.retirement, "#F59E0B") });
+  // ── Column 3b: Budget de l'État (single node from IR) ─────────────
+  if (result.incomeTax.amount > 0) {
+    nodes.push({ id: "st_budget", label: "Budget de l\u2019\u00C9tat", shortLabel: "Budget", amount: result.incomeTax.amount, color: "#3B82F6" });
   }
-  if (healthIdx >= 0) {
-    links.push({ source: nodeIndex("social"), target: healthIdx, value: result.socialContributions.health, ...makeLinkMeta("Cotisations", "Santé", result.socialContributions.health, "#10B981") });
+
+  // ── Links: Brut → prélèvements ────────────────────────────────────
+  links.push({ source: 0, target: idx("social"), value: result.socialContributions.total, ...meta("Salaire brut", "Cotisations sociales", result.socialContributions.total, "#F59E0B") });
+  if (result.incomeTax.amount > 0) {
+    links.push({ source: 0, target: idx("ir"), value: result.incomeTax.amount, ...meta("Salaire brut", "Impôt sur le revenu", result.incomeTax.amount, "#3B82F6") });
   }
-  const remainingSocial = result.socialContributions.total - result.socialContributions.retirement - result.socialContributions.health;
-  if (remainingSocial > 0) {
-    const otherIdx = nodeIndex("other");
-    if (otherIdx >= 0) {
-      links.push({ source: nodeIndex("social"), target: otherIdx, value: remainingSocial, ...makeLinkMeta("Cotisations", "Autres", remainingSocial, "#A3A3A3") });
+  links.push({ source: 0, target: idx("net"), value: result.netTakeHome, ...meta("Salaire brut", "Net en poche", result.netTakeHome, "#10B981") });
+
+  // ── Links: Cotisations → 4 destinations protection sociale ────────
+  const socialIdx = idx("social");
+  for (const dest of result.cotisationsByDestination) {
+    if (dest.amount <= 0) continue;
+    const targetIdx = idx(`sp_${dest.id}`);
+    if (targetIdx >= 0) {
+      links.push({ source: socialIdx, target: targetIdx, value: dest.amount, ...meta("Cotisations", dest.label, dest.amount, dest.color) });
     }
   }
 
-  // IR + TVA → budget sectors
-  const irPlusVat = result.incomeTax.amount + result.estimatedVAT.amount;
-  if (irPlusVat > 0) {
-    const stateSectors = topSectors.filter((s) => s.id !== "health" && s.id !== "retirement");
-    const statePctTotal = stateSectors.reduce((sum, s) => sum + s.percentage, 0)
-      + otherSectors.reduce((sum, s) => sum + s.percentage, 0);
-
-    for (const sector of stateSectors) {
-      const amount = irPlusVat * (sector.percentage / statePctTotal);
-      if (amount > 0) {
-        const irShare = result.incomeTax.amount > 0 ? amount * (result.incomeTax.amount / irPlusVat) : 0;
-        const vatShare = amount - irShare;
-        const targetIdx = nodeIndex(sector.id);
-        if (targetIdx >= 0) {
-          if (irShare > 0) links.push({ source: nodeIndex("ir"), target: targetIdx, value: irShare, ...makeLinkMeta("Impôt sur le revenu", sector.name, irShare, sector.color) });
-          if (vatShare > 0) links.push({ source: nodeIndex("vat"), target: targetIdx, value: vatShare, ...makeLinkMeta("TVA estimée", sector.name, vatShare, sector.color) });
-        }
-      }
-    }
-
-    if (otherTotal > 0) {
-      const otherFromState = irPlusVat * (otherSectors.reduce((s, sec) => s + sec.percentage, 0) / statePctTotal);
-      const otherIdx = nodeIndex("other");
-      if (otherIdx >= 0 && otherFromState > 0) {
-        const irShare = otherFromState * (result.incomeTax.amount / irPlusVat);
-        const vatShare = otherFromState - irShare;
-        if (irShare > 0) links.push({ source: nodeIndex("ir"), target: otherIdx, value: irShare, ...makeLinkMeta("Impôt sur le revenu", "Autres", irShare, "#A3A3A3") });
-        if (vatShare > 0) links.push({ source: nodeIndex("vat"), target: otherIdx, value: vatShare, ...makeLinkMeta("TVA estimée", "Autres", vatShare, "#A3A3A3") });
-      }
-    }
+  // ── Link: IR → Budget de l'État ───────────────────────────────────
+  if (result.incomeTax.amount > 0) {
+    links.push({ source: idx("ir"), target: idx("st_budget"), value: result.incomeTax.amount, ...meta("Impôt sur le revenu", "Budget de l\u2019\u00C9tat", result.incomeTax.amount, "#3B82F6") });
   }
 
   return { nodes, links };
@@ -143,7 +108,7 @@ function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[
 
 export function SankeyDiagram({ result }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 800, height: 520 });
+  const [dimensions, setDimensions] = useState({ width: 800, height: 440 });
   const [hoveredLink, setHoveredLink] = useState<number | null>(null);
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
@@ -153,7 +118,7 @@ export function SankeyDiagram({ result }: Props) {
       if (containerRef.current) {
         const { width } = containerRef.current.getBoundingClientRect();
         const w = Math.max(320, width);
-        setDimensions({ width: w, height: Math.max(450, Math.min(650, w * 0.65)) });
+        setDimensions({ width: w, height: Math.max(400, Math.min(550, w * 0.55)) });
       }
     };
     updateDimensions();
@@ -163,8 +128,7 @@ export function SankeyDiagram({ result }: Props) {
 
   const graph = useMemo(() => {
     const { nodes, links } = buildGraph(result);
-    // Responsive margins for labels — tight to reduce whitespace
-    const sideMargin = dimensions.width < 500 ? 45 : dimensions.width < 700 ? 65 : 80;
+    const sideMargin = dimensions.width < 500 ? 50 : dimensions.width < 700 ? 75 : 100;
     const margin = { top: 16, right: sideMargin, bottom: 16, left: sideMargin };
 
     const sankeyGenerator = d3Sankey<SNodeExtra, SLinkExtra>()
@@ -183,7 +147,6 @@ export function SankeyDiagram({ result }: Props) {
     return sankeyData;
   }, [result, dimensions]);
 
-  // Find connected links for a node
   const getConnectedLinks = useCallback((nodeIdx: number): Set<number> => {
     const connected = new Set<number>();
     graph.links.forEach((link, i) => {
@@ -220,7 +183,7 @@ export function SankeyDiagram({ result }: Props) {
       setTooltip({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top - 10,
-        name: `${link.sourceName} → ${link.targetName}`,
+        name: `${link.sourceName} \u2192 ${link.targetName}`,
         amount: link.amount,
         percentage: link.percentage,
         color: link.color,

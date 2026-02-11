@@ -38,6 +38,11 @@ function buildChartData(): ChartDataPoint[] {
   });
 }
 
+type OtherComposition = { name: string; pct: number };
+
+const OTHER_COMPOSITION: OtherComposition[] =
+  (historyData.sectors.other as { composition_2026?: OtherComposition[] }).composition_2026 ?? [];
+
 function CustomTooltip({
   active,
   payload,
@@ -50,9 +55,10 @@ function CustomTooltip({
   if (!active || !payload) return null;
 
   const event = historyData.events.find((e) => e.year === label);
+  const otherEntry = payload.find((e) => e.name === "other");
 
   return (
-    <div className="bg-white border border-border rounded-xl shadow-lg px-4 py-3 text-xs max-w-[260px]">
+    <div className="bg-white border border-border rounded-xl shadow-lg px-4 py-3 text-xs max-w-[300px]">
       <p className="font-bold text-text mb-2">{label}</p>
       {payload
         .slice()
@@ -69,6 +75,18 @@ function CustomTooltip({
             <span className="font-medium">{entry.value}%</span>
           </div>
         ))}
+      {/* Breakdown of "Autres" */}
+      {otherEntry && OTHER_COMPOSITION.length > 0 && (
+        <div className="mt-2 pt-2 border-t border-border/50">
+          <p className="text-[10px] font-semibold text-text-muted mb-1">Dont « Autres » :</p>
+          {OTHER_COMPOSITION.map((item) => (
+            <div key={item.name} className="flex justify-between gap-3 py-px text-[10px] text-text-muted">
+              <span>{item.name}</span>
+              <span>{item.pct}%</span>
+            </div>
+          ))}
+        </div>
+      )}
       {event && (
         <div className="mt-2 pt-2 border-t border-border text-text-muted">
           <span className="font-semibold text-text">{event.label}</span>
@@ -130,6 +148,15 @@ export function HistoryTimeline() {
           </span>
         ))}
       </div>
+
+      {/* Note about "Autres" */}
+      {OTHER_COMPOSITION.length > 0 && (
+        <p className="text-[11px] text-text-muted/70 leading-relaxed px-1">
+          <span className="font-medium text-text-muted">« Autres » (~12,5%) :</span>{" "}
+          {OTHER_COMPOSITION.map((item) => item.name).join(", ")}.
+          Survolez le graphique pour le détail.
+        </p>
+      )}
 
       {/* Event markers */}
       <div className="space-y-2">

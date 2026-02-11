@@ -45,6 +45,11 @@ export function EquivalenceCards({ sectors }: Props) {
             <p className="text-sm text-text-muted leading-snug">
               {sector.equivalence.description}
             </p>
+
+            {/* Source */}
+            <p className="text-[10px] text-text-muted/60 italic mt-2 leading-snug">
+              {sector.equivalence.source}
+            </p>
           </div>
         </ScrollReveal>
       ))}

@@ -1,8 +1,9 @@
 "use client";
 
-import { Receipt, Wallet, TrendingDown, ShoppingCart } from "lucide-react";
+import { Receipt, Wallet, ShieldCheck, Landmark } from "lucide-react";
 import { formatEuros, formatPercent } from "@/lib/formatting";
 import type { TaxResult } from "@/lib/types";
+import { GlossaryTerm } from "@/components/ui/GlossaryTerm";
 
 type Props = {
   result: TaxResult;
@@ -11,6 +12,7 @@ type Props = {
 type CardDef = {
   key: string;
   label: string;
+  glossaryId?: string;
   icon: typeof Receipt;
   color: string;
   accentColor: string;
@@ -23,6 +25,7 @@ const cards: CardDef[] = [
   {
     key: "gross",
     label: "Salaire brut",
+    glossaryId: "salaire_brut",
     icon: Receipt,
     color: "text-text",
     accentColor: "bg-text",
@@ -30,17 +33,9 @@ const cards: CardDef[] = [
     getSub: () => "annuel",
   },
   {
-    key: "direct-taxes",
-    label: "Prélevé sur ta fiche de paie",
-    icon: TrendingDown,
-    color: "text-defense",
-    accentColor: "bg-defense",
-    getValue: (r) => formatEuros(r.directTaxes),
-    getSub: (r) => formatPercent(r.directTaxRate) + " du brut (cotisations + IR)",
-  },
-  {
     key: "net",
     label: "Net en poche",
+    glossaryId: "net_apres_ir",
     icon: Wallet,
     color: "text-accent",
     accentColor: "bg-accent",
@@ -48,14 +43,25 @@ const cards: CardDef[] = [
     getSub: (r) => formatEuros(r.netTakeHome / 12) + "/mois",
   },
   {
-    key: "vat",
-    label: "TVA estimée en plus",
-    icon: ShoppingCart,
-    color: "text-infrastructure",
-    accentColor: "bg-infrastructure",
-    getValue: (r) => formatEuros(r.estimatedVAT.amount),
-    getSub: () => "taxe indirecte sur ta consommation",
-    note: "estimation",
+    key: "cotisations",
+    label: "Protection sociale",
+    glossaryId: "cotisations",
+    icon: ShieldCheck,
+    color: "text-social",
+    accentColor: "bg-social",
+    getValue: (r) => formatEuros(r.socialContributions.total),
+    getSub: (r) => formatPercent(r.socialContributions.total / r.input.grossAnnualSalary) + " — cotisations fléchées",
+  },
+  {
+    key: "state-taxes",
+    label: "Budget de l\u2019\u00C9tat",
+    glossaryId: "ir",
+    icon: Landmark,
+    color: "text-primary",
+    accentColor: "bg-primary",
+    getValue: (r) => formatEuros(r.stateTaxes),
+    getSub: (r) => `IR ${formatEuros(r.incomeTax.amount)} + TVA ${formatEuros(r.estimatedVAT.amount)}`,
+    note: "TVA estimée",
   },
 ];
 
@@ -74,7 +80,13 @@ export function SummaryCards({ result }: Props) {
           )}
           <div className="flex items-center gap-2 mb-3 pl-2">
             <card.icon size={18} className={card.color} />
-            <span className="text-sm text-text-muted">{card.label}</span>
+            <span className="text-sm text-text-muted">
+              {card.glossaryId ? (
+                <GlossaryTerm termId={card.glossaryId}>{card.label}</GlossaryTerm>
+              ) : (
+                card.label
+              )}
+            </span>
           </div>
           <p className={`text-2xl md:text-3xl font-bold pl-2 ${card.color}`}>
             {card.getValue(result)}
