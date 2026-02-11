@@ -10,6 +10,8 @@ import {
   Database,
   PieChart,
   GitBranch,
+  MapPin,
+  Equal,
 } from "lucide-react";
 import { Header } from "@/components/shared/Header";
 
@@ -61,6 +63,94 @@ const PRIMARY_SOURCES: SourceItem[] = [
     url: "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173099",
     description:
       "Article du Code de la Sécurité sociale définissant la répartition des 9,2 points de CSG entre organismes : CNAM (6,45 pts), CNAF (0,95 pts), FSV (0,7 pts), CNSA (0,6 pts) et CADES (0,5 pts). Base du circuit « Protection sociale ».",
+  },
+];
+
+type EquivalenceSource = {
+  sector: string;
+  equivalence: string;
+  value: string;
+  source: string;
+  url: string;
+};
+
+const EQUIVALENCE_SOURCES: EquivalenceSource[] = [
+  {
+    sector: "Éducation",
+    equivalence: "Jours d'école d'un élève",
+    value: "56 €/jour",
+    source: "DEPP Note d'Information n° 25.52 (sept. 2025) : dépense élémentaire 9 130 €/an ÷ 162 jours d'école",
+    url: "https://www.education.gouv.fr/en-2024-1971-milliards-d-euros-consacres-l-education-soit-68-du-pib-451458",
+  },
+  {
+    sector: "Défense",
+    equivalence: "Heures de vol d'un Rafale",
+    value: "20 000 €/h",
+    source: "Audition du général Stéphane Mille (CEMAA), commission Défense du Sénat, 7 novembre 2023 (PLF 2024)",
+    url: "https://www.senat.fr/compte-rendu-commissions/20231106/etr.html",
+  },
+  {
+    sector: "Santé",
+    equivalence: "Consultations chez un généraliste",
+    value: "30 €",
+    source: "Tarif conventionnel secteur 1, convention médicale 2024-2029 (en vigueur depuis le 22/12/2024)",
+    url: "https://www.ameli.fr/medecin/exercice-liberal/facturation-remuneration/consultations-actes/tarifs-consultations",
+  },
+  {
+    sector: "Retraite",
+    equivalence: "Mois de pension moyenne",
+    value: "1 666 €/mois",
+    source: "Pension moyenne brute de droit direct, fin 2023 — DREES « Les retraités et les retraites » éd. 2025",
+    url: "https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites",
+  },
+  {
+    sector: "Justice",
+    equivalence: "Jours de détention",
+    value: "128 €/jour",
+    source: "Coût moyen journée de détention, données 2024 — Sénat, Avis n° 145 PLF 2026, prog. 107, rapporteur Louis Vogel",
+    url: "https://www.senat.fr/rap/a25-145-6/a25-145-66.html",
+  },
+  {
+    sector: "Culture",
+    equivalence: "Entrées au Louvre",
+    value: "22 €",
+    source: "Tarif plein 2026, résidents EEE",
+    url: "https://www.louvre.fr/informations-pratiques/tarifs",
+  },
+  {
+    sector: "Dette",
+    equivalence: "Secondes d'intérêts de la dette",
+    value: "1 880 €/s",
+    source: "Charge de la dette 59,3 Md €/an (LFI 2026, prog. 117) ÷ 31 536 000 secondes/an",
+    url: "https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026",
+  },
+  {
+    sector: "Sécurité",
+    equivalence: "Heures de patrouille police",
+    value: "49 €/h",
+    source: "Titre 2 prog. 176 : 12,09 Md € ÷ 153 285 ETPT ÷ 1 607 h/an — Sénat, PLF 2026",
+    url: "https://www.senat.fr/rap/l25-139-328-1/l25-139-328-16.html",
+  },
+  {
+    sector: "Recherche",
+    equivalence: "Heures de chercheur CNRS",
+    value: "56 €/h",
+    source: "Masse salariale CNRS 2,87 Md € pour 34 289 agents — Cour des comptes, rapport CNRS mars 2025 ; salaire chercheur MESRI EESR 2025 fiche n° 18",
+    url: "https://www.ccomptes.fr/fr/publications/le-centre-national-de-la-recherche-scientifique-cnrs",
+  },
+  {
+    sector: "Aide intl.",
+    equivalence: "Repas distribués par le PAM",
+    value: "0,70 €",
+    source: "Coût opérationnel par repas (US$ 0.80) — Programme Alimentaire Mondial, ShareTheMeal",
+    url: "https://innovation.wfp.org/project/sharethemeal",
+  },
+  {
+    sector: "Famille",
+    equivalence: "Allocations familiales journalières",
+    value: "5,04 €/jour",
+    source: "Allocations familiales 2 enfants, tranche 1 : 151,05 €/mois ÷ 30 j — barème avril 2026",
+    url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F13213",
   },
 ];
 
@@ -391,6 +481,65 @@ export default function AProposPage() {
           </div>
         </Section>
 
+        {/* Local taxes explainer */}
+        <Section title="Et les impôts locaux ?" icon={MapPin}>
+          <div className="bg-white rounded-2xl border border-border p-6 text-sm leading-relaxed text-text-muted space-y-4">
+            <p>
+              Si vous êtes propriétaire, vous payez aussi la <strong className="text-text">taxe foncière</strong> — en moyenne{" "}
+              <strong className="text-text">1 082 €/an</strong> par redevable en 2024
+              (717 € pour un propriétaire d&apos;un seul logement).
+              Au total, la taxe foncière représente <strong className="text-text">53,6 Md €</strong> de recettes.
+              C&apos;est le seul impôt local direct payé par les ménages depuis la suppression
+              de la taxe d&apos;habitation (résidences principales) en 2023.
+            </p>
+            <p>
+              Cet argent finance les <strong className="text-text">collectivités territoriales</strong>,
+              qui dépensent au total <strong className="text-text">~330 Md €/an</strong> (11 % du PIB)
+              pour des services très concrets :
+            </p>
+            <div className="grid sm:grid-cols-3 gap-3">
+              <div className="rounded-xl border border-border bg-surface-alt p-4">
+                <p className="font-semibold text-text mb-2">Communes (60 %)</p>
+                <ul className="space-y-1 text-xs">
+                  <li>Écoles primaires (bâtiments, cantines)</li>
+                  <li>Voirie communale, eau, déchets</li>
+                  <li>Crèches, bibliothèques, piscines</li>
+                  <li>Urbanisme, espaces verts</li>
+                </ul>
+              </div>
+              <div className="rounded-xl border border-border bg-surface-alt p-4">
+                <p className="font-semibold text-text mb-2">Départements (26 %)</p>
+                <ul className="space-y-1 text-xs">
+                  <li>RSA, APA, aide à l&apos;enfance (ASE)</li>
+                  <li>Collèges (bâtiments, équipement)</li>
+                  <li>Routes départementales</li>
+                  <li>Pompiers (SDIS), PMI</li>
+                </ul>
+              </div>
+              <div className="rounded-xl border border-border bg-surface-alt p-4">
+                <p className="font-semibold text-text mb-2">Régions (14 %)</p>
+                <ul className="space-y-1 text-xs">
+                  <li>Lycées (bâtiments, équipement)</li>
+                  <li>TER et transports interurbains</li>
+                  <li>Formation professionnelle</li>
+                  <li>Développement économique</li>
+                </ul>
+              </div>
+            </div>
+            <p>
+              Ces dépenses ne sont <strong className="text-text">pas incluses dans notre outil</strong> car
+              la taxe foncière varie considérablement d&apos;une commune à l&apos;autre (le taux va du simple
+              au quadruple) et dépend de la valeur locative cadastrale de votre bien.
+              On ne peut pas estimer votre taxe foncière à partir de votre seul salaire.
+            </p>
+            <p className="text-xs text-text-muted/70 italic">
+              Sources : DGCL « Les collectivités locales en chiffres 2025 » (collectivites-locales.gouv.fr) ;
+              DGFiP Statistiques n° 34, taxe foncière 2024 (impots.gouv.fr) ;
+              FIPECO « Ce que les collectivités locales ont fait de notre argent en 2024 » (fipeco.fr).
+            </p>
+          </div>
+        </Section>
+
         {/* Primary Sources */}
         <Section title="Sources primaires" icon={BookOpen}>
           <div className="space-y-2">
@@ -406,6 +555,47 @@ export default function AProposPage() {
             {SECONDARY_SOURCES.map((source) => (
               <SourceCard key={source.name} source={source} />
             ))}
+          </div>
+        </Section>
+
+        {/* Equivalence Sources */}
+        <Section title="Sources des équivalences" icon={Equal}>
+          <div className="bg-white rounded-2xl border border-border p-6 text-sm leading-relaxed text-text-muted space-y-4">
+            <p>
+              Chaque secteur affiche une <strong className="text-text">équivalence concrète</strong> pour
+              rendre les montants tangibles. Voici les prix unitaires utilisés et leurs sources :
+            </p>
+            <div className="overflow-x-auto -mx-2">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2 px-2 font-semibold text-text">Secteur</th>
+                    <th className="text-left py-2 px-2 font-semibold text-text">Équivalence</th>
+                    <th className="text-right py-2 px-2 font-semibold text-text">Valeur</th>
+                    <th className="text-left py-2 px-2 font-semibold text-text">Source</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {EQUIVALENCE_SOURCES.map((eq) => (
+                    <tr key={eq.sector} className="border-b border-border/50 last:border-0">
+                      <td className="py-2.5 px-2 font-medium text-text whitespace-nowrap">{eq.sector}</td>
+                      <td className="py-2.5 px-2">{eq.equivalence}</td>
+                      <td className="py-2.5 px-2 text-right font-mono whitespace-nowrap">{eq.value}</td>
+                      <td className="py-2.5 px-2">
+                        <a
+                          href={eq.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:text-text"
+                        >
+                          {eq.source}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </Section>
 

@@ -47,13 +47,13 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 
 - Ventilation des cotisations par caisse : CNAV, AGIRC-ARRCO, CNAM, CNAF, CNSA, CADES, FSV
 - Répartition de la CSG entre organismes selon l'article [L136-8 du CSS](https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173099)
-- Équivalences concrètes : combien de mois de pension moyenne, de jours d'allocation, d'heures d'EHPAD vos cotisations financent
+- Équivalences concrètes : mois de pension moyenne (DREES), consultations généraliste (ameli.fr), allocations familiales journalières (service-public.gouv.fr)
 
 ### Circuit 2 : budget de l'État
 
 - Répartition de votre IR + TVA estimée par secteur (12 secteurs agrégés à partir des 32 missions de la LFI)
 - Drill-down par programme : chaque secteur s'ouvre pour montrer les programmes budgétaires qui le composent (données PLF 2025)
-- Équivalences : combien de secondes de dette publique, de mètres d'autoroute, de jours d'école
+- Équivalences : jours d'école d'un élève (DEPP), secondes d'intérêts de la dette (LFI 2026), heures de vol Rafale (Sénat), jours de détention (Sénat PLF 2026), heures de chercheur CNRS (Cour des comptes)
 
 ### Glossaire
 
@@ -83,7 +83,7 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 - **TVA estimée, pas calculée** — La TVA dépend des habitudes de consommation. On estime la consommation à partir du net (après épargne par tranche INSEE), puis on applique un taux effectif moyen de 12,5% (DGFiP).
 - **Revenus non-salariaux** — Revenus fonciers, dividendes, plus-values (PFU/flat tax), BIC/BNC.
 - **Niches fiscales** — Réductions et crédits d'impôt (Pinel, dons, emploi à domicile).
-- **Impôts locaux** — Taxe foncière, ancienne taxe d'habitation, CFE.
+- **Impôts locaux** — Taxe foncière (moy. 1 082 €/an par propriétaire, [DGFiP 2024](https://www.impots.gouv.fr/dgfip-statistiques-une-hausse-de-la-taxe-fonciere-en-2024-entrainee-par-lindexation-sur-linflation)), ancienne taxe d'habitation (résidences secondaires), CFE. Les collectivités dépensent ~330 Md €/an pour les services de proximité (écoles, routes, crèches, RSA, TER). Voir l'encadré dédié dans [Sources & Méthodologie](/a-propos).
 - **Taxes spécifiques** — TICPE (carburants), droits de succession, ISF/IFI.
 - **Situations complexes** — Garde alternée, invalidité, ancien combattant.
 
@@ -138,6 +138,24 @@ Toutes les données proviennent de **sources officielles** et sont traçables. C
 | Épargne des ménages | [Banque de France — T4 2024](https://www.banque-france.fr/fr/statistiques/epargne/epargne-des-menages-2024-q4) | 2024 |
 | Consommation par quintile | [INSEE Première n°1749 (BDF 2017)](https://www.insee.fr/fr/statistiques/4127596) | 2017 |
 | Taux de TVA | [economie.gouv.fr](https://www.economie.gouv.fr/particuliers/impots-et-fiscalite/gerer-mes-autres-impots-et-taxes/tva-quels-sont-les-taux-de-votre-quotidien) | 2026 |
+
+### Sources des équivalences
+
+Chaque secteur affiche une équivalence concrète pour rendre les montants tangibles. Toutes sont sourcées depuis des publications institutionnelles :
+
+| Équivalence | Valeur | Source |
+|-------------|--------|--------|
+| Jours d'école d'un élève | 56 €/jour | [DEPP Note n° 25.52, sept. 2025](https://www.education.gouv.fr/en-2024-1971-milliards-d-euros-consacres-l-education-soit-68-du-pib-451458) — 9 130 €/an ÷ 162 jours |
+| Heures de vol Rafale | 20 000 €/h | [Audition gén. Mille, Sénat, 7 nov. 2023](https://www.senat.fr/compte-rendu-commissions/20231106/etr.html) |
+| Consultations généraliste | 30 € | [Convention médicale 2024-2029](https://www.ameli.fr/medecin/exercice-liberal/facturation-remuneration/consultations-actes/tarifs-consultations) |
+| Mois de pension moyenne | 1 666 €/mois | [DREES « Les retraités et les retraites » éd. 2025](https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites) |
+| Jours de détention | 128 €/jour | [Sénat, Avis n° 145 PLF 2026, prog. 107](https://www.senat.fr/rap/a25-145-6/a25-145-66.html) |
+| Heures de patrouille police | 49 €/h | [Sénat, PLF 2026, prog. 176](https://www.senat.fr/rap/l25-139-328-1/l25-139-328-16.html) — 12,09 Md € ÷ 153 285 ETPT ÷ 1 607 h |
+| Heures de chercheur CNRS | 56 €/h | [Cour des comptes, rapport CNRS mars 2025](https://www.ccomptes.fr/fr/publications/le-centre-national-de-la-recherche-scientifique-cnrs) + [MESRI EESR fiche n° 18](https://publication.enseignementsup-recherche.gouv.fr/eesr/FR/T512/les_salaires_des_personnels_des_epscp_et_des_epst/) |
+| Repas distribués par le PAM | 0,70 € | [WFP ShareTheMeal](https://innovation.wfp.org/project/sharethemeal) — coût opérationnel US$ 0.80 |
+| Allocations familiales /jour | 5,04 €/jour | [service-public.gouv.fr — barème 2026](https://www.service-public.gouv.fr/particuliers/vosdroits/F13213) |
+| Entrées au Louvre | 22 € | [louvre.fr — tarifs 2026](https://www.louvre.fr/informations-pratiques/tarifs) |
+| Secondes de dette publique | 1 880 €/s | [LFI 2026, prog. 117](https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026) — 59,3 Md € ÷ 31,5 M secondes |
 
 ### Chiffres clés utilisés
 
