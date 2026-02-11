@@ -56,7 +56,7 @@ export default function HomePage() {
           </span>
           <span className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-social" />
-            Calculs côté client, aucune donnée collectée
+            Calculs côté client, aucun salaire collecté
           </span>
         </div>
       </ScrollReveal>

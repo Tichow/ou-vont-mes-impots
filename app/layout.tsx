@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AnalyticsProvider } from "@/components/shared/AnalyticsProvider";
 import "./globals.css";
 
 const figtree = Figtree({
@@ -21,7 +23,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={figtree.variable}>
-      <body className="min-h-screen bg-surface antialiased">{children}</body>
+      <body className="min-h-screen bg-surface antialiased">
+        {children}
+        <AnalyticsProvider />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
