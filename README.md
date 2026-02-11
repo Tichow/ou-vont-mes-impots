@@ -12,7 +12,7 @@ Projet personnel à visée pédagogique : une application web interactive pour c
 
 Chaque salarié français voit des dizaines de lignes de prélèvements sur sa fiche de paie. Cotisations sociales, CSG, CRDS, impôt sur le revenu... **Personne ne sait où va cet argent.**
 
-Les outils existants sont soit trop génériques, soit illisibles (tableaux PDF ministériels), soit — plus grave — ils mélangent cotisations sociales et impôts dans un seul pot. Ce raccourci est trompeur : vos cotisations retraite ne financent pas la défense.
+Les outils existants sont soit trop génériques, soit illisibles (tableaux PDF ministériels), soit, plus grave, ils mélangent cotisations sociales et impôts dans un seul pot. Ce raccourci est trompeur : vos cotisations retraite ne financent pas la défense.
 
 ## L'approche : deux circuits distincts
 
