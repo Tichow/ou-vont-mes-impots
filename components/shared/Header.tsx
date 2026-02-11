@@ -55,9 +55,7 @@ function HeaderInner() {
                 className={`text-sm px-3 py-1.5 rounded-full transition-colors ${
                   isActive
                     ? "font-semibold text-primary bg-primary/10"
-                    : link.href === "/a-propos"
-                      ? "font-medium text-primary hover:bg-primary/5"
-                      : "text-text-muted hover:text-text hover:bg-surface-alt"
+                    : "text-text-muted hover:text-text hover:bg-surface-alt"
                 }`}
               >
                 {link.label}
