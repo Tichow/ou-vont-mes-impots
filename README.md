@@ -119,7 +119,7 @@ La page [À propos](app/a-propos/page.tsx) documente :
 
 La conception du projet — le choix de l'angle éditorial, la recherche des données officielles, la vérification des calculs fiscaux contre les simulateurs de l'État, et les décisions d'architecture — est entièrement de moi.
 
-La **grande majorité du code** a été écrite avec l'aide de [Claude Code](https://claude.ai/claude-code) (Opus 4.6), l'outil CLI d'Anthropic. Un cas concret d'AI-assisted development : un développeur qui pilote l'architecture et valide chaque chiffre, un LLM qui exécute rapidement.
+La **grande majorité du code** a été écrite avec l'aide de [Claude Code](https://claude.com/product/claude-code) (Opus 4.6), l'outil CLI d'Anthropic. Un cas concret d'AI-assisted development : un développeur qui pilote l'architecture et valide chaque chiffre, un LLM qui exécute rapidement.
 
 ## Licence
 
