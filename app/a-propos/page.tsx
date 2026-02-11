@@ -27,31 +27,43 @@ const PRIMARY_SOURCES: SourceItem[] = [
       "Répartition officielle des dépenses de l'État par mission et programme. Base de nos pourcentages budgétaires.",
   },
   {
-    name: "data.gouv.fr — Budget de l'État",
-    url: "https://www.data.gouv.fr/fr/datasets/budget-de-letat/",
+    name: "data.gouv.fr — PLF 2025 dépenses",
+    url: "https://www.data.gouv.fr/fr/datasets/plf-2025-depenses-2025-selon-destination/",
     description:
-      "Jeux de données ouverts du PLF/LFI. Licence Ouverte 2.0.",
+      "Jeux de données ouverts du PLF 2025 — dépenses selon destination. Licence Ouverte 2.0.",
   },
   {
-    name: "URSSAF — Taux de cotisations",
-    url: "https://www.urssaf.fr/accueil/taux-baremes.html",
+    name: "URSSAF — Taux de cotisations 2025",
+    url: "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html",
     description:
-      "Taux officiels 2025 des cotisations sociales : CSG, CRDS, vieillesse, retraite complémentaire AGIRC-ARRCO.",
+      "Taux officiels 2025 des cotisations sociales salariales : CSG, CRDS, vieillesse, retraite complémentaire AGIRC-ARRCO.",
   },
   {
-    name: "impots.gouv.fr — Barème IR 2025",
-    url: "https://www.impots.gouv.fr/particulier/questions/comment-est-calcule-limpot-sur-les-revenus",
+    name: "service-public.gouv.fr — Barème IR 2025",
+    url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419",
     description:
-      "Barème progressif de l'impôt sur le revenu (revenus 2024), abattement forfaitaire de 10%, quotient familial.",
+      "Barème progressif de l'impôt sur le revenu 2025 (revenus 2024), abattement forfaitaire de 10%, quotient familial.",
+  },
+  {
+    name: "LFSS 2025 — Sécurité sociale",
+    url: "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours",
+    description:
+      "Objectifs de dépenses par branche (maladie/ONDAM, vieillesse, famille). Base des répartitions santé et retraites.",
   },
 ];
 
 const SECONDARY_SOURCES: SourceItem[] = [
   {
-    name: "OCDE Revenue Statistics",
-    url: "https://stats.oecd.org/Index.aspx?DataSetCode=REV",
+    name: "OCDE — Taxing Wages 2024",
+    url: "https://www.oecd.org/en/publications/2024/04/taxing-wages-2024_f869da31.html",
     description:
-      "Statistiques fiscales comparatives internationales (coin fiscal, recettes/PIB). Données 2023.",
+      "Coin fiscal par pays (données 2023). Décomposition IR / cotisations salarié / cotisations employeur.",
+  },
+  {
+    name: "OCDE — Revenue Statistics 2024",
+    url: "https://www.oecd.org/en/publications/revenue-statistics-2024_c87a3da5-en.html",
+    description:
+      "Recettes fiscales en % du PIB par pays (données 2022). Base de la comparaison internationale.",
   },
   {
     name: "Eurostat — Government revenue",
@@ -61,9 +73,9 @@ const SECONDARY_SOURCES: SourceItem[] = [
   },
   {
     name: "INSEE — Comptes nationaux",
-    url: "https://www.insee.fr/fr/statistiques",
+    url: "https://www.insee.fr/fr/statistiques/2830252",
     description:
-      "Données macroéconomiques (PIB, taux d'épargne, consommation des ménages) utilisées pour l'estimation de la TVA.",
+      "Comptes nationaux annuels (PIB, taux d'épargne, consommation des ménages) utilisés pour l'estimation de la TVA.",
   },
 ];
 
@@ -87,7 +99,7 @@ const SIMPLIFICATIONS: SimplificationItem[] = [
     icon: PieChart,
     title: "TVA estimée, pas calculée",
     detail:
-      "La TVA dépend de vos habitudes de consommation réelles. Nous estimons un taux effectif de ~15.3% basé sur la moyenne nationale (mix de TVA 20%, 10%, 5.5% et 2.1%), avec un taux d'épargne de 15% du revenu disponible.",
+      "La TVA dépend de vos habitudes de consommation réelles. Nous estimons un taux effectif moyen de ~12.5% basé sur la moyenne nationale (mix de TVA à 20%, 10%, 5.5% et 2.1%), avec un taux d'épargne de 15% du revenu disponible (source INSEE).",
     impact:
       "La TVA réelle varie selon le profil : plus de dépenses en alimentation = moins de TVA ; plus de loisirs = plus de TVA.",
   },

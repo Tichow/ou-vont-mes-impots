@@ -229,7 +229,7 @@ export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
       description: sector.description,
       equivalence: {
         description: `= ${formatQuantity(quantity)} ${equiv.item}`,
-        quantity: Math.round(quantity * 10) / 10,
+        quantity: Math.round(quantity * 100) / 100,
         unit: equiv.item,
         unitPrice: equiv.unit_price,
         emoji: equiv.emoji,

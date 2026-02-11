@@ -1,10 +1,14 @@
 {
   "metadata": {
     "source_url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419",
+    "ir_calculation_url": "https://www.impots.gouv.fr/particulier/questions/comment-calculer-mon-taux-dimposition-dapres-le-bareme-progressif-de-limpot",
+    "urssaf_url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html",
+    "pass_url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/plafonds-securite-sociale.html",
+    "agirc_arrco_url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/",
     "law": "LFI 2025 — revalorisation +1.8% (revenus 2024)",
     "year": 2025,
     "fiscal_year_income": 2024,
-    "last_verified": "2026-02-10",
+    "last_verified": "2026-02-11",
     "description": "Barème de l'impôt sur le revenu 2025 et taux de cotisations sociales salariales"
   },
   "income_tax_brackets": [

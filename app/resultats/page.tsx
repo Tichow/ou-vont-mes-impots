@@ -1,13 +1,12 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useMemo, Suspense } from "react";
+import { useMemo, Suspense, useEffect } from "react";
 import Link from "next/link";
 import { Clock, Globe, BookOpen } from "lucide-react";
 import { calculateTaxes } from "@/lib/tax-engine";
 import { SankeyDiagram } from "@/components/breakdown/SankeyDiagram";
-import { TreemapChart } from "@/components/breakdown/TreemapChart";
-import { EquivalenceCards } from "@/components/breakdown/EquivalenceCards";
+import { BudgetBreakdown } from "@/components/breakdown/BudgetBreakdown";
 import { SummaryCards } from "@/components/breakdown/SummaryCards";
 import { TaxBreakdownTable } from "@/components/breakdown/TaxBreakdownTable";
 import { HistoryTimeline } from "@/components/comparison/HistoryTimeline";
@@ -27,22 +26,42 @@ function ResultsContent() {
 
   const result = useMemo(() => calculateTaxes(input), [input]);
 
-  const handleShare = async () => {
-    const text = `Je paie ${Math.round(result.totalTaxes)}€ de prélèvements par an. Mes impôts financent ${result.budgetAllocation[0]?.equivalence.description}. Découvre où vont les tiens :`;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "Où Vont Mes Impôts", text, url: window.location.href });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      await navigator.clipboard.writeText(`${text} ${window.location.href}`);
+  // Dynamic OG meta tags (client-side update for share crawlers that execute JS)
+  useEffect(() => {
+    const salary = Math.round(result.input.grossAnnualSalary);
+    const total = Math.round(result.totalTaxes);
+    const net = Math.round(result.netTakeHome);
+    const top5 = result.budgetAllocation
+      .sort((a, b) => b.amount - a.amount)
+      .slice(0, 5)
+      .map((s) => `${s.name},${Math.round(s.amount)},${s.id}`)
+      .map((s, i) => `s${i + 1}=${encodeURIComponent(s)}`)
+      .join("&");
+
+    const ogUrl = `/api/og?salary=${salary}&total=${total}&net=${net}&${top5}`;
+
+    // Update OG image meta tag
+    let ogMeta = document.querySelector('meta[property="og:image"]');
+    if (!ogMeta) {
+      ogMeta = document.createElement("meta");
+      ogMeta.setAttribute("property", "og:image");
+      document.head.appendChild(ogMeta);
     }
-  };
+    ogMeta.setAttribute("content", `${window.location.origin}${ogUrl}`);
+
+    // Update OG description
+    let ogDesc = document.querySelector('meta[property="og:description"]');
+    if (!ogDesc) {
+      ogDesc = document.createElement("meta");
+      ogDesc.setAttribute("property", "og:description");
+      document.head.appendChild(ogDesc);
+    }
+    ogDesc.setAttribute("content", `Sur ${salary.toLocaleString("fr-FR")} € brut, je paie ${total.toLocaleString("fr-FR")} € de prélèvements. Découvre où vont les tiens !`);
+  }, [result]);
 
   return (
     <main className="min-h-screen bg-surface-alt">
-      <Header variant="results" onShare={handleShare} />
+      <Header variant="results" />
 
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-16 md:space-y-20">
         {/* Page title */}
@@ -60,7 +79,7 @@ function ResultsContent() {
           <SummaryCards result={result} />
         </section>
 
-        {/* Sankey */}
+        {/* Sankey premium */}
         <section>
           <ScrollReveal variant="fade-up">
             <h2 className="text-2xl font-bold text-text mb-6 heading-tight">
@@ -74,31 +93,17 @@ function ResultsContent() {
           </ScrollReveal>
         </section>
 
-        {/* Treemap */}
-        <section>
-          <ScrollReveal variant="fade-up">
-            <h2 className="text-2xl font-bold text-text mb-6 heading-tight">
-              Répartition par secteur
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal variant="scale" delay={0.1}>
-            <div className="rounded-3xl border border-border bg-white p-6">
-              <TreemapChart sectors={result.budgetAllocation} totalTaxes={result.totalTaxes} />
-            </div>
-          </ScrollReveal>
-        </section>
-
-        {/* Equivalences */}
+        {/* Budget Breakdown (fusion treemap + equivalences) */}
         <section>
           <ScrollReveal variant="fade-up">
             <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
-              En concret, ça donne quoi ?
+              Où va ton argent
             </h2>
             <p className="text-text-muted mb-6 text-sm">
-              Tes impôts traduits en choses du quotidien.
+              Chaque secteur de dépense, avec son équivalent concret.
             </p>
           </ScrollReveal>
-          <EquivalenceCards sectors={result.budgetAllocation} />
+          <BudgetBreakdown sectors={result.budgetAllocation} totalTaxes={result.totalTaxes} />
         </section>
 
         {/* Detailed breakdown */}

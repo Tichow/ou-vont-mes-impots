@@ -53,11 +53,12 @@ Toutes les données proviennent de **sources officielles françaises** :
 
 | Donnée | Source |
 |--------|--------|
-| Barème IR 2025 | [impots.gouv.fr](https://www.impots.gouv.fr) |
-| Cotisations sociales | [URSSAF](https://www.urssaf.fr/accueil/taux-baremes.html) |
-| Budget de l'État | [data.gouv.fr — PLF 2025](https://www.data.gouv.fr/fr/datasets/budget-de-letat/) |
-| Répartition par mission | [budget.gouv.fr](https://www.budget.gouv.fr) |
-| Comparaison internationale | [OCDE Revenue Statistics](https://stats.oecd.org), [Eurostat](https://ec.europa.eu/eurostat) |
+| Barème IR 2025 | [service-public.gouv.fr](https://www.service-public.gouv.fr/particuliers/vosdroits/F1419) |
+| Cotisations sociales | [URSSAF — Taux cotisations 2025](https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html) |
+| Budget de l'État | [data.gouv.fr — PLF 2025](https://www.data.gouv.fr/fr/datasets/plf-2025-depenses-2025-selon-destination/) |
+| Répartition par mission | [budget.gouv.fr](https://www.budget.gouv.fr/budget-etat) |
+| Sécurité sociale | [securite-sociale.fr — LFSS 2025](https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/annee-en-cours) |
+| Comparaison internationale | [OCDE Taxing Wages 2024](https://www.oecd.org/en/publications/2024/04/taxing-wages-2024_f869da31.html), [Eurostat](https://ec.europa.eu/eurostat) |
 
 Les calculs sont validés par **24 tests unitaires** qui vérifient la cohérence avec les simulateurs officiels.
 

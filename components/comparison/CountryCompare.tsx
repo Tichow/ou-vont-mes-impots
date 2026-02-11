@@ -271,7 +271,7 @@ export function CountryCompare() {
 
       {/* Source */}
       <p className="text-[10px] text-text-muted/60 text-center">
-        Source : OCDE Revenue Statistics {countriesData.metadata.year} · Données pour un célibataire
+        Source : OCDE Taxing Wages 2024 (données {countriesData.metadata.year_tax_wedge}) · Célibataire
         sans enfant au salaire moyen
       </p>
     </div>

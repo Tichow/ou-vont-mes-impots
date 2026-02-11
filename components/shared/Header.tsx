@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BarChart3, ArrowLeft, Share2, Github } from "lucide-react";
+import { BarChart3, ArrowLeft, Github } from "lucide-react";
+import { ShareMenu } from "@/components/shared/ShareMenu";
 
 type Props = {
   variant?: "landing" | "results" | "about";
-  onShare?: () => void;
 };
 
-export function Header({ variant = "landing", onShare }: Props) {
+export function Header({ variant = "landing" }: Props) {
   const router = useRouter();
 
   return (
@@ -56,15 +56,7 @@ export function Header({ variant = "landing", onShare }: Props) {
             <Github size={20} />
           </a>
         )}
-        {variant === "results" && onShare && (
-          <button
-            onClick={onShare}
-            className="flex items-center gap-1.5 text-sm bg-primary text-white px-4 py-2 rounded-full hover:bg-primary-dark transition-colors flex-shrink-0 font-medium"
-          >
-            <Share2 size={14} />
-            <span className="hidden sm:inline">Partager</span>
-          </button>
-        )}
+        {variant === "results" && <ShareMenu />}
         {variant === "about" && <div className="w-16" />}
       </nav>
     </header>
