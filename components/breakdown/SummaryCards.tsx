@@ -1,7 +1,6 @@
 "use client";
 
 import { Receipt, Wallet, TrendingDown, ShoppingCart } from "lucide-react";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { formatEuros, formatPercent } from "@/lib/formatting";
 import type { TaxResult } from "@/lib/types";
 
@@ -63,33 +62,27 @@ const cards: CardDef[] = [
 export function SummaryCards({ result }: Props) {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {cards.map((card, i) => (
-        <ScrollReveal
-          key={card.key}
-          variant="fade-up"
-          delay={i * 0.08}
-        >
-          <div className="glass-card rounded-2xl p-5 relative overflow-hidden h-full">
-            {/* Left accent bar */}
-            <div className={`absolute top-0 left-0 bottom-0 w-1 ${card.accentColor}`} />
+      {cards.map((card) => (
+        <div key={card.key} className="glass-card rounded-2xl p-5 relative overflow-hidden h-full">
+          {/* Left accent bar */}
+          <div className={`absolute top-0 left-0 bottom-0 w-1 ${card.accentColor}`} />
 
-            {card.note && (
-              <span className="absolute top-3 right-3 text-[10px] font-medium text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
-                {card.note}
-              </span>
-            )}
-            <div className="flex items-center gap-2 mb-3 pl-2">
-              <card.icon size={18} className={card.color} />
-              <span className="text-sm text-text-muted">{card.label}</span>
-            </div>
-            <p className={`text-2xl md:text-3xl font-bold pl-2 ${card.color}`}>
-              {card.getValue(result)}
-            </p>
-            <p className="text-xs text-text-muted mt-1.5 pl-2">
-              {card.getSub(result)}
-            </p>
+          {card.note && (
+            <span className="absolute top-3 right-3 text-[10px] font-medium text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
+              {card.note}
+            </span>
+          )}
+          <div className="flex items-center gap-2 mb-3 pl-2">
+            <card.icon size={18} className={card.color} />
+            <span className="text-sm text-text-muted">{card.label}</span>
           </div>
-        </ScrollReveal>
+          <p className={`text-2xl md:text-3xl font-bold pl-2 ${card.color}`}>
+            {card.getValue(result)}
+          </p>
+          <p className="text-xs text-text-muted mt-1.5 pl-2">
+            {card.getSub(result)}
+          </p>
+        </div>
       ))}
     </div>
   );

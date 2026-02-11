@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useMemo, Suspense, useEffect } from "react";
+import { useMemo, Suspense } from "react";
 import Link from "next/link";
 import { Clock, Globe, BookOpen } from "lucide-react";
 import { calculateTaxes } from "@/lib/tax-engine";
@@ -12,7 +12,6 @@ import { TaxBreakdownTable } from "@/components/breakdown/TaxBreakdownTable";
 import { HistoryTimeline } from "@/components/comparison/HistoryTimeline";
 import { CountryCompare } from "@/components/comparison/CountryCompare";
 import { Header } from "@/components/shared/Header";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import type { UserInput } from "@/lib/types";
 
 function ResultsContent() {
@@ -26,141 +25,90 @@ function ResultsContent() {
 
   const result = useMemo(() => calculateTaxes(input), [input]);
 
-  // Dynamic OG meta tags (client-side update for share crawlers that execute JS)
-  useEffect(() => {
-    const salary = Math.round(result.input.grossAnnualSalary);
-    const total = Math.round(result.totalTaxes);
-    const net = Math.round(result.netTakeHome);
-    const top5 = result.budgetAllocation
-      .sort((a, b) => b.amount - a.amount)
-      .slice(0, 5)
-      .map((s) => `${s.name},${Math.round(s.amount)},${s.id}`)
-      .map((s, i) => `s${i + 1}=${encodeURIComponent(s)}`)
-      .join("&");
-
-    const ogUrl = `/api/og?salary=${salary}&total=${total}&net=${net}&${top5}`;
-
-    // Update OG image meta tag
-    let ogMeta = document.querySelector('meta[property="og:image"]');
-    if (!ogMeta) {
-      ogMeta = document.createElement("meta");
-      ogMeta.setAttribute("property", "og:image");
-      document.head.appendChild(ogMeta);
-    }
-    ogMeta.setAttribute("content", `${window.location.origin}${ogUrl}`);
-
-    // Update OG description
-    let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (!ogDesc) {
-      ogDesc = document.createElement("meta");
-      ogDesc.setAttribute("property", "og:description");
-      document.head.appendChild(ogDesc);
-    }
-    ogDesc.setAttribute("content", `Sur ${salary.toLocaleString("fr-FR")} € brut, je paie ${total.toLocaleString("fr-FR")} € de prélèvements. Découvre où vont les tiens !`);
-  }, [result]);
-
   return (
     <main className="min-h-screen bg-surface-alt">
       <Header variant="results" />
 
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-16 md:space-y-20">
         {/* Page title */}
-        <ScrollReveal variant="fade-up">
+        <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">
             Tes résultats
           </h1>
           <p className="text-text-muted mt-2 text-lg">
             Voici où vont tes prélèvements, euro par euro.
           </p>
-        </ScrollReveal>
+        </div>
 
         {/* Summary cards */}
         <section>
           <SummaryCards result={result} />
         </section>
 
-        {/* Sankey premium */}
+        {/* Sankey */}
         <section>
-          <ScrollReveal variant="fade-up">
-            <h2 className="text-2xl font-bold text-text mb-6 heading-tight">
-              Le trajet de ton argent
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal variant="scale" delay={0.1}>
-            <div className="rounded-3xl border border-border bg-white p-6 overflow-hidden">
-              <SankeyDiagram result={result} />
-            </div>
-          </ScrollReveal>
+          <h2 className="text-2xl font-bold text-text mb-6 heading-tight">
+            Le trajet de ton argent
+          </h2>
+          <div className="rounded-3xl border border-border bg-white p-4 md:p-6 overflow-hidden">
+            <SankeyDiagram result={result} />
+          </div>
         </section>
 
-        {/* Budget Breakdown (fusion treemap + equivalences) */}
+        {/* Budget Breakdown */}
         <section>
-          <ScrollReveal variant="fade-up">
-            <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
-              Où va ton argent
-            </h2>
-            <p className="text-text-muted mb-6 text-sm">
-              Chaque secteur de dépense, avec son équivalent concret.
-            </p>
-          </ScrollReveal>
+          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+            Où va ton argent
+          </h2>
+          <p className="text-text-muted mb-6 text-sm">
+            Chaque secteur de dépense, avec son équivalent concret.
+          </p>
           <BudgetBreakdown sectors={result.budgetAllocation} totalTaxes={result.totalTaxes} />
         </section>
 
         {/* Detailed breakdown */}
         <section>
-          <ScrollReveal variant="fade-up">
-            <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
-              Détail de ta fiche de paie
-            </h2>
-            <p className="text-text-muted mb-6 text-sm">
-              Chaque ligne de cotisation, de ton brut à ton net.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal variant="fade-up" delay={0.1}>
-            <div className="rounded-3xl border border-border bg-white p-6">
-              <TaxBreakdownTable result={result} />
-            </div>
-          </ScrollReveal>
+          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+            Détail de ta fiche de paie
+          </h2>
+          <p className="text-text-muted mb-6 text-sm">
+            Chaque ligne de cotisation, de ton brut à ton net.
+          </p>
+          <div className="rounded-3xl border border-border bg-white p-6">
+            <TaxBreakdownTable result={result} />
+          </div>
         </section>
 
         {/* History timeline */}
         <section>
-          <ScrollReveal variant="fade-up">
-            <div className="flex items-center gap-2 mb-2">
-              <Clock size={20} className="text-primary" />
-              <h2 className="text-2xl font-bold text-text heading-tight">
-                Évolution du budget (2015-2025)
-              </h2>
-            </div>
-            <p className="text-text-muted mb-6 text-sm">
-              Comment la répartition des dépenses a changé en 10 ans.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal variant="fade-up" delay={0.1}>
-            <div className="rounded-3xl border border-border bg-white p-6">
-              <HistoryTimeline />
-            </div>
-          </ScrollReveal>
+          <div className="flex items-center gap-2 mb-2">
+            <Clock size={20} className="text-primary" />
+            <h2 className="text-2xl font-bold text-text heading-tight">
+              Évolution du budget (2015-2025)
+            </h2>
+          </div>
+          <p className="text-text-muted mb-6 text-sm">
+            Comment la répartition des dépenses a changé en 10 ans.
+          </p>
+          <div className="rounded-3xl border border-border bg-white p-6">
+            <HistoryTimeline />
+          </div>
         </section>
 
         {/* Country comparison */}
         <section>
-          <ScrollReveal variant="fade-up">
-            <div className="flex items-center gap-2 mb-2">
-              <Globe size={20} className="text-primary" />
-              <h2 className="text-2xl font-bold text-text heading-tight">
-                La France face au monde
-              </h2>
-            </div>
-            <p className="text-text-muted mb-6 text-sm">
-              Comparaison internationale des prélèvements obligatoires.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal variant="fade-up" delay={0.1}>
-            <div className="rounded-3xl border border-border bg-white p-6">
-              <CountryCompare />
-            </div>
-          </ScrollReveal>
+          <div className="flex items-center gap-2 mb-2">
+            <Globe size={20} className="text-primary" />
+            <h2 className="text-2xl font-bold text-text heading-tight">
+              La France face au monde
+            </h2>
+          </div>
+          <p className="text-text-muted mb-6 text-sm">
+            Comparaison internationale des prélèvements obligatoires.
+          </p>
+          <div className="rounded-3xl border border-border bg-white p-6">
+            <CountryCompare />
+          </div>
         </section>
 
         {/* Disclaimer */}

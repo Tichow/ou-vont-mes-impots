@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BarChart3, ArrowLeft, Github } from "lucide-react";
-import { ShareMenu } from "@/components/shared/ShareMenu";
 
 type Props = {
   variant?: "landing" | "results" | "about";
@@ -56,8 +55,7 @@ export function Header({ variant = "landing" }: Props) {
             <Github size={20} />
           </a>
         )}
-        {variant === "results" && <ShareMenu />}
-        {variant === "about" && <div className="w-16" />}
+        {variant !== "landing" && <div className="w-10" />}
       </nav>
     </header>
   );

@@ -8,7 +8,6 @@ import {
   type SankeyNode as D3SankeyNode,
   type SankeyLink as D3SankeyLink,
 } from "d3-sankey";
-import { motion } from "motion/react";
 import type { TaxResult } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
 
@@ -23,7 +22,6 @@ type Props = {
 
 const NODE_WIDTH = 24;
 const NODE_PADDING = 20;
-const LINK_EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
 type TooltipData = {
   x: number;
@@ -165,8 +163,8 @@ export function SankeyDiagram({ result }: Props) {
 
   const graph = useMemo(() => {
     const { nodes, links } = buildGraph(result);
-    // Responsive margins: smaller on mobile
-    const sideMargin = dimensions.width < 500 ? 90 : dimensions.width < 700 ? 140 : 180;
+    // Responsive margins for labels
+    const sideMargin = dimensions.width < 500 ? 60 : dimensions.width < 700 ? 90 : 110;
     const margin = { top: 24, right: sideMargin, bottom: 24, left: sideMargin };
 
     const sankeyGenerator = d3Sankey<SNodeExtra, SLinkExtra>()
@@ -271,7 +269,7 @@ export function SankeyDiagram({ result }: Props) {
             const path = linkPath(link as never);
             if (!path) return null;
             return (
-              <motion.path
+              <path
                 key={i}
                 d={path}
                 fill="none"
@@ -281,9 +279,6 @@ export function SankeyDiagram({ result }: Props) {
                 onMouseEnter={(e) => handleLinkHover(i, e)}
                 onMouseMove={(e) => handleLinkHover(i, e)}
                 onMouseLeave={handleMouseLeave}
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.8, delay: i * 0.04, ease: LINK_EASE }}
                 className="cursor-pointer transition-[stroke-opacity] duration-200"
               />
             );
@@ -306,11 +301,8 @@ export function SankeyDiagram({ result }: Props) {
             const labelGap = isMobile ? 6 : 10;
 
             return (
-              <motion.g
+              <g
                 key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 + i * 0.05 }}
                 onMouseEnter={(e) => handleNodeHover(i, e)}
                 onMouseMove={(e) => handleNodeHover(i, e)}
                 onMouseLeave={handleMouseLeave}
@@ -348,7 +340,7 @@ export function SankeyDiagram({ result }: Props) {
                 >
                   {formatEuros(extra.amount)}
                 </text>
-              </motion.g>
+              </g>
             );
           })}
         </g>

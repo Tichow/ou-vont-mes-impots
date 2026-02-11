@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown } from "lucide-react";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import type { BudgetSector } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
 
@@ -24,15 +23,13 @@ export function BudgetBreakdown({ sectors, totalTaxes }: Props) {
 
   return (
     <div className="space-y-3">
-      {mainSectors.map((sector, i) => (
-        <ScrollReveal key={sector.id} variant="fade-up" delay={0.05 + i * 0.04}>
-          <SectorRow sector={sector} maxAmount={maxAmount} totalTaxes={totalTaxes} />
-        </ScrollReveal>
+      {mainSectors.map((sector) => (
+        <SectorRow key={sector.id} sector={sector} maxAmount={maxAmount} totalTaxes={totalTaxes} />
       ))}
 
       {/* "Autres" expandable group */}
       {smallSectors.length > 0 && (
-        <ScrollReveal variant="fade-up" delay={0.05 + mainSectors.length * 0.04}>
+        <div>
           <button
             onClick={() => setShowOthers((prev) => !prev)}
             className="w-full group"
@@ -81,7 +78,7 @@ export function BudgetBreakdown({ sectors, totalTaxes }: Props) {
               </motion.div>
             )}
           </AnimatePresence>
-        </ScrollReveal>
+        </div>
       )}
     </div>
   );
