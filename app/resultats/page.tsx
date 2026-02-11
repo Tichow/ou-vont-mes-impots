@@ -23,6 +23,7 @@ function ResultsContent() {
     grossAnnualSalary: Number(searchParams.get("salary")) || 35_000,
     familyStatus: (searchParams.get("status") as "single" | "couple") || "single",
     numberOfChildren: Number(searchParams.get("children")) || 0,
+    partnerGrossAnnualSalary: Number(searchParams.get("partnerSalary")) || 0,
   }), [searchParams]);
 
   const result = useMemo(() => calculateTaxes(input), [input]);
@@ -46,6 +47,12 @@ function ResultsContent() {
             vos cotisations financent directement votre <span className="text-social font-medium">protection sociale</span>,
             tandis que vos impôts alimentent le <span className="text-primary font-medium">budget général de l&apos;État</span>.
           </p>
+          {input.familyStatus === "couple" && input.partnerGrossAnnualSalary > 0 && (
+            <p className="text-sm text-text-muted mt-2 bg-primary/5 border border-primary/20 rounded-xl px-4 py-2">
+              Calcul pour un foyer fiscal de 2 déclarants (votre revenu + celui de votre conjoint).
+              Les montants ci-dessous concernent <strong className="text-text">votre part</strong>.
+            </p>
+          )}
         </div>
 
         {/* Summary cards */}
@@ -238,6 +245,7 @@ function ResultsContent() {
                 salary: input.grossAnnualSalary.toString(),
                 status: input.familyStatus,
                 children: input.numberOfChildren.toString(),
+                ...(input.partnerGrossAnnualSalary > 0 ? { partnerSalary: input.partnerGrossAnnualSalary.toString() } : {}),
               }).toString()}`}
               className="inline-flex items-center gap-1 underline hover:text-text"
             >

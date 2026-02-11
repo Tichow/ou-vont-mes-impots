@@ -45,11 +45,17 @@ function buildRows(result: TaxResult): RowData[] {
   });
 
   // Income tax
+  const isHouseholdDeclaration =
+    result.input.familyStatus === "couple" && result.input.partnerGrossAnnualSalary > 0;
+  const irSuffix = isHouseholdDeclaration
+    ? ` (TMI ${formatPercent(result.incomeTax.marginalRate, 0)}, votre part)`
+    : ` (TMI ${formatPercent(result.incomeTax.marginalRate, 0)})`;
+
   if (result.incomeTax.amount > 0) {
     rows.push({
       label: "Impôt sur le revenu",
       glossaryId: "ir",
-      suffix: ` (TMI ${formatPercent(result.incomeTax.marginalRate, 0)})`,
+      suffix: irSuffix,
       amount: result.incomeTax.amount,
       rate: formatPercent(result.incomeTax.effectiveRate),
       color: "#3B82F6",
@@ -80,9 +86,16 @@ function buildRows(result: TaxResult): RowData[] {
 export function TaxBreakdownTable({ result }: Props) {
   const rows = buildRows(result);
   const barMax = result.input.grossAnnualSalary * 0.25; // scale bars relative to max ~25%
+  const isHouseholdDeclaration =
+    result.input.familyStatus === "couple" && result.input.partnerGrossAnnualSalary > 0;
 
   return (
     <div className="space-y-1">
+      {isHouseholdDeclaration && (
+        <div className="text-xs text-text-muted bg-primary/5 border border-primary/20 rounded-lg px-3 py-2 mb-2">
+          IR calculé sur le foyer fiscal (revenu imposable combiné : {formatEuros(result.incomeTax.householdNetImposable)})
+        </div>
+      )}
       {rows.map((row, i) => (
         <motion.div
           key={row.label}

@@ -98,6 +98,7 @@ describe("AUDIT: taux effectif global (all salaries × all configs)", () => {
           grossAnnualSalary: salary,
           familyStatus: config.status,
           numberOfChildren: config.children,
+          partnerGrossAnnualSalary: 0,
         });
         const pct = (result.overallTaxRate * 100).toFixed(1) + "%";
         cells.push(pct.padStart(14));
@@ -124,6 +125,7 @@ describe("AUDIT: breakdown détaillé à 35 000 € brut", () => {
         grossAnnualSalary: 35_000,
         familyStatus: config.status,
         numberOfChildren: config.children,
+        partnerGrossAnnualSalary: 0,
       });
 
       console.log(`\n--- ${config.label} (${result.incomeTax.parts} parts) ---`);
@@ -163,8 +165,8 @@ describe("AUDIT: Célib + 1 enfant vs Couple + 0 enfant", () => {
         `Diff: ${single1.amount > couple0.amount ? "Célib+1enf PAIE PLUS +" : "Couple+0enf paie plus +"}${fmt(Math.abs(single1.amount - couple0.amount))}`
       );
 
-      // This documents the issue but doesn't fail — it's expected given current parts formula
-      expect(single1.parts).toBe(1.5);
+      // With parent isolé fix, single+1child now has 2 parts = same as couple+0child
+      expect(single1.parts).toBe(2);
       expect(couple0.parts).toBe(2);
     });
   }
@@ -174,138 +176,51 @@ describe("AUDIT: Célib + 1 enfant vs Couple + 0 enfant", () => {
 // 5. Vérification parts fiscales — détection parent isolé manquant
 // ---------------------------------------------------------------------------
 
-describe("AUDIT: parts fiscales (parent isolé manquant ?)", () => {
-  it("shows current parts vs expected (with parent isolé)", () => {
-    console.log("\n" + "=".repeat(90));
-    console.log("PARTS FISCALES — Actuel vs Attendu (avec règle parent isolé)");
-    console.log("=".repeat(90));
-    console.log(
-      "Config".padEnd(25) +
-      "Parts actuelles".padStart(18) +
-      "Parts attendues*".padStart(20) +
-      "Écart".padStart(10) +
-      "  Note"
-    );
-    console.log("-".repeat(90));
-
+describe("AUDIT: parts fiscales (parent isolé implémenté)", () => {
+  it("all parts match expected values including parent isolé", () => {
     const cases: Array<{
       label: string;
       status: "single" | "couple";
       children: number;
       expectedParts: number;
-      note: string;
     }> = [
-      { label: "Célib, 0 enfant", status: "single", children: 0, expectedParts: 1, note: "OK" },
-      { label: "Célib, 1 enfant", status: "single", children: 1, expectedParts: 2, note: "Parent isolé: +0.5 part (case T)" },
-      { label: "Célib, 2 enfants", status: "single", children: 2, expectedParts: 2.5, note: "Parent isolé: +0.5 part (case T)" },
-      { label: "Célib, 3 enfants", status: "single", children: 3, expectedParts: 3.5, note: "Parent isolé: +0.5 part (case T)" },
-      { label: "Couple, 0 enfant", status: "couple", children: 0, expectedParts: 2, note: "OK" },
-      { label: "Couple, 1 enfant", status: "couple", children: 1, expectedParts: 2.5, note: "OK" },
-      { label: "Couple, 2 enfants", status: "couple", children: 2, expectedParts: 3, note: "OK" },
-      { label: "Couple, 3 enfants", status: "couple", children: 3, expectedParts: 4, note: "OK" },
+      { label: "Célib, 0 enfant", status: "single", children: 0, expectedParts: 1 },
+      { label: "Célib, 1 enfant", status: "single", children: 1, expectedParts: 2 },
+      { label: "Célib, 2 enfants", status: "single", children: 2, expectedParts: 2.5 },
+      { label: "Célib, 3 enfants", status: "single", children: 3, expectedParts: 3.5 },
+      { label: "Couple, 0 enfant", status: "couple", children: 0, expectedParts: 2 },
+      { label: "Couple, 1 enfant", status: "couple", children: 1, expectedParts: 2.5 },
+      { label: "Couple, 2 enfants", status: "couple", children: 2, expectedParts: 3 },
+      { label: "Couple, 3 enfants", status: "couple", children: 3, expectedParts: 4 },
     ];
 
     for (const c of cases) {
       const actual = computeFiscalParts(c.status, c.children);
-      const diff = actual - c.expectedParts;
-      const diffStr = diff === 0 ? "✓" : `${diff > 0 ? "+" : ""}${diff}`;
-      console.log(
-        c.label.padEnd(25) +
-        actual.toString().padStart(18) +
-        c.expectedParts.toString().padStart(20) +
-        diffStr.padStart(10) +
-        "  " + c.note
-      );
+      expect(actual).toBe(c.expectedParts);
     }
-
-    console.log("-".repeat(90));
-    console.log("* Art. 194 CGI : un célibataire élevant seul ses enfants (case T) bénéficie");
-    console.log("  d'une demi-part supplémentaire (parent isolé).");
-    console.log("  Notre UI ne distingue pas garde alternée / parent isolé, donc pour");
-    console.log("  un célibataire avec enfants, on devrait appliquer la règle parent isolé.");
-    console.log("=".repeat(90));
-
-    // Verify couple parts are correct
-    expect(computeFiscalParts("couple", 0)).toBe(2);
-    expect(computeFiscalParts("couple", 1)).toBe(2.5);
-    expect(computeFiscalParts("couple", 2)).toBe(3);
-    expect(computeFiscalParts("couple", 3)).toBe(4);
   });
 });
 
 // ---------------------------------------------------------------------------
-// 6. Impact du bug parent isolé — chiffrage de l'écart
+// 6. Vérification parent isolé — maintenant implémenté
 // ---------------------------------------------------------------------------
 
-describe("AUDIT: impact du bug parent isolé sur l'IR", () => {
-  it("quantifies the IR difference with/without parent isolé rule", () => {
-    console.log("\n" + "=".repeat(110));
-    console.log("IMPACT PARENT ISOLÉ — IR actuel vs IR corrigé (avec +0.5 part)");
-    console.log("=".repeat(110));
-    console.log(
-      "Brut".padStart(12) +
-      "Enfants".padStart(10) +
-      "Parts act.".padStart(12) +
-      "Parts corr.".padStart(13) +
-      "IR actuel".padStart(12) +
-      "IR corrigé".padStart(13) +
-      "Trop-perçu".padStart(13) +
-      "Note".padStart(20)
-    );
-    console.log("-".repeat(110));
-
-    for (const salary of SALARIES) {
-      for (const children of [1, 2, 3]) {
-        const sc = calculateSocialContributions(salary);
-
-        // Current (without parent isolé)
-        const currentIR = calculateIncomeTax(salary, sc, "single", children);
-
-        // Simulated fix: compute what IR would be with 0.5 extra part
-        // We simulate by computing with a "couple" status but adjusted
-        // Actually, let's just manually compute with the extra half part
-        const currentParts = computeFiscalParts("single", children);
-        const correctedParts = currentParts + 0.5; // parent isolé bonus
-
-        // Recompute IR with corrected parts by using the raw calculation
-        const deductibleContributions = sc.total - sc.csgNonDeductible - sc.crds;
-        const netImposable = salary - deductibleContributions;
-        const dedRate = 0.10;
-        const dedMin = 504;
-        const dedMax = 14_426;
-        const deduction = Math.max(dedMin, Math.min(dedMax, netImposable * dedRate));
-        const taxableIncome = Math.max(0, netImposable - deduction);
-
-        // With corrected parts
-        const taxPerPartCorr = computeRawTax(taxableIncome / correctedParts);
-        let correctedTotalTax = taxPerPartCorr * correctedParts;
-
-        // Apply QF cap with corrected parts
-        const baseParts = 1; // single
-        const extraHalfPartsCorr = (correctedParts - baseParts) * 2;
-        const taxBase = computeRawTax(taxableIncome / baseParts) * baseParts;
-        const qfAdvantageCorrected = taxBase - correctedTotalTax;
-        const maxAdvantage = extraHalfPartsCorr * 1807;
-        if (qfAdvantageCorrected > maxAdvantage) {
-          correctedTotalTax = taxBase - maxAdvantage;
-        }
-        correctedTotalTax = Math.max(0, Math.round(correctedTotalTax));
-
-        const diff = currentIR.amount - correctedTotalTax;
-
-        console.log(
-          salary.toLocaleString("fr-FR").padStart(12) +
-          children.toString().padStart(10) +
-          currentParts.toString().padStart(12) +
-          correctedParts.toString().padStart(13) +
-          fmt(currentIR.amount).padStart(12) +
-          fmt(correctedTotalTax).padStart(13) +
-          (diff > 0 ? `+${fmt(diff)}` : fmt(diff)).padStart(13) +
-          (diff > 0 ? " ← SURCHARGE" : "").padStart(20)
-        );
-      }
+describe("AUDIT: parent isolé correctement appliqué", () => {
+  it("single with children gets +0.5 parent isolé part", () => {
+    for (const children of [1, 2, 3]) {
+      const parts = computeFiscalParts("single", children);
+      // Base 1 + 0.5 parent isolé + children parts
+      const expectedChildParts = children <= 2 ? children * 0.5 : 1 + (children - 2);
+      expect(parts).toBe(1 + 0.5 + expectedChildParts);
     }
-    console.log("=".repeat(110));
+  });
+
+  it("couple does NOT get parent isolé part", () => {
+    for (const children of [1, 2, 3]) {
+      const parts = computeFiscalParts("couple", children);
+      const expectedChildParts = children <= 2 ? children * 0.5 : 1 + (children - 2);
+      expect(parts).toBe(2 + expectedChildParts);
+    }
   });
 });
 
@@ -313,39 +228,29 @@ describe("AUDIT: impact du bug parent isolé sur l'IR", () => {
 // 7. Monotonie: vérifier que plus de parts = moins d'IR
 // ---------------------------------------------------------------------------
 
-describe("AUDIT: monotonie — plus de parts ⇒ moins ou égal d'IR", () => {
-  for (const salary of SALARIES) {
-    it(`is monotonically decreasing with parts at ${salary.toLocaleString("fr-FR")} €`, () => {
-      const sc = calculateSocialContributions(salary);
-      let prevIR = Infinity;
-      let prevConfig = "";
+describe("AUDIT: monotonie — plus de parts ⇒ moins ou égal d'IR (même statut)", () => {
+  // Monotonicity only holds within the same family status because the QF cap
+  // is relative to base parts (1 for single, 2 for couple). A single with
+  // children can pay MORE than a couple with fewer parts due to cap differences.
+  for (const status of ["single", "couple"] as const) {
+    for (const salary of SALARIES) {
+      it(`monotonic for ${status} at ${salary.toLocaleString("fr-FR")} €`, () => {
+        const sc = calculateSocialContributions(salary);
+        const configs = FAMILY_CONFIGS.filter((c) => c.status === status);
 
-      for (const config of FAMILY_CONFIGS) {
-        const ir = calculateIncomeTax(salary, sc, config.status, config.children);
-        const parts = computeFiscalParts(config.status, config.children);
+        const results = configs.map((c) => ({
+          ...c,
+          parts: computeFiscalParts(c.status, c.children),
+          ir: calculateIncomeTax(salary, sc, c.status, c.children).amount,
+        })).sort((a, b) => a.parts - b.parts);
 
-        // More parts should mean less or equal IR
-        if (parts > computeFiscalParts(
-          FAMILY_CONFIGS[0].status,
-          FAMILY_CONFIGS[0].children
-        )) {
-          // Only compare configs with strictly more parts
+        for (let i = 1; i < results.length; i++) {
+          if (results[i].parts > results[i - 1].parts) {
+            expect(results[i].ir).toBeLessThanOrEqual(results[i - 1].ir);
+          }
         }
-      }
-
-      // Build sorted-by-parts list and verify monotonicity
-      const results = FAMILY_CONFIGS.map((c) => ({
-        ...c,
-        parts: computeFiscalParts(c.status, c.children),
-        ir: calculateIncomeTax(salary, sc, c.status, c.children).amount,
-      })).sort((a, b) => a.parts - b.parts);
-
-      for (let i = 1; i < results.length; i++) {
-        if (results[i].parts > results[i - 1].parts) {
-          expect(results[i].ir).toBeLessThanOrEqual(results[i - 1].ir);
-        }
-      }
-    });
+      });
+    }
   }
 });
 
@@ -361,6 +266,7 @@ describe("AUDIT: cotisations indépendantes de la situation familiale", () => {
           grossAnnualSalary: salary,
           familyStatus: c.status,
           numberOfChildren: c.children,
+          partnerGrossAnnualSalary: 0,
         })
       );
 
@@ -438,6 +344,7 @@ describe("AUDIT: invariants fondamentaux", () => {
           grossAnnualSalary: salary,
           familyStatus: config.status,
           numberOfChildren: config.children,
+          partnerGrossAnnualSalary: 0,
         });
 
         expect(result.netTakeHome).toBeGreaterThan(0);
@@ -492,20 +399,3 @@ function pct(n: number): string {
   return (n * 100).toFixed(1) + "%";
 }
 
-/** Simplified raw IR computation for testing (mirrors tax-engine logic) */
-function computeRawTax(taxablePerPart: number): number {
-  const brackets = [
-    { min: 0, max: 11600, rate: 0 },
-    { min: 11600, max: 29579, rate: 0.11 },
-    { min: 29579, max: 84577, rate: 0.30 },
-    { min: 84577, max: 181917, rate: 0.41 },
-    { min: 181917, max: Infinity, rate: 0.45 },
-  ];
-
-  let tax = 0;
-  for (const b of brackets) {
-    if (taxablePerPart <= b.min) break;
-    tax += (Math.min(taxablePerPart, b.max) - b.min) * b.rate;
-  }
-  return tax;
-}

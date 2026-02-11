@@ -215,6 +215,10 @@ function buildEquivalence(
 /** Compute the number of fiscal parts */
 export function computeFiscalParts(familyStatus: "single" | "couple", numberOfChildren: number): number {
   let parts = familyStatus === "couple" ? 2 : 1;
+  // Parent isolé: +0.5 part for single parent with children (art. 194 CGI, case T)
+  if (familyStatus === "single" && numberOfChildren >= 1) {
+    parts += 0.5;
+  }
   if (numberOfChildren <= 2) {
     parts += numberOfChildren * 0.5;
   } else {
@@ -252,45 +256,73 @@ function computeRawIR(taxableIncomePerPart: number): { tax: number; marginalRate
   return { tax, marginalRate };
 }
 
+/** Compute net imposable from gross and social contributions */
+function computeNetImposable(gross: number, sc: SocialContributionsBreakdown): number {
+  const deductibleContributions = sc.total - sc.csgNonDeductible - sc.crds;
+  return gross - deductibleContributions;
+}
+
 export function calculateIncomeTax(
   gross: number,
   socialContributions: SocialContributionsBreakdown,
   familyStatus: "single" | "couple",
-  numberOfChildren: number
+  numberOfChildren: number,
+  partnerGross: number = 0
 ): IncomeTaxResult {
-  // Net imposable = gross - total social contributions
-  // But only CSG déductible reduces the net imposable for IR purposes
-  // Actually: net imposable = gross - all social contributions that are deductible
-  // In practice for salarié: net imposable = gross - cotisations sociales (hors CSG non-déductible et CRDS)
-  // Simplified: net imposable = gross - (total contributions - CSG non-déductible - CRDS)
-  const deductibleContributions = socialContributions.total - socialContributions.csgNonDeductible - socialContributions.crds;
-  const netImposable = gross - deductibleContributions;
-
-  const taxableIncome = applyProfessionalDeduction(netImposable);
+  const netImposable = computeNetImposable(gross, socialContributions);
   const parts = computeFiscalParts(familyStatus, numberOfChildren);
 
-  // Apply quotient familial
-  const taxablePerPart = taxableIncome / parts;
+  // For couples: compute partner's net imposable separately
+  let householdNetImposable = netImposable;
+  if (familyStatus === "couple" && partnerGross > 0) {
+    const partnerSC = calculateSocialContributions(partnerGross);
+    const partnerNetImposable = computeNetImposable(partnerGross, partnerSC);
+    householdNetImposable = netImposable + partnerNetImposable;
+  }
+
+  // Apply 10% professional deduction per declarant (each capped independently)
+  let householdTaxableIncome: number;
+  if (familyStatus === "couple" && partnerGross > 0) {
+    const partnerSC = calculateSocialContributions(partnerGross);
+    const partnerNetImposable = computeNetImposable(partnerGross, partnerSC);
+    householdTaxableIncome =
+      applyProfessionalDeduction(netImposable) +
+      applyProfessionalDeduction(partnerNetImposable);
+  } else {
+    householdTaxableIncome = applyProfessionalDeduction(householdNetImposable);
+  }
+
+  // Apply quotient familial on household taxable income
+  const taxablePerPart = householdTaxableIncome / parts;
   const { tax: taxPerPart, marginalRate } = computeRawIR(taxablePerPart);
-  let totalTax = taxPerPart * parts;
+  let householdTax = taxPerPart * parts;
 
   // Apply QF cap: compare with tax without QF advantage
-  if (parts > 1) {
-    const baseParts = familyStatus === "couple" ? 2 : 1;
-    const extraHalfParts = (parts - baseParts) * 2; // number of half-parts from children
-    const { tax: taxBaseParts } = computeRawIR(taxableIncome / baseParts);
+  const baseParts = familyStatus === "couple" ? 2 : 1;
+  if (parts > baseParts) {
+    const extraHalfParts = (parts - baseParts) * 2; // number of half-parts from children (+ parent isolé)
+    const { tax: taxBaseParts } = computeRawIR(householdTaxableIncome / baseParts);
     const taxWithoutQF = taxBaseParts * baseParts;
-    const qfAdvantage = taxWithoutQF - totalTax;
+    const qfAdvantage = taxWithoutQF - householdTax;
     const maxAdvantage = extraHalfParts * taxData.quotient_familial.cap_per_half_part;
 
     if (qfAdvantage > maxAdvantage) {
-      totalTax = taxWithoutQF - maxAdvantage;
+      householdTax = taxWithoutQF - maxAdvantage;
     }
   }
 
-  totalTax = Math.max(0, Math.round(totalTax));
+  householdTax = Math.max(0, Math.round(householdTax));
 
-  const effectiveRate = netImposable > 0 ? totalTax / netImposable : 0;
+  // Your share of IR (proportional to your net imposable in the household)
+  const yourShare = householdNetImposable > 0
+    ? netImposable / householdNetImposable
+    : 1;
+  const yourTax = Math.round(householdTax * yourShare);
+
+  const effectiveRate = netImposable > 0 ? yourTax / netImposable : 0;
+
+  // taxableIncome here is YOUR taxable income (for display), not household
+  const taxableIncome = applyProfessionalDeduction(netImposable);
 
   return {
     netImposable: round2(netImposable),
@@ -298,7 +330,9 @@ export function calculateIncomeTax(
     parts,
     marginalRate,
     effectiveRate: round4(effectiveRate),
-    amount: totalTax,
+    amount: yourTax,
+    householdNetImposable: round2(householdNetImposable),
+    householdTax,
   };
 }
 
@@ -490,17 +524,18 @@ export function calculateStateBudgetAllocation(stateTaxes: number): BudgetSector
 // ---------------------------------------------------------------------------
 
 export function calculateTaxes(input: UserInput): TaxResult {
-  const { grossAnnualSalary, familyStatus, numberOfChildren } = input;
+  const { grossAnnualSalary, familyStatus, numberOfChildren, partnerGrossAnnualSalary } = input;
 
-  // Step A
+  // Step A — Social contributions on YOUR salary only
   const socialContributions = calculateSocialContributions(grossAnnualSalary);
 
-  // Step B
+  // Step B — IR on household combined income, your proportional share
   const incomeTax = calculateIncomeTax(
     grossAnnualSalary,
     socialContributions,
     familyStatus,
-    numberOfChildren
+    numberOfChildren,
+    partnerGrossAnnualSalary
   );
 
   // Net take-home = what actually lands in your bank account

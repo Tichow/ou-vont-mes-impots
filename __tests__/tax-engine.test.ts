@@ -22,8 +22,16 @@ describe("computeFiscalParts", () => {
     expect(computeFiscalParts("couple", 0)).toBe(2);
   });
 
-  it("returns 1.5 for single with 1 child", () => {
-    expect(computeFiscalParts("single", 1)).toBe(1.5);
+  it("returns 2 for single with 1 child (parent isolé: 1 + 0.5 PI + 0.5 child)", () => {
+    expect(computeFiscalParts("single", 1)).toBe(2);
+  });
+
+  it("returns 2.5 for single with 2 children (parent isolé)", () => {
+    expect(computeFiscalParts("single", 2)).toBe(2.5);
+  });
+
+  it("returns 3.5 for single with 3 children (parent isolé)", () => {
+    expect(computeFiscalParts("single", 3)).toBe(3.5);
   });
 
   it("returns 3 for couple with 2 children", () => {
@@ -297,6 +305,7 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 35_000,
       familyStatus: "single",
       numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
     });
 
     // Verify structure
@@ -326,6 +335,7 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 35_000,
       familyStatus: "single",
       numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
     });
 
     const destTotal = result.cotisationsByDestination.reduce((s, d) => s + d.amount, 0);
@@ -337,6 +347,7 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 35_000,
       familyStatus: "single",
       numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
     });
 
     expect(result.stateTaxes).toBeCloseTo(result.incomeTax.amount + result.estimatedVAT.amount, 1);
@@ -347,6 +358,7 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 35_000,
       familyStatus: "single",
       numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
     });
 
     const stateTotal = result.stateBudgetAllocation.reduce((s, b) => s + b.amount, 0);
@@ -358,6 +370,7 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 29_000,
       familyStatus: "single",
       numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
     });
 
     // Overall tax rate should be roughly 25-35% (social + IR + TVA)
@@ -370,10 +383,62 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 100_000,
       familyStatus: "single",
       numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
     });
 
     expect(result.incomeTax.marginalRate).toBe(0.30);
     expect(result.totalTaxes).toBeGreaterThan(30_000);
+  });
+
+  it("computes higher household IR when partner has income", () => {
+    const noPartner = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "couple",
+      numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
+    });
+    const withPartner = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "couple",
+      numberOfChildren: 0,
+      partnerGrossAnnualSalary: 35_000,
+    });
+
+    // With a partner earning the same, household tax is higher
+    expect(withPartner.incomeTax.householdTax).toBeGreaterThan(noPartner.incomeTax.householdTax);
+    // Your share should be roughly half the household tax
+    expect(withPartner.incomeTax.amount).toBeCloseTo(withPartner.incomeTax.householdTax / 2, -1);
+  });
+
+  it("household fields equal personal fields for singles", () => {
+    const result = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "single",
+      numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
+    });
+
+    expect(result.incomeTax.householdNetImposable).toBe(result.incomeTax.netImposable);
+    expect(result.incomeTax.householdTax).toBe(result.incomeTax.amount);
+  });
+
+  it("parent isolé reduces IR for single with children", () => {
+    const noKids = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "single",
+      numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
+    });
+    const oneKid = calculateTaxes({
+      grossAnnualSalary: 35_000,
+      familyStatus: "single",
+      numberOfChildren: 1,
+      partnerGrossAnnualSalary: 0,
+    });
+
+    // Parent isolé gives 2 parts (1 base + 0.5 PI + 0.5 child)
+    expect(oneKid.incomeTax.parts).toBe(2);
+    expect(oneKid.incomeTax.amount).toBeLessThan(noKids.incomeTax.amount);
   });
 
   it("handles couple with 2 children at 60,000€", () => {
@@ -381,6 +446,7 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 60_000,
       familyStatus: "couple",
       numberOfChildren: 2,
+      partnerGrossAnnualSalary: 0,
     });
 
     expect(result.incomeTax.parts).toBe(3);
@@ -389,6 +455,7 @@ describe("calculateTaxes (integration)", () => {
       grossAnnualSalary: 60_000,
       familyStatus: "single",
       numberOfChildren: 0,
+      partnerGrossAnnualSalary: 0,
     });
     expect(result.incomeTax.amount).toBeLessThan(singleResult.incomeTax.amount);
   });

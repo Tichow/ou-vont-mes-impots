@@ -12,7 +12,7 @@ const NAV_LINKS = [
 ] as const;
 
 /** Params to propagate across pages so the user doesn't lose context. */
-const PROPAGATED_PARAMS = ["salary", "status", "children"] as const;
+const PROPAGATED_PARAMS = ["salary", "status", "children", "partnerSalary"] as const;
 
 function HeaderInner() {
   const pathname = usePathname();

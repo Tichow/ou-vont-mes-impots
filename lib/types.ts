@@ -6,6 +6,8 @@ export type UserInput = {
   familyStatus: "single" | "couple";
   /** Number of dependent children */
   numberOfChildren: number;
+  /** Partner's gross annual salary (0 for singles, ≥0 for couples) */
+  partnerGrossAnnualSalary: number;
 };
 
 /** Breakdown of social contributions */
@@ -48,6 +50,10 @@ export type IncomeTaxResult = {
   effectiveRate: number;
   /** Income tax amount */
   amount: number;
+  /** Combined household net imposable (= netImposable for singles) */
+  householdNetImposable: number;
+  /** Total household IR (= amount for singles) */
+  householdTax: number;
 };
 
 /** Estimated VAT result */

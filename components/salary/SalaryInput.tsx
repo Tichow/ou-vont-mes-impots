@@ -2,8 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "motion/react";
-import { ArrowRight, Users, User, Baby } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowRight, Users, User, Baby, Info } from "lucide-react";
 import { formatEuros } from "@/lib/formatting";
 
 type FamilyStatus = "single" | "couple";
@@ -20,6 +20,7 @@ export function SalaryInput() {
   const [salary, setSalary] = useState(DEFAULT_SALARY);
   const [familyStatus, setFamilyStatus] = useState<FamilyStatus>("single");
   const [children, setChildren] = useState(0);
+  const [partnerSalary, setPartnerSalary] = useState(0);
 
   const handleSliderChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,16 +40,46 @@ export function SalaryInput() {
     []
   );
 
+  const handlePartnerSliderChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPartnerSalary(Number(e.target.value));
+    },
+    []
+  );
+
+  const handlePartnerInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value.replace(/\s/g, "").replace(/€/g, "");
+      const num = Number(value);
+      if (!isNaN(num) && num >= MIN_SALARY && num <= MAX_SALARY) {
+        setPartnerSalary(num);
+      }
+    },
+    []
+  );
+
+  const handleFamilyStatusChange = useCallback((status: FamilyStatus) => {
+    setFamilyStatus(status);
+    if (status === "single") {
+      setPartnerSalary(0);
+    }
+  }, []);
+
   const handleSubmit = useCallback(() => {
     const params = new URLSearchParams({
       salary: salary.toString(),
       status: familyStatus,
       children: children.toString(),
     });
+    if (familyStatus === "couple" && partnerSalary > 0) {
+      params.set("partnerSalary", partnerSalary.toString());
+    }
     router.push(`/resultats?${params.toString()}`);
-  }, [salary, familyStatus, children, router]);
+  }, [salary, familyStatus, children, partnerSalary, router]);
 
   const sliderPercentage = ((salary - MIN_SALARY) / (MAX_SALARY - MIN_SALARY)) * 100;
+  const partnerSliderPercentage = ((partnerSalary - MIN_SALARY) / (MAX_SALARY - MIN_SALARY)) * 100;
+  const showParentIsole = familyStatus === "single" && children >= 1;
 
   return (
     <motion.div
@@ -100,36 +131,92 @@ export function SalaryInput() {
         <div className="grid grid-cols-2 gap-3 mb-6">
           <button
             type="button"
-            onClick={() => setFamilyStatus("single")}
-            className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 text-sm font-medium transition-all ${
+            onClick={() => handleFamilyStatusChange("single")}
+            className={`flex flex-col items-center justify-center gap-1 py-3 px-4 rounded-xl border-2 transition-all ${
               familyStatus === "single"
                 ? "border-primary bg-primary/5 text-primary"
                 : "border-border text-text-muted hover:border-primary/30"
             }`}
           >
-            <User size={18} />
-            Célibataire
+            <span className="flex items-center gap-2 text-sm font-medium">
+              <User size={18} />
+              Seul(e)
+            </span>
+            <span className="text-[11px] text-text-muted font-normal">
+              Célibataire, divorcé(e) ou veuf/ve
+            </span>
           </button>
           <button
             type="button"
-            onClick={() => setFamilyStatus("couple")}
-            className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 text-sm font-medium transition-all ${
+            onClick={() => handleFamilyStatusChange("couple")}
+            className={`flex flex-col items-center justify-center gap-1 py-3 px-4 rounded-xl border-2 transition-all ${
               familyStatus === "couple"
                 ? "border-primary bg-primary/5 text-primary"
                 : "border-border text-text-muted hover:border-primary/30"
             }`}
           >
-            <Users size={18} />
-            En couple
+            <span className="flex items-center gap-2 text-sm font-medium">
+              <Users size={18} />
+              Marié(e) / Pacsé(e)
+            </span>
+            <span className="text-[11px] text-text-muted font-normal">
+              Déclaration commune
+            </span>
           </button>
         </div>
+
+        {/* Partner salary (conditional) */}
+        <AnimatePresence>
+          {familyStatus === "couple" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="overflow-hidden"
+            >
+              <label className="block text-sm font-medium text-text-muted mb-2">
+                Salaire brut annuel du conjoint
+              </label>
+              <div className="relative mb-2">
+                <input
+                  type="text"
+                  value={formatEuros(partnerSalary)}
+                  onChange={handlePartnerInputChange}
+                  className="w-full text-center text-2xl font-bold text-text bg-surface-alt rounded-xl py-3 px-6 border border-border focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                />
+              </div>
+              <div className="relative mb-2 mt-3">
+                <input
+                  type="range"
+                  min={MIN_SALARY}
+                  max={MAX_SALARY}
+                  step={STEP}
+                  value={partnerSalary}
+                  onChange={handlePartnerSliderChange}
+                  className="w-full h-2 appearance-none rounded-full cursor-pointer"
+                  style={{
+                    background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${partnerSliderPercentage}%, var(--color-border) ${partnerSliderPercentage}%, var(--color-border) 100%)`,
+                  }}
+                />
+                <div className="flex justify-between text-xs text-text-muted mt-1">
+                  <span>{formatEuros(MIN_SALARY)}</span>
+                  <span>{formatEuros(MAX_SALARY)}</span>
+                </div>
+              </div>
+              <p className="text-[11px] text-text-muted mb-6">
+                0 € si votre conjoint est sans emploi
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Children */}
         <label className="block text-sm font-medium text-text-muted mb-3">
           <Baby size={16} className="inline mr-1" />
           Enfants à charge
         </label>
-        <div className="grid grid-cols-4 gap-2 mb-8">
+        <div className="grid grid-cols-4 gap-2 mb-4">
           {CHILDREN_OPTIONS.map((n) => (
             <button
               key={n}
@@ -145,6 +232,28 @@ export function SalaryInput() {
             </button>
           ))}
         </div>
+
+        {/* Parent isolé info */}
+        <AnimatePresence>
+          {showParentIsole && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden"
+            >
+              <div className="flex items-start gap-2 rounded-xl bg-primary/5 border border-primary/20 px-3 py-2 mb-4">
+                <Info size={14} className="text-primary mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-text-muted leading-relaxed">
+                  Demi-part parent isolé appliquée (case T)
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="mb-8" />
 
         {/* Submit */}
         <motion.button

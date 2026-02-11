@@ -160,9 +160,9 @@ const SIMPLIFICATIONS: SimplificationItem[] = [
     icon: Scale,
     title: "Quotient familial simplifié",
     detail:
-      "Nous gérons les cas standards (célibataire/couple, 0 à 3+ enfants). Les situations spécifiques (parent isolé, invalidité, demi-parts supplémentaires) ne sont pas prises en compte.",
+      "Nous gérons les cas standards (célibataire/couple, 0 à 3+ enfants) et la demi-part parent isolé (case T). Pour les couples mariés/pacsés, l'IR est calculé sur le revenu combiné des deux déclarants avec abattement de 10% appliqué séparément. La garde alternée (demi-parts partagées) et les situations d'invalidité ne sont pas prises en compte.",
     impact:
-      "L'impôt affiché peut différer de quelques centaines d'euros pour les situations familiales complexes.",
+      "L'impôt affiché peut différer de quelques centaines d'euros pour les situations familiales complexes (garde alternée, invalidité, ancien combattant).",
   },
 ];
 
