@@ -2,6 +2,8 @@
 
 **Suivez l'argent de vos prélèvements, euro par euro.**
 
+**[ou-vont-mes-impots.vercel.app](https://ou-vont-mes-impots.vercel.app/)**
+
 Projet personnel à visée pédagogique : une application web interactive pour comprendre où va chaque euro prélevé sur un salaire. Cotisations fléchées vers la protection sociale, impôts redistribués dans le budget de l'État.
 
 > **Ceci n'est pas un outil officiel** de l'administration fiscale. L'objectif est de vulgariser le fonctionnement des prélèvements obligatoires et de rendre plus lisible l'utilisation de l'argent public. Ce n'est pas une prise de position politique. Le site peut contenir des erreurs ou des approximations. Pour une simulation officielle : [impots.gouv.fr](https://www.impots.gouv.fr/simulateurs).
