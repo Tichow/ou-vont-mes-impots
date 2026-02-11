@@ -1,0 +1,669 @@
+{
+  "metadata": {
+    "description": "Glossaire complet des termes fiscaux, sociaux et budgétaires utilisés sur le site",
+    "last_updated": "2026-02-11",
+    "year": 2026
+  },
+  "categories": [
+    {
+      "id": "salaire",
+      "label": "Salaire et fiche de paie"
+    },
+    {
+      "id": "cotisations",
+      "label": "Cotisations sociales"
+    },
+    {
+      "id": "impots",
+      "label": "Impôts"
+    },
+    {
+      "id": "famille",
+      "label": "Situation familiale"
+    },
+    {
+      "id": "organismes",
+      "label": "Organismes et caisses"
+    },
+    {
+      "id": "budget",
+      "label": "Budget et lois de finances"
+    },
+    {
+      "id": "international",
+      "label": "Comparaison internationale"
+    }
+  ],
+  "terms": [
+    {
+      "id": "salaire_brut",
+      "term": "Salaire brut",
+      "definition": "Rémunération totale avant toute retenue. C'est le montant inscrit en haut de votre fiche de paie, avant déduction des cotisations sociales et de l'impôt sur le revenu.",
+      "category": "salaire",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2301"
+      }
+    },
+    {
+      "id": "net_avant_ir",
+      "term": "Net avant impôt",
+      "definition": "Salaire après déduction des cotisations sociales, mais avant le prélèvement à la source de l'impôt sur le revenu. Correspond au « net imposable » de votre fiche de paie.",
+      "category": "salaire",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2301"
+      }
+    },
+    {
+      "id": "net_en_poche",
+      "term": "Net en poche",
+      "definition": "Ce qui arrive réellement sur votre compte en banque : le salaire brut moins toutes les cotisations sociales et l'impôt sur le revenu prélevé à la source.",
+      "category": "salaire",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2301"
+      }
+    },
+    {
+      "id": "super_brut",
+      "term": "Super-brut (coût total employeur)",
+      "definition": "Coût total du salarié pour l'employeur : salaire brut + cotisations patronales (~27 % du brut). Ce montant n'apparaît pas sur la fiche de paie standard. En France, il est environ 1,45 fois le brut.",
+      "category": "salaire",
+      "source": {
+        "label": "mon-entreprise.urssaf.fr",
+        "url": "https://mon-entreprise.urssaf.fr/simulateurs/salaire-brut-net"
+      }
+    },
+    {
+      "id": "fiche_de_paie",
+      "term": "Fiche de paie (bulletin de salaire)",
+      "definition": "Document mensuel obligatoire détaillant votre salaire brut, toutes les cotisations prélevées, l'impôt retenu à la source, et le net versé sur votre compte.",
+      "category": "salaire",
+      "source": {
+        "label": "code.travail.gouv.fr",
+        "url": "https://code.travail.gouv.fr/fiche-ministere-travail/le-bulletin-de-paie"
+      }
+    },
+    {
+      "id": "prelevement_source",
+      "term": "Prélèvement à la source (PAS)",
+      "definition": "Mode de collecte de l'impôt sur le revenu directement sur le salaire mensuel, en vigueur depuis janvier 2019. Votre employeur prélève l'IR chaque mois et le reverse au Trésor public.",
+      "category": "salaire",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F34009"
+      }
+    },
+    {
+      "id": "revenu_imposable",
+      "term": "Revenu imposable",
+      "definition": "Revenu sur lequel est calculé l'impôt, après application de l'abattement forfaitaire de 10 % pour frais professionnels et déduction de la CSG déductible.",
+      "category": "salaire",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F34328"
+      }
+    },
+    {
+      "id": "abattement_forfaitaire",
+      "term": "Abattement forfaitaire de 10 %",
+      "definition": "Déduction automatique de 10 % appliquée sur les salaires déclarés pour couvrir les frais professionnels (transport, repas, etc.), avec un minimum de 504 € et un maximum de 14 426 € pour les revenus 2025.",
+      "category": "salaire",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1989"
+      }
+    },
+    {
+      "id": "cotisations_sociales",
+      "term": "Cotisations sociales (salariales)",
+      "definition": "Prélèvements obligatoires sur le salaire brut, directement fléchés vers les caisses de protection sociale : retraite, maladie, famille, dette sociale. Contrairement aux impôts, chaque euro a une destination précise.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "cotisations_patronales",
+      "term": "Cotisations patronales (employeur)",
+      "definition": "Part des cotisations sociales payée par l'employeur, en plus du salaire brut (~27 % du brut). Elles financent l'assurance maladie, les allocations familiales, l'assurance chômage, les accidents du travail, etc.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "csg",
+      "term": "CSG (Contribution Sociale Généralisée)",
+      "definition": "Prélèvement de 9,2 % sur les revenus d'activité, créé en 1991 pour financer la Sécurité sociale. Elle est répartie entre la CNAM (6,45 pts), la CNAF (0,95 pts), le FSV (0,7 pts), la CNSA (0,6 pts) et la CADES (0,5 pts).",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "csg_deductible",
+      "term": "CSG déductible",
+      "definition": "Part de la CSG (6,8 % sur 9,2 %) qui est déduite de votre revenu imposable. Vous ne payez donc pas d'impôt sur le revenu sur cette fraction.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "csg_non_deductible",
+      "term": "CSG non déductible",
+      "definition": "Part de la CSG (2,4 % sur 9,2 %) qui n'est pas déduite du revenu imposable. Vous payez de l'impôt sur le revenu sur ce montant.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "crds",
+      "term": "CRDS (Contribution au Remboursement de la Dette Sociale)",
+      "definition": "Prélèvement de 0,5 % créé en 1996 pour rembourser la dette de la Sécurité sociale, gérée par la CADES. Non déductible du revenu imposable.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "vieillesse_plafonnee",
+      "term": "Assurance vieillesse plafonnée",
+      "definition": "Cotisation retraite de base (6,90 %) calculée sur le salaire jusqu'au PASS (48 060 €/an en 2026). Finance la pension de retraite de base versée par la CNAV.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "vieillesse_deplafonnee",
+      "term": "Assurance vieillesse déplafonnée",
+      "definition": "Cotisation retraite de base (0,40 %) calculée sur la totalité du salaire, sans plafond. Complète la cotisation plafonnée pour financer le régime de base.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+      }
+    },
+    {
+      "id": "retraite_complementaire",
+      "term": "Retraite complémentaire (AGIRC-ARRCO)",
+      "definition": "Régime obligatoire de retraite complémentaire des salariés du privé, géré par l'AGIRC-ARRCO. Fonctionne par points : vos cotisations achètent des points, convertis en pension à la retraite.",
+      "category": "cotisations",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    {
+      "id": "tranche_1",
+      "term": "Tranche 1 (T1)",
+      "definition": "Part du salaire inférieure au PASS (48 060 €/an). La cotisation retraite complémentaire AGIRC-ARRCO sur cette tranche est de 3,15 % (part salariale).",
+      "category": "cotisations",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    {
+      "id": "tranche_2",
+      "term": "Tranche 2 (T2)",
+      "definition": "Part du salaire entre 1 et 8 fois le PASS (de 48 060 € à 384 480 €/an). La cotisation retraite complémentaire sur cette tranche est de 8,64 % (part salariale).",
+      "category": "cotisations",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    {
+      "id": "ceg",
+      "term": "CEG (Contribution d'Équilibre Général)",
+      "definition": "Cotisation finançant l'équilibre du régime AGIRC-ARRCO. Taux salarial : 0,86 % sur la tranche 1, 1,08 % sur la tranche 2.",
+      "category": "cotisations",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/"
+      }
+    },
+    {
+      "id": "pass",
+      "term": "PASS (Plafond Annuel de la Sécurité Sociale)",
+      "definition": "Montant de référence fixé chaque année pour le calcul de certaines cotisations sociales. En 2026, il est de 48 060 € (soit 4 005 €/mois). Au-delà de ce plafond, certaines cotisations ne s'appliquent plus.",
+      "category": "cotisations",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/plafonds.html"
+      }
+    },
+    {
+      "id": "ir",
+      "term": "Impôt sur le revenu (IR)",
+      "definition": "Impôt progressif par tranches sur les revenus annuels des personnes physiques. Son taux augmente par paliers (0 %, 11 %, 30 %, 41 %, 45 % pour 2026). Il est prélevé à la source chaque mois.",
+      "category": "impots",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F34328"
+      }
+    },
+    {
+      "id": "bareme_progressif",
+      "term": "Barème progressif",
+      "definition": "Grille de taux d'imposition par tranches de revenus. Chaque tranche est imposée à un taux différent. Par exemple, les premiers 11 600 € ne sont pas imposés (taux 0 %), puis de 11 601 € à 29 579 € le taux est de 11 %, etc.",
+      "category": "impots",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F34328"
+      }
+    },
+    {
+      "id": "tmi",
+      "term": "TMI (Taux Marginal d'Imposition)",
+      "definition": "Taux de la tranche la plus haute dans laquelle tombe votre revenu. Ce n'est pas le taux réel que vous payez (le taux effectif est plus bas), mais le taux appliqué à chaque euro supplémentaire gagné.",
+      "category": "impots",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/particulier/questions/comment-calculer-mon-taux-dimposition-dapres-le-bareme-progressif-de-limpot"
+      }
+    },
+    {
+      "id": "tva",
+      "term": "TVA (Taxe sur la Valeur Ajoutée)",
+      "definition": "Impôt indirect inclus dans le prix de la plupart des biens et services. Il existe quatre taux : 20 % (normal), 10 % (intermédiaire), 5,5 % (réduit, alimentation de base) et 2,1 % (super-réduit, médicaments remboursés).",
+      "category": "impots",
+      "source": {
+        "label": "economie.gouv.fr",
+        "url": "https://www.economie.gouv.fr/particuliers/impots-et-fiscalite/gerer-mes-autres-impots-et-taxes/tva-quels-sont-les-taux-de-votre-quotidien"
+      }
+    },
+    {
+      "id": "prelevements_obligatoires",
+      "term": "Prélèvements obligatoires",
+      "definition": "Ensemble des impôts et cotisations sociales perçus par les administrations publiques. En France, ils représentent environ 43 à 46 % du PIB selon les sources (43,2 % INSEE, 43,9 % OCDE, 45,6 % Eurostat pour 2023), l'un des taux les plus élevés au monde.",
+      "category": "impots",
+      "source": {
+        "label": "vie-publique.fr",
+        "url": "https://www.vie-publique.fr/questions-reponses/296090-les-prelevements-obligatoires-en-huit-questions"
+      }
+    },
+    {
+      "id": "taxes_locales",
+      "term": "Taxes locales",
+      "definition": "Impôts perçus par les collectivités territoriales (communes, départements, régions) : taxe foncière sur les propriétés bâties/non bâties, taxe d'habitation (résidences secondaires uniquement depuis 2023), CFE pour les entreprises.",
+      "category": "impots",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/N206"
+      }
+    },
+    {
+      "id": "niches_fiscales",
+      "term": "Niches fiscales",
+      "definition": "Réductions et crédits d'impôt prévus par la loi pour inciter certains comportements : investissement locatif (Pinel), dons aux associations, emploi à domicile, frais de garde d'enfants, etc.",
+      "category": "impots",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/particulier/questions/quelle-est-la-difference-entre-une-reduction-et-un-credit-dimpot"
+      }
+    },
+    {
+      "id": "pfu",
+      "term": "PFU (Prélèvement Forfaitaire Unique) / Flat tax",
+      "definition": "Taux unique de 30 % (12,8 % d'IR + 17,2 % de prélèvements sociaux) appliqué par défaut aux revenus du capital : intérêts, dividendes, plus-values mobilières. Le contribuable peut opter pour le barème progressif s'il est plus avantageux.",
+      "category": "impots",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2613"
+      }
+    },
+    {
+      "id": "ticpe",
+      "term": "TICPE (Taxe Intérieure de Consommation sur les Produits Énergétiques)",
+      "definition": "Taxe sur les carburants et combustibles fossiles (essence, gazole, fioul). C'est l'une des principales recettes fiscales de l'État (~17 Md€/an). Son montant est fixe (en centimes par litre), pas proportionnel au prix.",
+      "category": "impots",
+      "source": {
+        "label": "ecologie.gouv.fr",
+        "url": "https://www.ecologie.gouv.fr/politiques-publiques/fiscalite-energies"
+      }
+    },
+    {
+      "id": "contribution_etat",
+      "term": "Contribution au budget de l'État",
+      "definition": "Sur ce site, désigne la somme de votre IR et de la TVA estimée sur vos achats. Contrairement aux cotisations sociales (fléchées vers la Sécu), ces impôts alimentent le budget général : c'est le Parlement qui en décide la répartition chaque année.",
+      "category": "impots",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026"
+      }
+    },
+    {
+      "id": "foyer_fiscal",
+      "term": "Foyer fiscal",
+      "definition": "Ensemble des personnes inscrites sur une même déclaration de revenus : le ou les déclarants (célibataire, couple marié ou pacsé) et les personnes à charge (enfants mineurs, enfants majeurs rattachés).",
+      "category": "famille",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/particulier/votre-situation-de-famille"
+      }
+    },
+    {
+      "id": "quotient_familial",
+      "term": "Quotient familial",
+      "definition": "Mécanisme qui divise le revenu imposable par un nombre de « parts » déterminé par la composition du foyer. Objectif : adapter l'impôt à la taille de la famille. L'avantage par demi-part supplémentaire est plafonné à 1 807 € (2026).",
+      "category": "famille",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2705"
+      }
+    },
+    {
+      "id": "parts_fiscales",
+      "term": "Parts fiscales",
+      "definition": "Unité de calcul du quotient familial. Un célibataire = 1 part, un couple marié/pacsé = 2 parts, chaque enfant à charge ajoute 0,5 part (1 part à partir du 3e enfant).",
+      "category": "famille",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2702"
+      }
+    },
+    {
+      "id": "parent_isole",
+      "term": "Parent isolé (case T)",
+      "definition": "Personne célibataire, divorcée ou séparée vivant seule avec au moins un enfant à charge. Cocher la case T de la déclaration donne droit à une demi-part supplémentaire (plafonnée à 4 149 €).",
+      "category": "famille",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2702"
+      }
+    },
+    {
+      "id": "declaration_commune",
+      "term": "Déclaration commune",
+      "definition": "Les couples mariés ou pacsés font une déclaration de revenus commune. Leurs revenus sont additionnés, puis divisés par le nombre de parts du foyer pour le calcul de l'IR.",
+      "category": "famille",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F369"
+      }
+    },
+    {
+      "id": "enfants_a_charge",
+      "term": "Enfants à charge",
+      "definition": "Enfants mineurs ou majeurs rattachés au foyer fiscal. Chaque enfant augmente le nombre de parts fiscales : +0,5 part pour le 1er et le 2e enfant, +1 part à partir du 3e.",
+      "category": "famille",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2702"
+      }
+    },
+    {
+      "id": "cnav",
+      "term": "CNAV (Caisse Nationale d'Assurance Vieillesse)",
+      "definition": "Organisme qui gère le régime de base de retraite des salariés du secteur privé. C'est elle qui verse la pension de retraite de base. Financée par les cotisations vieillesse.",
+      "category": "organismes",
+      "source": {
+        "label": "lassuranceretraite.fr",
+        "url": "https://www.lassuranceretraite.fr/portail-info/nous-connaitre/nos-missions.html"
+      }
+    },
+    {
+      "id": "agirc_arrco",
+      "term": "AGIRC-ARRCO",
+      "definition": "Régime unifié de retraite complémentaire obligatoire des salariés du privé, issu de la fusion en 2019 de l'AGIRC (cadres) et de l'ARRCO (non-cadres). Fonctionne par un système de points.",
+      "category": "organismes",
+      "source": {
+        "label": "agirc-arrco.fr",
+        "url": "https://www.agirc-arrco.fr/particuliers/ma-retraite/comprendre-ma-retraite/comment-se-constitue-ma-retraite-complementaire/"
+      }
+    },
+    {
+      "id": "cnam",
+      "term": "CNAM (Caisse Nationale de l'Assurance Maladie)",
+      "definition": "Organisme qui gère l'assurance maladie des salariés : remboursement des soins, indemnités journalières en cas d'arrêt maladie, prévention. Reçoit la plus grande part de la CSG (6,45 points sur 9,2).",
+      "category": "organismes",
+      "source": {
+        "label": "ameli.fr",
+        "url": "https://assurance-maladie.ameli.fr/qui-sommes-nous"
+      }
+    },
+    {
+      "id": "cnaf",
+      "term": "CNAF (Caisse Nationale des Allocations Familiales)",
+      "definition": "Organisme qui verse les prestations familiales : allocations familiales, prime de naissance, allocation de rentrée scolaire, aides au logement (APL), RSA, prime d'activité.",
+      "category": "organismes",
+      "source": {
+        "label": "caf.fr",
+        "url": "https://www.caf.fr/nous-connaitre"
+      }
+    },
+    {
+      "id": "cnsa",
+      "term": "CNSA (Caisse Nationale de Solidarité pour l'Autonomie)",
+      "definition": "Établissement public qui finance l'aide à l'autonomie des personnes âgées et des personnes handicapées (APA, PCH, EHPAD). Reçoit 0,6 point de CSG.",
+      "category": "organismes",
+      "source": {
+        "label": "cnsa.fr",
+        "url": "https://www.cnsa.fr/la-cnsa/la-cnsa-branche-autonomie-de-la-securite-sociale/presentation-et-missions-de-la-cnsa"
+      }
+    },
+    {
+      "id": "cades",
+      "term": "CADES (Caisse d'Amortissement de la Dette Sociale)",
+      "definition": "Établissement public chargé de rembourser la dette de la Sécurité sociale. Financée par la CRDS (0,5 %) et une partie de la CSG (0,5 point). Date de fin prévue : 2033.",
+      "category": "organismes",
+      "source": {
+        "label": "cades.fr",
+        "url": "https://www.cades.fr/fr/a-propos"
+      }
+    },
+    {
+      "id": "fsv",
+      "term": "FSV (Fonds de Solidarité Vieillesse)",
+      "definition": "Fonds qui finance les avantages de retraite non contributifs : minimum vieillesse (ASPA), majorations de pension pour enfants, validation de trimestres chômage. Reçoit 0,7 point de CSG.",
+      "category": "organismes",
+      "source": {
+        "label": "vie-publique.fr",
+        "url": "https://www.vie-publique.fr/fiches/37944-le-fonds-de-solidarite-vieillesse-fsv-missions-et-ressources"
+      }
+    },
+    {
+      "id": "urssaf",
+      "term": "URSSAF (Union de Recouvrement des cotisations de Sécurité Sociale et d'Allocations Familiales)",
+      "definition": "Organisme chargé de collecter les cotisations et contributions sociales (CSG, CRDS, cotisations retraite, maladie, famille) auprès des employeurs et travailleurs indépendants, puis de les redistribuer aux caisses.",
+      "category": "organismes",
+      "source": {
+        "label": "urssaf.fr",
+        "url": "https://www.urssaf.fr/accueil/decouvrir-urssaf.html"
+      }
+    },
+    {
+      "id": "ondam",
+      "term": "ONDAM (Objectif National de Dépenses d'Assurance Maladie)",
+      "definition": "Montant prévisionnel des dépenses de santé voté chaque année dans la LFSS. Pour 2026 : 274,4 Md€. C'est un objectif, pas un plafond contraignant.",
+      "category": "organismes",
+      "source": {
+        "label": "vie-publique.fr",
+        "url": "https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss"
+      }
+    },
+    {
+      "id": "lfi",
+      "term": "LFI (Loi de Finances Initiale)",
+      "definition": "Loi votée chaque année par le Parlement qui autorise le budget de l'État : recettes prévues et dépenses autorisées, réparties par missions et programmes. La LFI 2026 a été adoptée le 2 février 2026.",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026"
+      }
+    },
+    {
+      "id": "plf",
+      "term": "PLF (Projet de Loi de Finances)",
+      "definition": "Projet de budget de l'État déposé par le gouvernement au Parlement, généralement en septembre. Après discussion et vote, il devient la LFI.",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances"
+      }
+    },
+    {
+      "id": "lfss",
+      "term": "LFSS (Loi de Financement de la Sécurité Sociale)",
+      "definition": "Loi annuelle qui fixe les objectifs de recettes et de dépenses de la Sécurité sociale par branche (maladie, vieillesse, famille, accidents du travail). La LFSS 2026 a été promulguée le 30 décembre 2025.",
+      "category": "budget",
+      "source": {
+        "label": "vie-publique.fr",
+        "url": "https://www.vie-publique.fr/loi/300445-loi-de-financement-de-la-securite-sociale-2026-retraites-lfss"
+      }
+    },
+    {
+      "id": "lolf",
+      "term": "LOLF (Loi Organique relative aux Lois de Finances)",
+      "definition": "Texte de 2001 qui organise la présentation du budget de l'État en missions, programmes et actions, remplaçant l'ancienne logique par ministère. Elle impose une logique de performance et de résultats.",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/lolf/articles/loi-organique-relative-aux-lois"
+      }
+    },
+    {
+      "id": "mission",
+      "term": "Mission (budgétaire)",
+      "definition": "Grande politique publique dans le budget de l'État (ex. : « Enseignement scolaire », « Défense », « Solidarité »). Le budget 2026 compte 32 missions. Chaque mission regroupe un ou plusieurs programmes.",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026"
+      }
+    },
+    {
+      "id": "programme",
+      "term": "Programme (budgétaire)",
+      "definition": "Subdivision d'une mission, chaque programme a un responsable, des objectifs et des indicateurs de performance. Exemple : le programme 140 « Enseignement scolaire public du premier degré » dans la mission « Enseignement scolaire ».",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/documentation/documents-budgetaires-lois/exercice-2026"
+      }
+    },
+    {
+      "id": "credits_paiement",
+      "term": "Crédits de paiement (CP)",
+      "definition": "Montants effectivement autorisés à être dépensés dans l'année. À distinguer des autorisations d'engagement (AE), qui représentent les engagements futurs. Ce site utilise les CP pour calculer la répartition budgétaire.",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances"
+      }
+    },
+    {
+      "id": "budget_etat",
+      "term": "Budget de l'État",
+      "definition": "Ensemble des recettes et dépenses de l'État central (~500 Md€ en 2026). Il est distinct du budget de la Sécurité sociale (~700 Md€) et des budgets des collectivités locales (~300 Md€).",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026"
+      }
+    },
+    {
+      "id": "charge_dette",
+      "term": "Charge de la dette",
+      "definition": "Montant annuel des intérêts payés par l'État sur sa dette publique. C'est le deuxième poste de dépenses du budget de l'État. Ces intérêts sont versés aux détenteurs d'obligations d'État (OAT).",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026"
+      }
+    },
+    {
+      "id": "protection_sociale",
+      "term": "Protection sociale",
+      "definition": "Système couvrant les risques sociaux : maladie, vieillesse, famille, chômage, pauvreté, logement. En France, elle est financée principalement par les cotisations sociales et la CSG.",
+      "category": "budget",
+      "source": {
+        "label": "vie-publique.fr",
+        "url": "https://www.vie-publique.fr/fiches/24109-quest-ce-que-la-protection-sociale"
+      }
+    },
+    {
+      "id": "circuit_1",
+      "term": "Circuit 1 : protection sociale",
+      "definition": "Sur ce site, désigne le chemin des cotisations sociales (CSG, CRDS, vieillesse, complémentaire) qui vont directement aux caisses de Sécurité sociale sans passer par le budget de l'État.",
+      "category": "budget",
+      "source": {
+        "label": "securite-sociale.fr",
+        "url": "https://www.securite-sociale.fr/la-secu-en-detail/loi-de-financement/presentation"
+      }
+    },
+    {
+      "id": "circuit_2",
+      "term": "Circuit 2 : budget de l'État",
+      "definition": "Sur ce site, désigne le chemin de l'IR et de la TVA qui alimentent le budget général de l'État, réparti entre les missions par la loi de finances votée au Parlement.",
+      "category": "budget",
+      "source": {
+        "label": "budget.gouv.fr",
+        "url": "https://www.budget.gouv.fr/reperes/loi_de_finances"
+      }
+    },
+    {
+      "id": "coin_fiscal",
+      "term": "Coin fiscal (tax wedge)",
+      "definition": "Écart entre le coût total du travail pour l'employeur (super-brut) et le net en poche du salarié. Il mesure le poids total des prélèvements sur le travail. En France : 47,2 % pour un célibataire au salaire moyen (OCDE, données 2024).",
+      "category": "international",
+      "source": {
+        "label": "OCDE — Taxing Wages 2025",
+        "url": "https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html"
+      }
+    },
+    {
+      "id": "pib",
+      "term": "PIB (Produit Intérieur Brut)",
+      "definition": "Valeur totale des biens et services produits dans un pays en un an. Sert de référence pour mesurer la taille d'une économie et le poids relatif des dépenses publiques ou de la fiscalité.",
+      "category": "international",
+      "source": {
+        "label": "INSEE",
+        "url": "https://www.insee.fr/fr/metadonnees/definition/c1215"
+      }
+    },
+    {
+      "id": "ocde",
+      "term": "OCDE (Organisation de Coopération et de Développement Économiques)",
+      "definition": "Organisation internationale regroupant 38 pays développés. Elle publie des données comparatives sur la fiscalité, l'emploi, l'éducation, etc. Ses rapports « Taxing Wages » et « Revenue Statistics » servent de référence pour comparer les systèmes fiscaux.",
+      "category": "international",
+      "source": {
+        "label": "oecd.org",
+        "url": "https://www.oecd.org/fr/about/"
+      }
+    },
+    {
+      "id": "recettes_pib",
+      "term": "Recettes fiscales / PIB",
+      "definition": "Ratio mesurant le poids total des prélèvements obligatoires par rapport à la richesse nationale. En France : 43,9 % du PIB (2023), contre 37,7 % en Allemagne et 27,3 % au Royaume-Uni.",
+      "category": "international",
+      "source": {
+        "label": "OCDE — Revenue Statistics 2025",
+        "url": "https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html"
+      }
+    },
+    {
+      "id": "redistribution",
+      "term": "Redistribution",
+      "definition": "Transfert de revenus opéré par les prélèvements obligatoires et les prestations sociales, des ménages les plus aisés vers les plus modestes. Elle réduit les inégalités de revenus mesurées avant/après transferts.",
+      "category": "international",
+      "source": {
+        "label": "INSEE",
+        "url": "https://www.insee.fr/fr/statistiques/5371275"
+      }
+    }
+  ]
+}

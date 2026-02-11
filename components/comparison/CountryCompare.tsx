@@ -59,7 +59,7 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
             axisLine={false}
           />
           <Tooltip
-            formatter={(value: number) => [`${value}%`, "Coin fiscal"]}
+            formatter={(value) => [`${value}%`, "Coin fiscal"]}
             contentStyle={{
               borderRadius: "12px",
               border: "1px solid #E5E7EB",
@@ -110,13 +110,13 @@ function BreakdownChart({ countries }: { countries: Country[] }) {
               border: "1px solid #E5E7EB",
               fontSize: "12px",
             }}
-            formatter={(value: number, name: string) => [
+            formatter={(value, name) => [
               `${value}%`,
-              BREAKDOWN_LABELS[name] ?? name,
+              BREAKDOWN_LABELS[name as string] ?? name,
             ]}
           />
           <Legend
-            formatter={(value: string) => BREAKDOWN_LABELS[value] ?? value}
+            formatter={(value) => BREAKDOWN_LABELS[value as string] ?? value}
             wrapperStyle={{ fontSize: "11px" }}
           />
           {Object.entries(BREAKDOWN_COLORS).map(([key, color]) => (
@@ -160,7 +160,7 @@ function RevenueChart({ countries }: { countries: Country[] }) {
             axisLine={false}
           />
           <Tooltip
-            formatter={(value: number) => [`${value}% du PIB`, "Recettes fiscales"]}
+            formatter={(value) => [`${value}% du PIB`, "Recettes fiscales"]}
             contentStyle={{
               borderRadius: "12px",
               border: "1px solid #E5E7EB",

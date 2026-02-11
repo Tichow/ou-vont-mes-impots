@@ -1,10 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useMemo, Suspense } from "react";
+import { useState, useMemo, Suspense } from "react";
 import Link from "next/link";
-import { Clock, Globe, BookOpen, ShoppingCart, ShieldCheck, Landmark, AlertTriangle } from "lucide-react";
-import { calculateTaxes } from "@/lib/tax-engine";
+import { Clock, Globe, BookOpen, ShoppingCart, ShieldCheck, Landmark, AlertTriangle, Users, User } from "lucide-react";
+import { calculateTaxes, calculateHouseholdTaxes } from "@/lib/tax-engine";
 import { formatEuros } from "@/lib/formatting";
 import { SankeyDiagram } from "@/components/breakdown/SankeyDiagram";
 import { BudgetBreakdown } from "@/components/breakdown/BudgetBreakdown";
@@ -26,7 +26,17 @@ function ResultsContent() {
     partnerGrossAnnualSalary: Number(searchParams.get("partnerSalary")) || 0,
   }), [searchParams]);
 
-  const result = useMemo(() => calculateTaxes(input), [input]);
+  const personalResult = useMemo(() => calculateTaxes(input), [input]);
+
+  const isCouple = input.familyStatus === "couple" && input.partnerGrossAnnualSalary > 0;
+
+  const householdResult = useMemo(
+    () => (isCouple ? calculateHouseholdTaxes(input) : null),
+    [input, isCouple]
+  );
+
+  const [viewMode, setViewMode] = useState<"personal" | "household">("personal");
+  const result = viewMode === "household" && householdResult ? householdResult : personalResult;
 
   const cotisations = result.socialContributions.total;
   const ir = result.incomeTax.amount;
@@ -47,11 +57,39 @@ function ResultsContent() {
             vos cotisations financent directement votre <span className="text-social font-medium">protection sociale</span>,
             tandis que vos impôts alimentent le <span className="text-primary font-medium">budget général de l&apos;État</span>.
           </p>
-          {input.familyStatus === "couple" && input.partnerGrossAnnualSalary > 0 && (
-            <p className="text-sm text-text-muted mt-2 bg-primary/5 border border-primary/20 rounded-xl px-4 py-2">
-              Calcul pour un foyer fiscal de 2 déclarants (votre revenu + celui de votre conjoint).
-              Les montants ci-dessous concernent <strong className="text-text">votre part</strong>.
-            </p>
+          {isCouple && (
+            <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-3 bg-primary/5 border border-primary/20 rounded-xl px-4 py-3">
+              <span className="text-sm text-text-muted">Afficher pour :</span>
+              <div className="flex bg-white rounded-lg border border-border p-0.5">
+                <button
+                  onClick={() => setViewMode("personal")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                    viewMode === "personal"
+                      ? "bg-primary text-white shadow-sm"
+                      : "text-text-muted hover:text-text"
+                  }`}
+                >
+                  <User size={13} />
+                  Votre part
+                </button>
+                <button
+                  onClick={() => setViewMode("household")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                    viewMode === "household"
+                      ? "bg-primary text-white shadow-sm"
+                      : "text-text-muted hover:text-text"
+                  }`}
+                >
+                  <Users size={13} />
+                  Foyer fiscal
+                </button>
+              </div>
+              <span className="text-xs text-text-muted">
+                {viewMode === "personal"
+                  ? "Montants calculés sur votre revenu uniquement."
+                  : "Montants combinés des 2 déclarants."}
+              </span>
+            </div>
           )}
         </div>
 

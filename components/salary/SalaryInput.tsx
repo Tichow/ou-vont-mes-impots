@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, Users, User, Baby, Info } from "lucide-react";
@@ -9,11 +9,124 @@ import { formatEuros } from "@/lib/formatting";
 type FamilyStatus = "single" | "couple";
 
 const MIN_SALARY = 0;
-const MAX_SALARY = 200_000;
+const MAX_SALARY = 500_000;
 const DEFAULT_SALARY = 35_000;
 const STEP = 500;
 
 const CHILDREN_OPTIONS = [0, 1, 2, 3] as const;
+
+/** Parse a raw string into a salary number, stripping all non-digit chars. */
+function parseSalary(raw: string): number {
+  const cleaned = raw.replace(/[^\d]/g, "");
+  return cleaned === "" ? 0 : Number(cleaned);
+}
+
+/** Format a number for display in the input (no € symbol, just spaces). */
+function formatDisplay(n: number): string {
+  if (n === 0) return "";
+  return n.toLocaleString("fr-FR");
+}
+
+type SalaryFieldProps = {
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  placeholder?: string;
+  large?: boolean;
+  hint?: string;
+};
+
+function SalaryField({ label, value, onChange, placeholder, large, hint }: SalaryFieldProps) {
+  const [isFocused, setIsFocused] = useState(false);
+  const [rawValue, setRawValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setRawValue(value > 0 ? value.toString() : "");
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    const parsed = parseSalary(rawValue);
+    const clamped = Math.min(MAX_SALARY, Math.max(MIN_SALARY, parsed));
+    onChange(clamped);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    // Allow only digits and spaces while typing
+    if (/^[\d\s]*$/.test(raw)) {
+      setRawValue(raw);
+      const parsed = parseSalary(raw);
+      if (parsed <= MAX_SALARY) {
+        onChange(parsed);
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      inputRef.current?.blur();
+    }
+  };
+
+  const sliderPercentage = ((value - MIN_SALARY) / (MAX_SALARY - MIN_SALARY)) * 100;
+
+  return (
+    <div>
+      <label className="block text-sm font-medium text-text-muted mb-2">
+        {label}
+      </label>
+
+      {/* Text input */}
+      <div className="relative mb-2">
+        <input
+          ref={inputRef}
+          type="text"
+          inputMode="numeric"
+          value={isFocused ? rawValue : formatDisplay(value)}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder ?? "Ex : 35 000"}
+          className={`w-full ${large ? "text-4xl py-4" : "text-2xl py-3"} text-center font-bold text-text bg-surface-alt rounded-xl px-6 border border-border focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all placeholder:text-text-muted/30 placeholder:font-normal ${large ? "placeholder:text-2xl" : "placeholder:text-lg"}`}
+        />
+        {/* € suffix when there's a value */}
+        {value > 0 && !isFocused && (
+          <span className={`absolute right-5 top-1/2 -translate-y-1/2 ${large ? "text-2xl" : "text-lg"} font-bold text-text-muted/40 pointer-events-none`}>
+            €
+          </span>
+        )}
+      </div>
+
+      {/* Slider */}
+      <div className="relative mt-3">
+        <input
+          type="range"
+          min={MIN_SALARY}
+          max={MAX_SALARY}
+          step={STEP}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className="w-full h-2 appearance-none rounded-full cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${sliderPercentage}%, var(--color-border) ${sliderPercentage}%, var(--color-border) 100%)`,
+          }}
+        />
+        <div className="flex justify-between text-xs text-text-muted mt-1">
+          <span>0 €</span>
+          <span>{formatEuros(MAX_SALARY)}</span>
+        </div>
+      </div>
+
+      {hint && (
+        <p className="text-[11px] text-text-muted mt-1">{hint}</p>
+      )}
+    </div>
+  );
+}
 
 export function SalaryInput() {
   const router = useRouter();
@@ -21,42 +134,6 @@ export function SalaryInput() {
   const [familyStatus, setFamilyStatus] = useState<FamilyStatus>("single");
   const [children, setChildren] = useState(0);
   const [partnerSalary, setPartnerSalary] = useState(0);
-
-  const handleSliderChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSalary(Number(e.target.value));
-    },
-    []
-  );
-
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value.replace(/\s/g, "").replace(/€/g, "");
-      const num = Number(value);
-      if (!isNaN(num) && num >= MIN_SALARY && num <= MAX_SALARY) {
-        setSalary(num);
-      }
-    },
-    []
-  );
-
-  const handlePartnerSliderChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPartnerSalary(Number(e.target.value));
-    },
-    []
-  );
-
-  const handlePartnerInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value.replace(/\s/g, "").replace(/€/g, "");
-      const num = Number(value);
-      if (!isNaN(num) && num >= MIN_SALARY && num <= MAX_SALARY) {
-        setPartnerSalary(num);
-      }
-    },
-    []
-  );
 
   const handleFamilyStatusChange = useCallback((status: FamilyStatus) => {
     setFamilyStatus(status);
@@ -77,8 +154,6 @@ export function SalaryInput() {
     router.push(`/resultats?${params.toString()}`);
   }, [salary, familyStatus, children, partnerSalary, router]);
 
-  const sliderPercentage = ((salary - MIN_SALARY) / (MAX_SALARY - MIN_SALARY)) * 100;
-  const partnerSliderPercentage = ((partnerSalary - MIN_SALARY) / (MAX_SALARY - MIN_SALARY)) * 100;
   const showParentIsole = familyStatus === "single" && children >= 1;
 
   return (
@@ -91,37 +166,16 @@ export function SalaryInput() {
       <div className="relative rounded-3xl bg-white p-8 md:p-10 shadow-primary-lg border border-border overflow-hidden">
         {/* Accent bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
-        {/* Salary input */}
-        <label className="block text-sm font-medium text-text-muted mb-2">
-          Salaire brut annuel
-        </label>
-        <div className="relative mb-2">
-          <input
-            type="text"
-            value={formatEuros(salary)}
-            onChange={handleInputChange}
-            className="w-full text-center text-4xl font-bold text-text bg-surface-alt rounded-xl py-4 px-6 border border-border focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-          />
-        </div>
 
-        {/* Slider */}
-        <div className="relative mb-8 mt-4">
-          <input
-            type="range"
-            min={MIN_SALARY}
-            max={MAX_SALARY}
-            step={STEP}
+        {/* Salary input */}
+        <div className="mb-8">
+          <SalaryField
+            label="Salaire brut annuel"
             value={salary}
-            onChange={handleSliderChange}
-            className="w-full h-2 appearance-none rounded-full cursor-pointer"
-            style={{
-              background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${sliderPercentage}%, var(--color-border) ${sliderPercentage}%, var(--color-border) 100%)`,
-            }}
+            onChange={setSalary}
+            placeholder="Ex : 35 000"
+            large
           />
-          <div className="flex justify-between text-xs text-text-muted mt-1">
-            <span>{formatEuros(MIN_SALARY)}</span>
-            <span>{formatEuros(MAX_SALARY)}</span>
-          </div>
         </div>
 
         {/* Family status */}
@@ -173,40 +227,15 @@ export function SalaryInput() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="overflow-hidden"
+              className="overflow-hidden mb-6"
             >
-              <label className="block text-sm font-medium text-text-muted mb-2">
-                Salaire brut annuel du conjoint
-              </label>
-              <div className="relative mb-2">
-                <input
-                  type="text"
-                  value={formatEuros(partnerSalary)}
-                  onChange={handlePartnerInputChange}
-                  className="w-full text-center text-2xl font-bold text-text bg-surface-alt rounded-xl py-3 px-6 border border-border focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                />
-              </div>
-              <div className="relative mb-2 mt-3">
-                <input
-                  type="range"
-                  min={MIN_SALARY}
-                  max={MAX_SALARY}
-                  step={STEP}
-                  value={partnerSalary}
-                  onChange={handlePartnerSliderChange}
-                  className="w-full h-2 appearance-none rounded-full cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${partnerSliderPercentage}%, var(--color-border) ${partnerSliderPercentage}%, var(--color-border) 100%)`,
-                  }}
-                />
-                <div className="flex justify-between text-xs text-text-muted mt-1">
-                  <span>{formatEuros(MIN_SALARY)}</span>
-                  <span>{formatEuros(MAX_SALARY)}</span>
-                </div>
-              </div>
-              <p className="text-[11px] text-text-muted mb-6">
-                0 € si votre conjoint est sans emploi
-              </p>
+              <SalaryField
+                label="Salaire brut annuel du conjoint"
+                value={partnerSalary}
+                onChange={setPartnerSalary}
+                placeholder="Ex : 30 000"
+                hint="0 si votre conjoint est sans emploi"
+              />
             </motion.div>
           )}
         </AnimatePresence>

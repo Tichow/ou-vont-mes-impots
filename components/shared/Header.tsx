@@ -8,6 +8,7 @@ import { BarChart3, Github } from "lucide-react";
 const NAV_LINKS = [
   { href: "/", label: "Accueil" },
   { href: "/resultats", label: "Résultats" },
+  { href: "/glossaire", label: "Glossaire" },
   { href: "/a-propos", label: "Sources" },
 ] as const;
 
@@ -21,7 +22,7 @@ function HeaderInner() {
   /** Build a query string from the current search params (salary, status, children). */
   function buildQuery(targetHref: string): string {
     // Only propagate params to pages that use them
-    if (targetHref === "/" || targetHref === "/resultats" || targetHref === "/a-propos") {
+    if (targetHref === "/" || targetHref === "/resultats" || targetHref === "/glossaire" || targetHref === "/a-propos") {
       const entries: string[] = [];
       for (const key of PROPAGATED_PARAMS) {
         const value = searchParams.get(key);

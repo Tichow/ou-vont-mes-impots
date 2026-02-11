@@ -11,7 +11,7 @@ import {
 import type { TaxResult } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
 
-type SNodeExtra = { id: string; label: string; shortLabel: string; amount: number; color: string };
+type SNodeExtra = { id: string; label: string; shortLabel: string; amount: number; color: string; sortOrder: number };
 type SLinkExtra = { color: string; sourceName: string; targetName: string; amount: number; percentage: number };
 type SNode = D3SankeyNode<SNodeExtra, SLinkExtra>;
 type SLink = D3SankeyLink<SNodeExtra, SLinkExtra>;
@@ -55,14 +55,14 @@ function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[
   });
 
   // ── Column 1: Source ──────────────────────────────────────────────
-  nodes.push({ id: "gross", label: "Salaire brut", shortLabel: "Brut", amount: totalGross, color: "#0F172A" });
+  nodes.push({ id: "gross", label: "Salaire brut", shortLabel: "Brut", amount: totalGross, color: "#0F172A", sortOrder: 0 });
 
   // ── Column 2: Types de prélèvement ────────────────────────────────
-  nodes.push({ id: "social", label: "Cotisations sociales", shortLabel: "Cotis.", amount: result.socialContributions.total, color: "#F59E0B" });
+  nodes.push({ id: "social", label: "Cotisations sociales", shortLabel: "Cotis.", amount: result.socialContributions.total, color: "#F59E0B", sortOrder: 0 });
   if (result.incomeTax.amount > 0) {
-    nodes.push({ id: "ir", label: "Impôt sur le revenu", shortLabel: "IR", amount: result.incomeTax.amount, color: "#3B82F6" });
+    nodes.push({ id: "ir", label: "Impôt sur le revenu", shortLabel: "IR", amount: result.incomeTax.amount, color: "#3B82F6", sortOrder: 1 });
   }
-  nodes.push({ id: "net", label: "Net en poche", shortLabel: "Net", amount: result.netTakeHome, color: "#10B981" });
+  nodes.push({ id: "net", label: "Net en poche", shortLabel: "Net", amount: result.netTakeHome, color: "#10B981", sortOrder: 2 });
 
   // ── Column 3a: Protection sociale by destination (from cotisations — orange) ──
   const SHORT_DEST_LABELS: Record<string, string> = {
@@ -70,6 +70,12 @@ function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[
     sante: "Maladie",
     famille: "Famille",
     dette_sociale: "Dette",
+  };
+  const DEST_ORDER: Record<string, number> = {
+    retraite: 0,
+    sante: 1,
+    famille: 2,
+    dette_sociale: 3,
   };
   for (const dest of result.cotisationsByDestination) {
     if (dest.amount <= 0) continue;
@@ -79,12 +85,13 @@ function buildGraph(result: TaxResult): { nodes: SNodeExtra[]; links: LinkInput[
       shortLabel: SHORT_DEST_LABELS[dest.id] ?? dest.label,
       amount: dest.amount,
       color: dest.color,
+      sortOrder: DEST_ORDER[dest.id] ?? 4,
     });
   }
 
   // ── Column 3b: Budget de l'État (single node from IR) ─────────────
   if (result.incomeTax.amount > 0) {
-    nodes.push({ id: "st_budget", label: "Budget de l\u2019\u00C9tat", shortLabel: "Budget", amount: result.incomeTax.amount, color: "#3B82F6" });
+    nodes.push({ id: "st_budget", label: "Budget de l\u2019\u00C9tat", shortLabel: "Budget", amount: result.incomeTax.amount, color: "#3B82F6", sortOrder: 5 });
   }
 
   // ── Links: Brut → prélèvements ────────────────────────────────────
@@ -134,12 +141,13 @@ export function SankeyDiagram({ result }: Props) {
 
   const graph = useMemo(() => {
     const { nodes, links } = buildGraph(result);
-    const sideMargin = dimensions.width < 500 ? 50 : dimensions.width < 700 ? 75 : 100;
+    const sideMargin = dimensions.width < 500 ? 30 : dimensions.width < 700 ? 45 : 60;
     const margin = { top: 16, right: sideMargin, bottom: 16, left: sideMargin };
 
     const sankeyGenerator = d3Sankey<SNodeExtra, SLinkExtra>()
       .nodeWidth(NODE_WIDTH)
       .nodePadding(NODE_PADDING)
+      .nodeSort((a, b) => (a as SNodeExtra).sortOrder - (b as SNodeExtra).sortOrder)
       .extent([
         [margin.left, margin.top],
         [dimensions.width - margin.right, dimensions.height - margin.bottom],

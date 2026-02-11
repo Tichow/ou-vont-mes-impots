@@ -148,7 +148,7 @@ export function calculateCotisationsByDestination(
       id: "retraite",
       label: "Retraite",
       organism: "Caisse de retraite de base (CNAV) et compl\u00E9mentaire (AGIRC-ARRCO)",
-      description: "Finance les pensions des retrait\u00E9s actuels — vous cotisez aujourd\u2019hui, d\u2019autres cotiseront pour vous demain",
+      description: "Finance les pensions des retrait\u00E9s actuels : vous cotisez aujourd\u2019hui, d\u2019autres cotiseront (peut-être) pour vous demain",
       amount: retraite,
       percentage: total > 0 ? round2((retraite / total) * 100) : 0,
       color: "#F59E0B",
@@ -566,6 +566,98 @@ export function calculateTaxes(input: UserInput): TaxResult {
     input,
     socialContributions,
     incomeTax,
+    estimatedVAT,
+    directTaxes,
+    totalTaxes,
+    netTakeHome,
+    directTaxRate,
+    overallTaxRate,
+    budgetAllocation,
+    cotisationsByDestination,
+    stateBudgetAllocation,
+    stateTaxes,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Household-level calculation (combines both declarants)
+// ---------------------------------------------------------------------------
+
+export function calculateHouseholdTaxes(input: UserInput): TaxResult {
+  const { grossAnnualSalary, familyStatus, numberOfChildren, partnerGrossAnnualSalary } = input;
+
+  if (familyStatus !== "couple" || partnerGrossAnnualSalary <= 0) {
+    return calculateTaxes(input);
+  }
+
+  const combinedGross = grossAnnualSalary + partnerGrossAnnualSalary;
+
+  // Social contributions per person, then combined
+  const yourSC = calculateSocialContributions(grossAnnualSalary);
+  const partnerSC = calculateSocialContributions(partnerGrossAnnualSalary);
+
+  const combinedSC: SocialContributionsBreakdown = {
+    total: round2(yourSC.total + partnerSC.total),
+    retirement: round2(yourSC.retirement + partnerSC.retirement),
+    health: round2(yourSC.health + partnerSC.health),
+    csgDeductible: round2(yourSC.csgDeductible + partnerSC.csgDeductible),
+    csgNonDeductible: round2(yourSC.csgNonDeductible + partnerSC.csgNonDeductible),
+    crds: round2(yourSC.crds + partnerSC.crds),
+    details: yourSC.details.map((d, i) => ({
+      ...d,
+      base: round2(d.base + partnerSC.details[i].base),
+      amount: round2(d.amount + partnerSC.details[i].amount),
+    })),
+  };
+
+  // IR: reuse household-level calculation, take the full household tax
+  const irCalc = calculateIncomeTax(grossAnnualSalary, yourSC, familyStatus, numberOfChildren, partnerGrossAnnualSalary);
+  const householdIR: IncomeTaxResult = {
+    ...irCalc,
+    netImposable: irCalc.householdNetImposable,
+    amount: irCalc.householdTax,
+    effectiveRate: irCalc.householdNetImposable > 0 ? round4(irCalc.householdTax / irCalc.householdNetImposable) : 0,
+  };
+
+  const netTakeHome = round2(combinedGross - combinedSC.total - householdIR.amount);
+  const estimatedVAT = calculateEstimatedVAT(netTakeHome);
+
+  const directTaxes = round2(combinedSC.total + householdIR.amount);
+  const directTaxRate = combinedGross > 0 ? round4(directTaxes / combinedGross) : 0;
+  const totalTaxes = round2(directTaxes + estimatedVAT.amount);
+  const overallTaxRate = combinedGross > 0 ? round4(totalTaxes / combinedGross) : 0;
+
+  const budgetAllocation = calculateBudgetAllocation(totalTaxes);
+
+  // Cotisations by destination — combine both declarants
+  const yourDest = calculateCotisationsByDestination(grossAnnualSalary, yourSC);
+  const partnerDest = calculateCotisationsByDestination(partnerGrossAnnualSalary, partnerSC);
+  const cotisationsByDestination = yourDest.map((d, i) => {
+    const amount = round2(d.amount + partnerDest[i].amount);
+    const quantity = d.equivalence.unitPrice > 0 ? amount / d.equivalence.unitPrice : 0;
+    return {
+      ...d,
+      amount,
+      equivalence: {
+        ...d.equivalence,
+        description: `= ${formatQuantity(quantity)} ${d.equivalence.unit}`,
+        quantity: Math.round(quantity * 100) / 100,
+      },
+    };
+  });
+  const totalCotisDest = cotisationsByDestination.reduce((s, d) => s + d.amount, 0);
+  for (const d of cotisationsByDestination) {
+    d.percentage = totalCotisDest > 0 ? round2((d.amount / totalCotisDest) * 100) : 0;
+  }
+
+  const stateTaxes = round2(householdIR.amount + estimatedVAT.amount);
+  const stateBudgetAllocation = calculateStateBudgetAllocation(stateTaxes);
+
+  return {
+    // Set partnerGrossAnnualSalary to 0 so child components don't show "votre part" labels
+    input: { ...input, grossAnnualSalary: combinedGross, partnerGrossAnnualSalary: 0 },
+    socialContributions: combinedSC,
+    incomeTax: householdIR,
     estimatedVAT,
     directTaxes,
     totalTaxes,
