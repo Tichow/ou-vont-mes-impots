@@ -8,7 +8,7 @@
       "item": "jours d'école d'un élève",
       "unit_price": 56,
       "emoji": "\ud83c\udf93",
-      "source": "Dépense élémentaire 9 130 €/an ÷ 162 jours — DEPP Note d'Information n° 25.52, sept. 2025",
+      "source": "Dépense élémentaire 9 130 €/an ÷ 162 jours, DEPP Note d'Information n° 25.52, sept. 2025",
       "url": "https://www.education.gouv.fr/en-2024-1971-milliards-d-euros-consacres-l-education-soit-68-du-pib-451458"
     },
     "defense": {
@@ -29,14 +29,14 @@
       "item": "mois de pension moyenne",
       "unit_price": 1666,
       "emoji": "\ud83d\udc74",
-      "source": "Pension moyenne brute de droit direct 1 666 €/mois, fin 2023 — DREES « Les retraités et les retraites » éd. 2025",
+      "source": "Pension moyenne brute de droit direct 1 666 €/mois, fin 2023, DREES « Les retraités et les retraites » éd. 2025",
       "url": "https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites"
     },
     "justice": {
       "item": "jours de détention",
       "unit_price": 128,
       "emoji": "\u2696\ufe0f",
-      "source": "Coût moyen journée de détention 128 €, données 2024 — Sénat, Avis n° 145 PLF 2026, prog. 107",
+      "source": "Coût moyen journée de détention 128 €, données 2024, Sénat, Avis n° 145 PLF 2026, prog. 107",
       "url": "https://www.senat.fr/rap/a25-145-6/a25-145-66.html"
     },
     "culture": {
@@ -57,35 +57,35 @@
       "item": "mètres d'autoroute",
       "unit_price": 6000,
       "emoji": "\ud83d\udee3\ufe0f",
-      "source": "Ordre de grandeur ~6 M €/km en terrain dégagé — fourchette 6-15 M €/km selon tracé, Cour des comptes / CEREMA",
+      "source": "Ordre de grandeur ~6 M €/km en terrain dégagé, fourchette 6-15 M €/km selon tracé, Cour des comptes / CEREMA",
       "url": "https://www.ccomptes.fr/fr/publications"
     },
     "security": {
       "item": "heures de patrouille police",
       "unit_price": 49,
       "emoji": "\ud83d\ude94",
-      "source": "Titre 2 prog. 176 : 12,09 Md € ÷ 153 285 ETPT ÷ 1 607 h — Sénat, PLF 2026",
+      "source": "Titre 2 prog. 176 : 12,09 Md € ÷ 153 285 ETPT ÷ 1 607 h, Sénat, PLF 2026",
       "url": "https://www.senat.fr/rap/l25-139-328-1/l25-139-328-16.html"
     },
     "research": {
       "item": "heures de chercheur CNRS",
       "unit_price": 56,
       "emoji": "\ud83d\udd2c",
-      "source": "Masse salariale CNRS 2,87 Md € ÷ 34 289 agents — Cour des comptes, rapport CNRS mars 2025",
+      "source": "Masse salariale CNRS 2,87 Md € ÷ 34 289 agents, Cour des comptes, rapport CNRS mars 2025",
       "url": "https://www.ccomptes.fr/fr/publications/le-centre-national-de-la-recherche-scientifique-cnrs"
     },
     "aid": {
       "item": "repas distribués par le PAM",
       "unit_price": 0.70,
       "emoji": "\ud83c\udf0d",
-      "source": "Coût opérationnel 0,70 €/repas (US$ 0.80) — Programme Alimentaire Mondial, ShareTheMeal",
+      "source": "Coût opérationnel 0,70 €/repas (US$ 0.80), Programme Alimentaire Mondial, ShareTheMeal",
       "url": "https://innovation.wfp.org/project/sharethemeal"
     },
     "admin": {
       "item": "allocations familiales journalières",
       "unit_price": 5.04,
       "emoji": "\ud83c\udfe1",
-      "source": "Allocations familiales 2 enfants tranche 1 : 151,05 €/mois ÷ 30 j — barème avril 2026",
+      "source": "Allocations familiales 2 enfants tranche 1 : 151,05 €/mois ÷ 30 j, barème avril 2026",
       "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F13213"
     },
     "generic": {
@@ -98,21 +98,21 @@
       "item": "pleins de carburant (50L)",
       "unit_price": 30.00,
       "emoji": "\u26fd",
-      "source": "TICPE ~0,60 €/L × 50 L = 30 € de taxes par plein — DGDDI, accises 2024",
+      "source": "TICPE ~0,60 €/L × 50 L = 30 € de taxes par plein, DGDDI, accises 2024",
       "url": "https://www.douane.gouv.fr/la-douane/open-data"
     },
     "taxe_fonciere": {
       "item": "mois de loyer social moyen",
       "unit_price": 380,
       "emoji": "\ud83c\udfe0",
-      "source": "Loyer social moyen ~380 €/mois, données RPLS 2024 — Ancols",
+      "source": "Loyer social moyen ~380 €/mois, données RPLS 2024, Ancols",
       "url": "https://www.ancols.fr"
     },
     "tsca": {
       "item": "consultations vétérinaires",
       "unit_price": 50,
       "emoji": "\ud83d\udee1\ufe0f",
-      "source": "Consultation vétérinaire généraliste ~50 € en 2024 — Ordre national des vétérinaires",
+      "source": "Consultation vétérinaire généraliste ~50 € en 2024, Ordre national des vétérinaires",
       "url": "https://www.veterinaire.fr"
     }
   }

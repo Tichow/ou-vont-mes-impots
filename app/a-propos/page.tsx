@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import {
   AlertTriangle,
   BookOpen,
@@ -101,14 +101,14 @@ const EQUIVALENCE_SOURCES: EquivalenceSource[] = [
     sector: "Retraite",
     equivalence: "Mois de pension moyenne",
     value: "1 666 €/mois",
-    source: "Pension moyenne brute de droit direct, fin 2023 — DREES « Les retraités et les retraites » éd. 2025",
+    source: "Pension moyenne brute de droit direct, fin 2023, DREES « Les retraités et les retraites » éd. 2025",
     url: "https://drees.solidarites-sante.gouv.fr/publications-communique-de-presse-documents-de-reference/250731_PANORAMAS-retraites",
   },
   {
     sector: "Justice",
     equivalence: "Jours de détention",
     value: "128 €/jour",
-    source: "Coût moyen journée de détention, données 2024 — Sénat, Avis n° 145 PLF 2026, prog. 107, rapporteur Louis Vogel",
+    source: "Coût moyen journée de détention, données 2024, Sénat, Avis n° 145 PLF 2026, prog. 107, rapporteur Louis Vogel",
     url: "https://www.senat.fr/rap/a25-145-6/a25-145-66.html",
   },
   {
@@ -129,28 +129,28 @@ const EQUIVALENCE_SOURCES: EquivalenceSource[] = [
     sector: "Sécurité",
     equivalence: "Heures de patrouille police",
     value: "49 €/h",
-    source: "Titre 2 prog. 176 : 12,09 Md € ÷ 153 285 ETPT ÷ 1 607 h/an — Sénat, PLF 2026",
+    source: "Titre 2 prog. 176 : 12,09 Md € ÷ 153 285 ETPT ÷ 1 607 h/an, Sénat, PLF 2026",
     url: "https://www.senat.fr/rap/l25-139-328-1/l25-139-328-16.html",
   },
   {
     sector: "Recherche",
     equivalence: "Heures de chercheur CNRS",
     value: "56 €/h",
-    source: "Masse salariale CNRS 2,87 Md € pour 34 289 agents — Cour des comptes, rapport CNRS mars 2025 ; salaire chercheur MESRI EESR 2025 fiche n° 18",
+    source: "Masse salariale CNRS 2,87 Md € pour 34 289 agents, Cour des comptes, rapport CNRS mars 2025 ; salaire chercheur MESRI EESR 2025 fiche n° 18",
     url: "https://www.ccomptes.fr/fr/publications/le-centre-national-de-la-recherche-scientifique-cnrs",
   },
   {
     sector: "Aide intl.",
     equivalence: "Repas distribués par le PAM",
     value: "0,70 €",
-    source: "Coût opérationnel par repas (US$ 0.80) — Programme Alimentaire Mondial, ShareTheMeal",
+    source: "Coût opérationnel par repas (US$ 0.80), Programme Alimentaire Mondial, ShareTheMeal",
     url: "https://innovation.wfp.org/project/sharethemeal",
   },
   {
     sector: "Famille",
     equivalence: "Allocations familiales journalières",
     value: "5,04 €/jour",
-    source: "Allocations familiales 2 enfants, tranche 1 : 151,05 €/mois ÷ 30 j — barème avril 2026",
+    source: "Allocations familiales 2 enfants, tranche 1 : 151,05 €/mois ÷ 30 j, barème avril 2026",
     url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F13213",
   },
 ];
@@ -355,6 +355,70 @@ function Section({
   );
 }
 
+function ParallaxCard({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState(
+    "perspective(600px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)"
+  );
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = cardRef.current;
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const rotateX = (0.5 - y) * 16;
+      const rotateY = (x - 0.5) * 16;
+      setTransform(
+        `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04,1.04,1.04)`
+      );
+      setGlare({ x: x * 100, y: y * 100, opacity: 0.12 });
+    },
+    []
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    setTransform(
+      "perspective(600px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)"
+    );
+    setGlare({ x: 50, y: 50, opacity: 0 });
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={className}
+      style={{
+        transform,
+        transition: "transform 0.15s ease-out",
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+      }}
+    >
+      <div className="relative overflow-hidden rounded-xl border border-border bg-white p-4 flex items-start gap-3 h-full">
+        {children}
+        <div
+          className="pointer-events-none absolute inset-0 rounded-xl"
+          style={{
+            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,${glare.opacity}) 0%, transparent 60%)`,
+            transition: "background 0.15s ease-out",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function SourceCard({ source }: { source: SourceItem }) {
   return (
     <a
@@ -505,16 +569,13 @@ export default function AProposPage() {
                 { emoji: "🏢", title: "Impôts des entreprises", desc: "IS (~59 Md€), taxe sur les salaires, forfait social, CVAE" },
                 { emoji: "⚖️", title: "CDHR", desc: "Impôt plancher 20% (>250 k€), ~24 000 foyers concernés" },
               ].map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-xl border border-border bg-white p-4 flex items-start gap-3"
-                >
+                <ParallaxCard key={item.title}>
                   <span className="text-lg flex-shrink-0">{item.emoji}</span>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-text">{item.title}</p>
                     <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{item.desc}</p>
                   </div>
-                </div>
+                </ParallaxCard>
               ))}
             </div>
             <div className="rounded-xl border border-green-200 bg-green-50/50 px-5 py-3.5 text-sm text-text-muted">
@@ -529,7 +590,7 @@ export default function AProposPage() {
         <Section title="Et les impôts locaux ?" icon={MapPin}>
           <div className="bg-white rounded-2xl border border-border p-6 text-sm leading-relaxed text-text-muted space-y-4">
             <p>
-              Si vous êtes propriétaire, vous payez aussi la <strong className="text-text">taxe foncière</strong> — en moyenne{" "}
+              Si vous êtes propriétaire, vous payez aussi la <strong className="text-text">taxe foncière</strong>, en moyenne{" "}
               <strong className="text-text">1 082 €/an</strong> par redevable en 2024
               (717 € pour un propriétaire d&apos;un seul logement).
               Au total, la taxe foncière représente <strong className="text-text">53,6 Md €</strong> de recettes.

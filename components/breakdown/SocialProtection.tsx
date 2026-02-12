@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { motion } from "motion/react";
+import { Landmark } from "lucide-react";
 import type { CotisationDestination } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
 import { SourceTooltip } from "@/components/ui/SourceTooltip";
@@ -86,23 +87,30 @@ export function SocialProtection({ destinations }: Props) {
             />
           </div>
 
-          {/* Description + organism + equivalence */}
+          {/* Description + equivalence */}
           <div className="space-y-1">
             <p className="text-sm text-text-muted leading-relaxed">
               {dest.description}
             </p>
-            <p className="text-xs text-text-muted">
-              <span className="font-medium text-text-muted/70">Bénéficiaire :</span>{" "}
-              {dest.organism}
-            </p>
             <p className="text-xs text-text-muted font-medium">
               {dest.equivalence.description}
+            </p>
+          </div>
+
+          {/* Footer: beneficiary + source */}
+          <div className="mt-3 pt-3 border-t border-border/50">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1.5">
+                <Landmark size={12} className="text-text-muted/50 flex-shrink-0" />
+                <span className="text-xs font-semibold text-text-secondary">Bénéficiaire</span>
+              </div>
               <SourceTooltip
                 source={dest.equivalence.source}
                 label={dest.label}
                 url={dest.equivalence.url}
               />
-            </p>
+            </div>
+            <p className="text-xs text-text-muted mt-1 leading-relaxed">{dest.organism}</p>
           </div>
         </div>
       ))}

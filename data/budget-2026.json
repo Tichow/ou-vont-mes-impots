@@ -24,9 +24,9 @@
       "includes_social_security": true,
       "state_budget_bn": 74.5,
       "missions": [
-        { "name": "Régimes sociaux et de retraite (budget État)", "budget_bn": 5.5, "source": "LFI 2026 — rapport Sénat commission des finances" },
-        { "name": "Pensions civiles et militaires (CAS Pensions)", "budget_bn": 62.0, "source": "LFI 2026 — CAS Pensions" },
-        { "name": "Branche vieillesse Sécurité sociale", "budget_bn": 310.4, "source": "LFSS 2026 — objectif branche vieillesse (vie-publique.fr)" }
+        { "name": "Régimes sociaux et de retraite (budget État)", "budget_bn": 5.5, "source": "LFI 2026, rapport Sénat commission des finances" },
+        { "name": "Pensions civiles et militaires (CAS Pensions)", "budget_bn": 62.0, "source": "LFI 2026, CAS Pensions" },
+        { "name": "Branche vieillesse Sécurité sociale", "budget_bn": 310.4, "source": "LFSS 2026, objectif branche vieillesse (vie-publique.fr)" }
       ],
       "description": "Pensions civiles et militaires, régimes spéciaux de retraite"
     },
@@ -41,7 +41,7 @@
       "state_budget_bn": 1.6,
       "missions": [
         { "name": "Santé (budget État)", "budget_bn": 1.5, "source": "LFI 2026" },
-        { "name": "Branche maladie — ONDAM", "budget_bn": 274.4, "source": "LFSS 2026 — ONDAM voté +3.1% (vie-publique.fr)" }
+        { "name": "Branche maladie, ONDAM", "budget_bn": 274.4, "source": "LFSS 2026, ONDAM voté +3.1% (vie-publique.fr)" }
       ],
       "description": "Prévention, sécurité sanitaire, offre de soins (hors assurance maladie)"
     },
@@ -55,8 +55,8 @@
       "includes_social_security": false,
       "state_budget_bn": 104.1,
       "missions": [
-        { "name": "Enseignement scolaire", "budget_bn": 64.5, "source": "LFI 2026 — mission Enseignement scolaire, CP hors CAS Pensions (education.gouv.fr)" },
-        { "name": "Enseignement supérieur (programme 150)", "budget_bn": 15.5, "source": "LFI 2026 — MIRES, programme 150 (enseignementsup-recherche.gouv.fr)" }
+        { "name": "Enseignement scolaire", "budget_bn": 64.5, "source": "LFI 2026, mission Enseignement scolaire, CP hors CAS Pensions (education.gouv.fr)" },
+        { "name": "Enseignement supérieur (programme 150)", "budget_bn": 15.5, "source": "LFI 2026, MIRES, programme 150 (enseignementsup-recherche.gouv.fr)" }
       ],
       "description": "Écoles, collèges, lycées, universités, enseignants"
     },
@@ -70,7 +70,7 @@
       "includes_social_security": false,
       "state_budget_bn": 61.3,
       "missions": [
-        { "name": "Charge de la dette de l'État (programme 117)", "budget_bn": 59.3, "source": "LFI 2026 — rapport Sénat, dépasse pour la première fois le budget défense" }
+        { "name": "Charge de la dette de l'État (programme 117)", "budget_bn": 59.3, "source": "LFI 2026, rapport Sénat, dépasse pour la première fois le budget défense" }
       ],
       "description": "Intérêts de la dette, charge de la dette"
     },
@@ -84,7 +84,7 @@
       "includes_social_security": false,
       "state_budget_bn": 61.9,
       "missions": [
-        { "name": "Défense", "budget_bn": 57.1, "source": "LFI 2026 — hors CAS Pensions, conforme LPM 2024-2030 + 3,5 Md€ supplémentaires (defense.gouv.fr)" }
+        { "name": "Défense", "budget_bn": 57.1, "source": "LFI 2026, hors CAS Pensions, conforme LPM 2024-2030 + 3,5 Md€ supplémentaires (defense.gouv.fr)" }
       ],
       "description": "Armée, équipements militaires, dissuasion nucléaire"
     },
@@ -98,7 +98,7 @@
       "includes_social_security": false,
       "state_budget_bn": 46.6,
       "missions": [
-        { "name": "Écologie, développement et mobilité durables", "budget_bn": 16.2, "source": "LFI 2026 — CP, -1.7% vs 2025 (rapport Sénat)" },
+        { "name": "Écologie, développement et mobilité durables", "budget_bn": 16.2, "source": "LFI 2026, CP, -1.7% vs 2025 (rapport Sénat)" },
         { "name": "Cohésion des territoires", "budget_bn": 5.0, "source": "LFI 2026" }
       ],
       "description": "Transports, routes, écologie, transition énergétique"
@@ -113,7 +113,7 @@
       "includes_social_security": false,
       "state_budget_bn": 27.3,
       "missions": [
-        { "name": "Sécurités", "budget_bn": 26.0, "source": "LFI 2026 — CP incluant CAS Pensions, +2.1% vs 2025 (rapport Sénat)" },
+        { "name": "Sécurités", "budget_bn": 26.0, "source": "LFI 2026, CP incluant CAS Pensions, +2.1% vs 2025 (rapport Sénat)" },
         { "name": "Immigration, asile et intégration", "budget_bn": 2.3, "source": "LFI 2026" }
       ],
       "description": "Police, gendarmerie, sécurité civile"
@@ -128,7 +128,7 @@
       "includes_social_security": false,
       "state_budget_bn": 21.8,
       "missions": [
-        { "name": "Recherche (MIRES hors programme 150)", "budget_bn": 16.0, "source": "LFI 2026 — programmes 172, 193, 190, 186, 142 et autres (MIRES total 31,5 Md€ CP)" }
+        { "name": "Recherche (MIRES hors programme 150)", "budget_bn": 16.0, "source": "LFI 2026, programmes 172, 193, 190, 186, 142 et autres (MIRES total 31,5 Md€ CP)" }
       ],
       "description": "CNRS, INSERM, recherche spatiale, innovation"
     },
@@ -142,7 +142,7 @@
       "includes_social_security": false,
       "state_budget_bn": 13.4,
       "missions": [
-        { "name": "Justice", "budget_bn": 10.6, "source": "LFI 2026 — CP hors CAS Pensions, +200 M€ et +1 600 postes (rapport Sénat)" }
+        { "name": "Justice", "budget_bn": 10.6, "source": "LFI 2026, CP hors CAS Pensions, +200 M€ et +1 600 postes (rapport Sénat)" }
       ],
       "description": "Tribunaux, prisons, aide juridictionnelle"
     },
@@ -171,7 +171,7 @@
       "includes_social_security": false,
       "state_budget_bn": 8.7,
       "missions": [
-        { "name": "Aide publique au développement", "budget_bn": 5.5, "source": "LFI 2026 — en baisse vs 2025" }
+        { "name": "Aide publique au développement", "budget_bn": 5.5, "source": "LFI 2026, en baisse vs 2025" }
       ],
       "description": "Aide internationale, coopération, humanitaire"
     },
@@ -185,13 +185,13 @@
       "includes_social_security": true,
       "state_budget_bn": 86.4,
       "missions": [
-        { "name": "Branche famille Sécurité sociale", "budget_bn": 59.7, "source": "LFSS 2026 — objectif branche famille (vie-publique.fr)" },
+        { "name": "Branche famille Sécurité sociale", "budget_bn": 59.7, "source": "LFSS 2026, objectif branche famille (vie-publique.fr)" },
         { "name": "Assurance chômage (Unédic)", "budget_bn": 45.0, "source": "Convention Unédic 2024, prévisions 2026" },
-        { "name": "Travail et emploi (budget État)", "budget_bn": 17.7, "source": "LFI 2026 — CP, -11.8% vs 2025 (rapport Sénat)" },
-        { "name": "Solidarité, insertion et égalité des chances", "budget_bn": 29.5, "source": "LFI 2026 — CP (rapport Sénat)" },
+        { "name": "Travail et emploi (budget État)", "budget_bn": 17.7, "source": "LFI 2026, CP, -11.8% vs 2025 (rapport Sénat)" },
+        { "name": "Solidarité, insertion et égalité des chances", "budget_bn": 29.5, "source": "LFI 2026, CP (rapport Sénat)" },
         { "name": "Gestion des finances publiques", "budget_bn": 10.2, "source": "LFI 2026" },
         { "name": "Administration générale et territoriale de l'État", "budget_bn": 4.5, "source": "LFI 2026" },
-        { "name": "Autres missions", "budget_bn": 45.0, "source": "LFI 2026 — missions restantes agrégées" }
+        { "name": "Autres missions", "budget_bn": 45.0, "source": "LFI 2026, missions restantes agrégées" }
       ],
       "description": "Solidarité, emploi, handicap, logement, administration, services publics"
     }

@@ -6,7 +6,7 @@
     "pass_url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/plafonds-securite-sociale.html",
     "agirc_arrco_url": "https://www.agirc-arrco.fr/entreprises/mon-entreprise/calculer-et-declarer/le-calcul-des-cotisations-de-retraite-complementaire/",
     "simulateur_officiel": "https://simulateur-ir-ifi.impots.gouv.fr/calcul_impot/2026/complet/index.htm",
-    "law": "LFI 2026 — revalorisation +1.8% (revenus 2025), adoptée le 2 février 2026 via 49.3",
+    "law": "LFI 2026, revalorisation +1.8% (revenus 2025), adoptée le 2 février 2026 via 49.3",
     "year": 2026,
     "fiscal_year_income": 2025,
     "last_verified": "2026-02-11",
@@ -103,7 +103,7 @@
       { "max_net_annual": null, "rate": 0.23, "label": "> 50 k€ net" }
     ],
     "sources": {
-      "savings_rate": "Banque de France T4 2024 (taux agrégé 17,7%) ; répartition par quintile dérivée de l'INSEE Première n°1749 (Enquête Budget de famille 2017) — Q1 ~3%, Q2 ~5%, Q3 ~10%, Q4 ~11%, Q5 ~28%",
+      "savings_rate": "Banque de France T4 2024 (taux agrégé 17,7%) ; répartition par quintile dérivée de l'INSEE Première n°1749 (Enquête Budget de famille 2017) : Q1 ~3%, Q2 ~5%, Q3 ~10%, Q4 ~11%, Q5 ~28%",
       "effective_vat_rate": "Taux effectif moyen ~12,5% calculé à partir du mix des 4 taux légaux (20%, 10%, 5,5%, 2,1%) pondéré par la structure de consommation des ménages (economie.gouv.fr)"
     },
     "description": "TVA estimée en fonction du revenu net : les ménages modestes épargnent moins et consomment une part plus importante de leurs revenus."

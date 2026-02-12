@@ -1,5 +1,6 @@
 "use client";
 
+import { Landmark } from "lucide-react";
 import type { OtherTaxEstimate, OtherTaxInputs, VehicleType } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
 import { SourceTooltip } from "@/components/ui/SourceTooltip";
@@ -134,10 +135,16 @@ function TICPECard({
         </p>
       )}
 
-      <p className="text-xs text-text-muted mt-1.5">
-        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {tax.destinationLabel}
-        <SourceTooltip source="DGDDI 2024 — TICPE ~30 Md€ de recettes" label="TICPE" url="https://www.douane.gouv.fr/la-douane/open-data" />
-      </p>
+      <div className="mt-3 pt-3 border-t border-border/50">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Landmark size={12} className="text-text-muted/50 flex-shrink-0" />
+            <span className="text-xs font-semibold text-text-secondary">Bénéficiaire</span>
+          </div>
+          <SourceTooltip source="DGDDI 2024, TICPE ~30 Md€ de recettes" label="TICPE" url="https://www.douane.gouv.fr/la-douane/open-data" />
+        </div>
+        <p className="text-xs text-text-muted mt-1 leading-relaxed">{tax.destinationLabel}</p>
+      </div>
     </div>
   );
 }
@@ -157,10 +164,16 @@ function TSCACard({ tax }: { tax: OtherTaxEstimate }) {
         </span>
       </div>
       <p className="text-sm text-text-muted leading-relaxed">{tax.description}</p>
-      <p className="text-xs text-text-muted mt-1.5">
-        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {tax.destinationLabel}
-        <SourceTooltip source="DGFiP 2024 — TSCA ~9 Md€ de recettes" label="TSCA" url="https://www.impots.gouv.fr/statistiques" />
-      </p>
+      <div className="mt-3 pt-3 border-t border-border/50">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Landmark size={12} className="text-text-muted/50 flex-shrink-0" />
+            <span className="text-xs font-semibold text-text-secondary">Bénéficiaire</span>
+          </div>
+          <SourceTooltip source="DGFiP 2024, TSCA ~9 Md€ de recettes" label="TSCA" url="https://www.impots.gouv.fr/statistiques" />
+        </div>
+        <p className="text-xs text-text-muted mt-1 leading-relaxed">{tax.destinationLabel}</p>
+      </div>
     </div>
   );
 }
@@ -204,15 +217,21 @@ function TabacCard({
         </p>
       )}
 
-      <p className="text-xs text-text-muted mt-1.5">
-        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {d.destination_label}
-        <SourceTooltip source="DGDDI 2024 — Droits tabac ~13 Md€" label="Accise tabac" url="https://www.douane.gouv.fr/la-douane/open-data" />
-      </p>
       {inputs.packsPerWeek > 0 && (
-        <p className="text-xs text-text-muted mt-0.5 italic">
+        <p className="text-xs text-text-muted mt-1 italic">
           Droits de consommation uniquement (TVA déjà comptée)
         </p>
       )}
+      <div className="mt-3 pt-3 border-t border-border/50">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Landmark size={12} className="text-text-muted/50 flex-shrink-0" />
+            <span className="text-xs font-semibold text-text-secondary">Bénéficiaire</span>
+          </div>
+          <SourceTooltip source="DGDDI 2024, Droits tabac ~13 Md€" label="Accise tabac" url="https://www.douane.gouv.fr/la-douane/open-data" />
+        </div>
+        <p className="text-xs text-text-muted mt-1 leading-relaxed">{d.destination_label}</p>
+      </div>
     </div>
   );
 }
@@ -256,15 +275,21 @@ function AlcoolCard({
         </p>
       )}
 
-      <p className="text-xs text-text-muted mt-1.5">
-        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {d.destination_label}
-        <SourceTooltip source="DGDDI 2024 — Accise alcool ~4 Md€" label="Accise alcool" url="https://www.douane.gouv.fr/la-douane/open-data" />
-      </p>
       {inputs.drinksPerWeek > 0 && (
-        <p className="text-xs text-text-muted mt-0.5 italic">
+        <p className="text-xs text-text-muted mt-1 italic">
           Droits de consommation uniquement (TVA déjà comptée)
         </p>
       )}
+      <div className="mt-3 pt-3 border-t border-border/50">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Landmark size={12} className="text-text-muted/50 flex-shrink-0" />
+            <span className="text-xs font-semibold text-text-secondary">Bénéficiaire</span>
+          </div>
+          <SourceTooltip source="DGDDI 2024, Accise alcool ~4 Md€" label="Accise alcool" url="https://www.douane.gouv.fr/la-douane/open-data" />
+        </div>
+        <p className="text-xs text-text-muted mt-1 leading-relaxed">{d.destination_label}</p>
+      </div>
     </div>
   );
 }
@@ -339,10 +364,16 @@ function TaxeFonciereCard({
               €/an
             </span>
           </div>
-          <p className="text-xs text-text-muted mt-1.5">
-            <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {d.destination_label}
-            <SourceTooltip source="DGFiP 2024 — Taxe foncière ~40 Md€ de recettes" label="Taxe foncière" url="https://www.impots.gouv.fr/statistiques" />
-          </p>
+          <div className="mt-3 pt-3 border-t border-border/50">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1.5">
+                <Landmark size={12} className="text-text-muted/50 flex-shrink-0" />
+                <span className="text-xs font-semibold text-text-secondary">Bénéficiaire</span>
+              </div>
+              <SourceTooltip source="DGFiP 2024, Taxe foncière ~40 Md€ de recettes" label="Taxe foncière" url="https://www.impots.gouv.fr/statistiques" />
+            </div>
+            <p className="text-xs text-text-muted mt-1 leading-relaxed">{d.destination_label}</p>
+          </div>
         </div>
       )}
     </div>
@@ -364,10 +395,16 @@ function CEHRCard({ tax }: { tax: OtherTaxEstimate }) {
         </span>
       </div>
       <p className="text-sm text-text-muted leading-relaxed">{tax.description}</p>
-      <p className="text-xs text-text-muted mt-1.5">
-        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {tax.destinationLabel}
-        <SourceTooltip source="Art. 223 sexies CGI — CEHR" label="CEHR" url="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025049488" />
-      </p>
+      <div className="mt-3 pt-3 border-t border-border/50">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Landmark size={12} className="text-text-muted/50 flex-shrink-0" />
+            <span className="text-xs font-semibold text-text-secondary">Bénéficiaire</span>
+          </div>
+          <SourceTooltip source="Art. 223 sexies CGI, CEHR" label="CEHR" url="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025049488" />
+        </div>
+        <p className="text-xs text-text-muted mt-1 leading-relaxed">{tax.destinationLabel}</p>
+      </div>
     </div>
   );
 }
@@ -379,19 +416,19 @@ export function OtherTaxCards({ taxes, cehr, inputs, onChange }: Props) {
 
   return (
     <div className="space-y-3">
-      {/* TICPE — full width */}
+      {/* TICPE, full width */}
       <TICPECard tax={ticpe} inputs={inputs} onChange={onChange} />
 
-      {/* TSCA — full width */}
+      {/* TSCA, full width */}
       <TSCACard tax={tsca} />
 
-      {/* Tabac + Alcool — side by side */}
+      {/* Tabac + Alcool, side by side */}
       <div className="grid grid-cols-2 gap-3">
         <TabacCard inputs={inputs} onChange={onChange} />
         <AlcoolCard inputs={inputs} onChange={onChange} />
       </div>
 
-      {/* Propriétaire — full width */}
+      {/* Propriétaire, full width */}
       <TaxeFonciereCard inputs={inputs} onChange={onChange} />
 
       {cehr && (

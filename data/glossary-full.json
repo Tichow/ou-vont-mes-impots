@@ -611,7 +611,7 @@
       "definition": "Écart entre le coût total du travail pour l'employeur (super-brut) et le net en poche du salarié. Il mesure le poids total des prélèvements sur le travail. En France : 47,2 % pour un célibataire au salaire moyen (OCDE, données 2024).",
       "category": "international",
       "source": {
-        "label": "OCDE — Taxing Wages 2025",
+        "label": "OCDE, Taxing Wages 2025",
         "url": "https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html"
       }
     },
@@ -641,7 +641,7 @@
       "definition": "Ratio mesurant le poids total des prélèvements obligatoires par rapport à la richesse nationale. En France : 43,9 % du PIB (2023), contre 37,7 % en Allemagne et 27,3 % au Royaume-Uni.",
       "category": "international",
       "source": {
-        "label": "OCDE — Revenue Statistics 2025",
+        "label": "OCDE, Revenue Statistics 2025",
         "url": "https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html"
       }
     },
@@ -661,7 +661,7 @@
       "definition": "Taxe intérieure de consommation sur les produits énergétiques, incluse dans le prix des carburants à la pompe (~0,60 €/L de gazole, ~0,70 €/L de SP95). Son montant est fixe (en centimes par litre), il ne varie pas avec le prix du pétrole. Recettes totales : ~30 Md€/an, réparties entre l'État (53%), les collectivités territoriales (40%) et l'AFITF (7%, agence de financement des transports).",
       "category": "impots",
       "source": {
-        "label": "DGDDI — Statistiques des accises 2024",
+        "label": "DGDDI, Statistiques des accises 2024",
         "url": "https://www.douane.gouv.fr/la-douane/open-data"
       }
     },
@@ -671,7 +671,7 @@
       "definition": "Impôt local annuel payé par tout propriétaire d'un bien immobilier bâti. Son montant dépend de la valeur locative cadastrale du bien et du taux voté par la commune et le département. Moyenne nationale : 1 082 €/an par redevable (717 € pour un logement unique). Recettes totales : ~40 Md€/an (53,6 Md€ incluant le non-bâti). Seul impôt local direct des ménages depuis la suppression de la taxe d'habitation (résidences principales) en 2023.",
       "category": "impots",
       "source": {
-        "label": "DGFiP — Statistiques n°34, taxe foncière 2024",
+        "label": "DGFiP, Statistiques n°34, taxe foncière 2024",
         "url": "https://www.impots.gouv.fr/dgfip-statistiques-une-hausse-de-la-taxe-fonciere-en-2024-entrainee-par-lindexation-sur-linflation"
       }
     },
@@ -681,7 +681,7 @@
       "definition": "Surtaxe progressive créée en 2012 pour les contribuables à revenus très élevés. Pour un célibataire : 3% sur la fraction du RFR entre 250 000 € et 500 000 €, et 4% au-delà. Pour un couple : seuils doublés (500 000 € et 1 000 000 €). Rapporte environ 4,5 Md€/an et concerne ~50 000 foyers fiscaux.",
       "category": "impots",
       "source": {
-        "label": "BOFiP — BOI-IR-CHR (CGI art. 223 sexies)",
+        "label": "BOFiP, BOI-IR-CHR (CGI art. 223 sexies)",
         "url": "https://bofip.impots.gouv.fr/bofip/7573-PGP.html"
       }
     },
@@ -691,7 +691,7 @@
       "definition": "Taxe incluse dans toutes les primes d'assurance payées en France (auto, habitation, santé complémentaire, responsabilité civile, etc.). Taux variable selon le type de contrat : 9% pour l'assurance maladie, 18% pour l'assurance auto, 30% pour l'incendie. Recettes totales : ~9 Md€/an, principalement affectées aux collectivités territoriales (60%), à l'État (25%) et à la Sécurité sociale (15%).",
       "category": "impots",
       "source": {
-        "label": "DGFiP — Statistiques fiscales 2024",
+        "label": "DGFiP, Statistiques fiscales 2024",
         "url": "https://www.impots.gouv.fr/statistiques"
       }
     },
@@ -701,7 +701,7 @@
       "definition": "Communément appelés « frais de notaire », les DMTO représentent 5,81% du prix d'achat d'un bien immobilier dans l'ancien (4,50% département + 1,20% commune + 0,10% État + frais d'assiette). Sur un achat de 200 000 €, cela représente environ 11 620 € de taxes. Les DMTO sont la principale ressource fiscale des départements. Recettes totales : ~16 Md€/an (très cycliques, dépendent du marché immobilier).",
       "category": "impots",
       "source": {
-        "label": "service-public.gouv.fr — Frais de notaire",
+        "label": "service-public.gouv.fr, Frais de notaire",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17759"
       }
     },
@@ -711,7 +711,7 @@
       "definition": "Impôt progressif prélevé lors de la transmission d'un patrimoine au décès. En ligne directe (parent → enfant) : abattement de 100 000 € par parent et par enfant, puis barème progressif de 5% (jusqu'à 8 072 €) à 45% (au-delà de 1 805 677 €). Exonération totale entre époux et partenaires de PACS. Recettes totales : ~20 Md€/an.",
       "category": "impots",
       "source": {
-        "label": "service-public.gouv.fr — Droits de succession",
+        "label": "service-public.gouv.fr, Droits de succession",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F14198"
       }
     },
@@ -721,7 +721,7 @@
       "definition": "Impôt annuel sur le patrimoine immobilier net supérieur à 1,3 million d'euros, instauré en 2018 en remplacement de l'ISF (qui taxait aussi les placements financiers). Barème progressif de 0,50% (800 000-1,3 M€) à 1,50% (au-delà de 10 M€). Concerne environ 186 000 foyers fiscaux. Recettes : ~2,2 Md€/an.",
       "category": "impots",
       "source": {
-        "label": "DGFiP — Statistiques IFI 2024",
+        "label": "DGFiP, Statistiques IFI 2024",
         "url": "https://www.impots.gouv.fr/statistiques"
       }
     },
@@ -731,7 +731,7 @@
       "definition": "Nouvel impôt plancher créé par la LFI 2026, garantissant un taux effectif d'imposition minimum de 20 % pour les contribuables dont le revenu fiscal de référence (RFR) dépasse 250 000 € (célibataire) ou 500 000 € (couple). Si le total de l'IR et de la CEHR est inférieur à 20 % du RFR, le contribuable paie la différence. Mesure temporaire (3 ans, 2025-2027), concernant environ 24 000 foyers fiscaux. Recettes estimées : ~2 Md€/an.",
       "category": "impots",
       "source": {
-        "label": "impots.gouv.fr — CDHR",
+        "label": "impots.gouv.fr, CDHR",
         "url": "https://www.impots.gouv.fr/actualite/contribution-differentielle-sur-les-hauts-revenus-cdhr"
       }
     },
@@ -741,7 +741,7 @@
       "definition": "Impôt de production dû par les entreprises dont le chiffre d'affaires dépasse 500 000 €, calculé sur la valeur ajoutée produite (et non sur le bénéfice). Taux maximal de 0,28 % en 2025. Composante de la CET (contribution économique territoriale) avec la CFE. Sa suppression progressive a été annoncée puis reportée à plusieurs reprises ; elle devrait être effective d'ici 2030. Recettes : ~8 Md€/an, reversées aux collectivités territoriales.",
       "category": "impots",
       "source": {
-        "label": "entreprendre.service-public.gouv.fr — CVAE",
+        "label": "entreprendre.service-public.gouv.fr, CVAE",
         "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F23546"
       }
     },
@@ -751,7 +751,7 @@
       "definition": "Catégorie fiscale de revenus correspondant aux bénéfices tirés d'activités commerciales, industrielles ou artisanales exercées par des personnes physiques (commerçants, artisans, loueurs meublés, e-commerçants). Deux régimes possibles : le micro-BIC (CA < 188 700 € pour les ventes, abattement forfaitaire de 71 % ou 50 %) ou le régime réel (déduction des charges réelles). Soumis à l'impôt sur le revenu au barème progressif.",
       "category": "impots",
       "source": {
-        "label": "economie.gouv.fr — BIC/BNC",
+        "label": "economie.gouv.fr, BIC/BNC",
         "url": "https://www.economie.gouv.fr/entreprises/gerer-sa-fiscalite-et-ses-impots/limpot-sur-les-benefices-ir-et/impot-sur-le-revenu-bic"
       }
     },
@@ -761,7 +761,7 @@
       "definition": "Catégorie fiscale de revenus correspondant aux bénéfices des professions libérales et activités non commerciales (médecins, avocats, consultants, architectes, auteurs, artistes). Deux régimes possibles : le micro-BNC (recettes < 77 700 €, abattement forfaitaire de 34 %) ou la déclaration contrôlée (déduction des charges réelles). Soumis à l'impôt sur le revenu au barème progressif.",
       "category": "impots",
       "source": {
-        "label": "entreprendre.service-public.gouv.fr — BNC",
+        "label": "entreprendre.service-public.gouv.fr, BNC",
         "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F32105"
       }
     },
@@ -771,7 +771,7 @@
       "definition": "Institution de l'Union européenne chargée de la politique monétaire de la zone euro (20 pays). Elle fixe les taux directeurs, qui influencent le coût des emprunts pour les États et les ménages. Quand la BCE relève ses taux (comme en 2022-2023, de 0 % à 4 %), la charge de la dette française augmente car l'État emprunte plus cher. Siège : Francfort.",
       "category": "organismes",
       "source": {
-        "label": "economie.gouv.fr — Banque Centrale Européenne",
+        "label": "economie.gouv.fr, Banque Centrale Européenne",
         "url": "https://www.economie.gouv.fr/facileco/dossiers-economiques/banque-centrale-europeenne"
       }
     },
@@ -781,7 +781,7 @@
       "definition": "Loi pluriannuelle qui fixe les objectifs stratégiques et les moyens financiers des armées françaises sur une période de 5 à 7 ans. La LPM 2024-2030 prévoit 413 milliards d'euros de crédits militaires cumulés, portant le budget annuel de la Défense à 2 % du PIB dès 2025, conformément aux engagements OTAN. Elle détermine les grands programmes d'armement, les effectifs et la posture stratégique de la France.",
       "category": "budget",
       "source": {
-        "label": "info.gouv.fr — LPM",
+        "label": "info.gouv.fr, LPM",
         "url": "https://www.info.gouv.fr/actualite/la-loi-de-programmation-militaire-quest-ce-que-cest"
       }
     }

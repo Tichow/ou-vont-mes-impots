@@ -181,7 +181,7 @@ export function calculateCotisationsByDestination(
       id: "dette_sociale",
       label: "Dette sociale",
       organism: "Caisse d\u2019amortissement de la dette sociale (CADES)",
-      description: "Rembourse la dette accumul\u00E9e par la S\u00E9curit\u00E9 sociale — objectif : sold\u00E9e d\u2019ici 2033",
+      description: "Rembourse la dette accumul\u00E9e par la S\u00E9curit\u00E9 sociale. Objectif : sold\u00E9e d\u2019ici 2033",
       amount: detteSociale,
       percentage: total > 0 ? round2((detteSociale / total) * 100) : 0,
       color: "#6B7280",
