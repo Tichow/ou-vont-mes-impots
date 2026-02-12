@@ -2,35 +2,33 @@
 
 import {
   useState,
+  useId,
   useRef,
   useCallback,
   useEffect,
-  type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
 import { Info } from "lucide-react";
-import { getGlossaryEntry } from "@/lib/glossary";
 
 type Props = {
-  termId: string;
-  children: ReactNode;
+  source: string;
+  url?: string;
 };
 
 type Coords = { top: number; left: number; placement: "above" | "below" };
 
-const TOOLTIP_W = 288; // w-72 = 18rem = 288px
+const TOOLTIP_W = 280;
 const GAP = 8;
 
 function computeCoords(trigger: HTMLElement): Coords {
   const rect = trigger.getBoundingClientRect();
   const spaceBelow = window.innerHeight - rect.bottom;
-  const placement = spaceBelow < 220 ? "above" : "below";
+  const placement = spaceBelow < 200 ? "above" : "below";
 
   const top =
-    placement === "below" ? rect.bottom + GAP : rect.top - GAP; // adjusted later for "above"
+    placement === "below" ? rect.bottom + GAP : rect.top - GAP;
   let left = rect.left;
 
-  // Keep tooltip inside the viewport horizontally
   if (left + TOOLTIP_W > window.innerWidth - 16) {
     left = window.innerWidth - TOOLTIP_W - 16;
   }
@@ -39,19 +37,20 @@ function computeCoords(trigger: HTMLElement): Coords {
   return { top, left, placement };
 }
 
-function Tooltip({
-  termId,
-  entry,
+function TooltipPortal({
+  id,
+  source,
+  url,
   coords,
 }: {
-  termId: string;
-  entry: { term: string; definition: string; source: { label: string; url: string } };
+  id: string;
+  source: string;
+  url?: string;
   coords: Coords;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [finalTop, setFinalTop] = useState(coords.top);
 
-  // For "above" placement, we need the tooltip height to position it
   useEffect(() => {
     if (coords.placement === "above" && ref.current) {
       setFinalTop(coords.top - ref.current.offsetHeight);
@@ -63,57 +62,53 @@ function Tooltip({
   return createPortal(
     <div
       ref={ref}
-      id={`glossary-${termId}`}
+      id={id}
       role="tooltip"
       style={{ top: finalTop, left: coords.left, width: TOOLTIP_W }}
-      className="fixed z-[9999] p-3.5 rounded-xl text-left
-        bg-white border border-border shadow-lg
-        animate-[fadeIn_120ms_ease-out]"
+      className="fixed z-[9999] p-4 rounded-xl text-left bg-white border border-border shadow-lg animate-[fadeIn_120ms_ease-out]"
     >
-      <p className="text-sm font-semibold text-text mb-1">{entry.term}</p>
-      <p className="text-xs text-text-muted leading-relaxed">
-        {entry.definition}
-      </p>
-      <a
-        href={entry.source.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-1 mt-2 text-xs text-primary hover:underline"
-        onClick={(e) => e.stopPropagation()}
-      >
-        Source&nbsp;: {entry.source.label}
-      </a>
+      <p className="text-xs text-text-secondary leading-relaxed">{source}</p>
+      {url && (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 mt-2 text-xs text-primary hover:underline"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Voir la source
+        </a>
+      )}
     </div>,
     document.body,
   );
 }
 
-export function GlossaryTerm({ termId, children }: Props) {
-  const entry = getGlossaryEntry(termId);
+export function SourceTooltip({ source, url }: Props) {
   const [open, setOpen] = useState(false);
   const [clickLocked, setClickLocked] = useState(false);
   const [coords, setCoords] = useState<Coords | null>(null);
-  const wrapperRef = useRef<HTMLSpanElement>(null);
+  const triggerRef = useRef<HTMLSpanElement>(null);
+  const tooltipId = `source-${useId()}`;
 
   const recalc = useCallback(() => {
-    if (!wrapperRef.current) return;
-    setCoords(computeCoords(wrapperRef.current));
+    if (!triggerRef.current) return;
+    setCoords(computeCoords(triggerRef.current));
   }, []);
 
-  // Close on outside pointer
+  // Close on outside click
   useEffect(() => {
     if (!open) return;
     function onPointerDown(e: PointerEvent) {
-      if (wrapperRef.current?.contains(e.target as Node)) return;
-      // Also check if click is inside the portal tooltip
-      const tooltip = document.getElementById(`glossary-${termId}`);
+      if (triggerRef.current?.contains(e.target as Node)) return;
+      const tooltip = document.getElementById(tooltipId);
       if (tooltip?.contains(e.target as Node)) return;
       setOpen(false);
       setClickLocked(false);
     }
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [open, termId]);
+  }, [open, tooltipId]);
 
   // Close on Escape
   useEffect(() => {
@@ -128,27 +123,23 @@ export function GlossaryTerm({ termId, children }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  if (!entry) return <>{children}</>;
-
   return (
-    <span
-      ref={wrapperRef}
-      className="glossary-term inline-flex items-baseline gap-0.5 group"
-      onMouseEnter={() => {
-        if (!clickLocked) {
-          recalc();
-          setOpen(true);
-        }
-      }}
-      onMouseLeave={() => {
-        if (!clickLocked) setOpen(false);
-      }}
-    >
+    <span className="inline-flex items-center">
       <span
+        ref={triggerRef}
         role="button"
         tabIndex={0}
-        aria-describedby={open ? `glossary-${termId}` : undefined}
-        className="decoration-text-muted/40 decoration-dotted underline underline-offset-2 cursor-help"
+        aria-describedby={open ? tooltipId : undefined}
+        className="inline-flex items-center text-text-muted hover:text-primary transition-colors cursor-pointer ml-1"
+        onMouseEnter={() => {
+          if (!clickLocked) {
+            recalc();
+            setOpen(true);
+          }
+        }}
+        onMouseLeave={() => {
+          if (!clickLocked) setOpen(false);
+        }}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
@@ -164,21 +155,23 @@ export function GlossaryTerm({ termId, children }: Props) {
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
+            e.stopPropagation();
             recalc();
             setOpen((prev) => !prev);
             setClickLocked((prev) => !prev);
           }
         }}
       >
-        {children}
+        <Info size={14} />
       </span>
-      <Info
-        size={11}
-        className="inline-block flex-shrink-0 text-text-muted/40 group-hover:text-primary transition-colors relative -top-px"
-      />
 
       {open && coords && (
-        <Tooltip termId={termId} entry={entry} coords={coords} />
+        <TooltipPortal
+          id={tooltipId}
+          source={source}
+          url={url}
+          coords={coords}
+        />
       )}
     </span>
   );

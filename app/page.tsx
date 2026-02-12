@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { SalaryInput } from "@/components/salary/SalaryInput";
 import { Header } from "@/components/shared/Header";
-import { ScrollReveal } from "@/components/shared/ScrollReveal";
 import { DecorativeShapes } from "@/components/shared/DecorativeShapes";
 
 export default function HomePage() {
@@ -22,7 +21,7 @@ export default function HomePage() {
           transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="relative z-10 text-center mb-12"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-text leading-[1.05] mb-6 heading-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-text leading-[1.05] mb-6 heading-tight">
             Chaque euro compte.
             <br />
             <span className="text-primary">
@@ -44,7 +43,7 @@ export default function HomePage() {
       </section>
 
       {/* Trust indicators */}
-      <ScrollReveal variant="fade-up" className="py-10 px-6 border-t border-border/50 bg-surface-warm">
+      <div className="py-10 px-6 border-t border-border/50 bg-surface-warm">
         <div className="max-w-3xl mx-auto flex flex-wrap items-center justify-center gap-8 text-sm text-text-muted">
           <span className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-primary" />
@@ -55,11 +54,11 @@ export default function HomePage() {
             100% open source
           </span>
           <span className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-social" />
+            <span className="w-2.5 h-2.5 rounded-full bg-primary" />
             Calculs côté client, aucun salaire collecté
           </span>
         </div>
-      </ScrollReveal>
+      </div>
 
       {/* Footer */}
       <footer className="py-8 px-6 text-center text-xs text-text-muted space-y-2 max-w-2xl mx-auto">

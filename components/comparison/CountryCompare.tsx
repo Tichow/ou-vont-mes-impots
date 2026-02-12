@@ -212,7 +212,7 @@ export function CountryCompare() {
           <button
             key={v.id}
             onClick={() => setView(v.id)}
-            className={`flex-1 text-xs md:text-sm px-3 py-2 rounded-lg transition-all ${
+            className={`flex-1 text-sm px-3 py-2 rounded-lg transition-all ${
               view === v.id
                 ? "bg-white shadow-sm font-semibold text-text"
                 : "text-text-muted hover:text-text"
@@ -242,13 +242,10 @@ export function CountryCompare() {
 
       {/* Country highlights */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-        {countries.map((c, i) => (
-          <motion.div
+        {countries.map((c) => (
+          <div
             key={c.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: i * 0.05 }}
-            className={`rounded-xl border p-3 text-xs ${
+            className={`rounded-xl border p-5 text-xs ${
               c.id === "france"
                 ? "border-primary/30 bg-primary/5"
                 : "border-border bg-white"
@@ -265,12 +262,12 @@ export function CountryCompare() {
                 {formatPercent(c.tax_wedge_pct / 100, 1)}
               </span>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Source */}
-      <p className="text-[10px] text-text-muted/60 text-center">
+      <p className="text-xs text-text-muted text-center">
         Source : OCDE Taxing Wages 2025 (données {countriesData.metadata.year_tax_wedge}) · Célibataire
         sans enfant au salaire moyen
       </p>

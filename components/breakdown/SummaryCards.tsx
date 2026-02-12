@@ -15,7 +15,7 @@ type CardDef = {
   glossaryId?: string;
   icon: typeof Receipt;
   color: string;
-  accentColor: string;
+  iconBg: string;
   getValue: (r: TaxResult) => string;
   getSub: (r: TaxResult) => string;
   note?: string;
@@ -28,7 +28,7 @@ const cards: CardDef[] = [
     glossaryId: "salaire_brut",
     icon: Receipt,
     color: "text-text",
-    accentColor: "bg-text",
+    iconBg: "bg-text/10",
     getValue: (r) => formatEuros(r.input.grossAnnualSalary),
     getSub: () => "annuel",
   },
@@ -38,7 +38,7 @@ const cards: CardDef[] = [
     glossaryId: "net_apres_ir",
     icon: Wallet,
     color: "text-emerald-600",
-    accentColor: "bg-emerald-600",
+    iconBg: "bg-emerald-600/10",
     getValue: (r) => formatEuros(r.netTakeHome),
     getSub: (r) => formatEuros(r.netTakeHome / 12) + "/mois",
   },
@@ -48,7 +48,7 @@ const cards: CardDef[] = [
     glossaryId: "cotisations",
     icon: ShieldCheck,
     color: "text-social",
-    accentColor: "bg-social",
+    iconBg: "bg-social/10",
     getValue: (r) => formatEuros(r.socialContributions.total),
     getSub: (r) => formatPercent(r.socialContributions.total / r.input.grossAnnualSalary) + " (cotisations fléchées)",
   },
@@ -58,7 +58,7 @@ const cards: CardDef[] = [
     glossaryId: "contribution_etat",
     icon: Landmark,
     color: "text-primary",
-    accentColor: "bg-primary",
+    iconBg: "bg-primary/10",
     getValue: (r) => formatEuros(r.stateTaxes),
     getSub: (r) => `IR ${formatEuros(r.incomeTax.amount)} + TVA ${formatEuros(r.estimatedVAT.amount)}`,
     note: "TVA estim\u00E9e",
@@ -69,29 +69,26 @@ export function SummaryCards({ result }: Props) {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map((card) => (
-        <div key={card.key} className="glass-card rounded-2xl p-5 relative overflow-hidden h-full">
-          {/* Left accent bar */}
-          <div className={`absolute top-0 left-0 bottom-0 w-1 ${card.accentColor}`} />
-
+        <div key={card.key} className="bg-white border border-border rounded-2xl p-6 card-interactive relative">
           {card.note && (
-            <span className="absolute top-3 right-3 text-[10px] font-medium text-text-muted bg-surface-alt px-1.5 py-0.5 rounded">
+            <span className="absolute top-3 right-3 text-xs font-medium text-text-muted bg-surface-alt px-2 py-0.5 rounded">
               {card.note}
             </span>
           )}
-          <div className="flex items-center gap-2 mb-3 pl-2">
-            <card.icon size={18} className={card.color} />
-            <span className="text-sm text-text-muted">
-              {card.glossaryId ? (
-                <GlossaryTerm termId={card.glossaryId}>{card.label}</GlossaryTerm>
-              ) : (
-                card.label
-              )}
-            </span>
+          <div className={`w-10 h-10 rounded-xl ${card.iconBg} flex items-center justify-center mb-3`}>
+            <card.icon size={20} className={card.color} />
           </div>
-          <p className={`text-2xl md:text-3xl font-bold pl-2 ${card.color}`}>
+          <p className={`text-3xl md:text-4xl font-bold ${card.color} mb-1`}>
             {card.getValue(result)}
           </p>
-          <p className="text-xs text-text-muted mt-1.5 pl-2">
+          <p className="text-sm text-text-secondary font-medium">
+            {card.glossaryId ? (
+              <GlossaryTerm termId={card.glossaryId}>{card.label}</GlossaryTerm>
+            ) : (
+              card.label
+            )}
+          </p>
+          <p className="text-xs text-text-muted mt-1">
             {card.getSub(result)}
           </p>
         </div>

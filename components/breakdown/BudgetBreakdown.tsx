@@ -6,6 +6,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import type { BudgetSector } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
 import { ProgrammeList } from "./ProgrammeList";
+import { SourceTooltip } from "@/components/ui/SourceTooltip";
 
 type Props = {
   sectors: BudgetSector[];
@@ -133,7 +134,7 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
             <span className={`font-bold tabular-nums ${compact ? "text-xs" : "text-sm"}`} style={{ color: sector.color }}>
               {formatEuros(sector.amount)}
             </span>
-            <span className={`text-text-muted tabular-nums ${compact ? "text-[10px]" : "text-xs"}`}>
+            <span className="text-text-muted tabular-nums text-xs">
               {pctOfTotal.toFixed(1)}%
             </span>
             {hasProgrammes && (
@@ -160,12 +161,9 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
         </div>
 
         {/* Equivalence text */}
-        <p
-          className={`text-text-muted leading-snug mt-2 ${compact ? "text-[11px]" : "text-xs"}`}
-          title={sector.equivalence.source}
-        >
+        <p className="text-text-muted leading-snug mt-2 text-xs">
           {sector.equivalence.description}
-          <span className="inline-block ml-1 text-text-muted/50 cursor-help" title={sector.equivalence.source}>ⓘ</span>
+          <SourceTooltip source={sector.equivalence.source} />
         </p>
       </button>
 

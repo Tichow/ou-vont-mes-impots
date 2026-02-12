@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   AlertTriangle,
@@ -12,6 +13,7 @@ import {
   GitBranch,
   MapPin,
   Equal,
+  ChevronDown,
 } from "lucide-react";
 import { Header } from "@/components/shared/Header";
 
@@ -293,6 +295,47 @@ const SIMPLIFICATIONS: SimplificationItem[] = [
   },
 ];
 
+function SimplificationCard({ item }: { item: SimplificationItem }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <button
+      onClick={() => setExpanded(!expanded)}
+      className="w-full text-left bg-white rounded-2xl border border-border p-5 card-interactive"
+    >
+      <div className="flex items-start gap-3">
+        <item.icon size={16} className="text-amber-600 flex-shrink-0 mt-0.5" />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="font-semibold text-text">
+              {item.title}
+            </h3>
+            <ChevronDown
+              size={16}
+              className={`text-text-muted flex-shrink-0 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+            />
+          </div>
+          {!expanded && (
+            <p className="text-sm text-text-muted mt-1 line-clamp-1">
+              {item.detail}
+            </p>
+          )}
+          {expanded && (
+            <div className="space-y-2 mt-2">
+              <p className="text-sm text-text-muted leading-relaxed">
+                {item.detail}
+              </p>
+              <p className="text-sm bg-surface-alt rounded-xl px-4 py-2 text-text-muted">
+                <span className="font-medium text-text">Impact :</span> {item.impact}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </button>
+  );
+}
+
 function Section({
   title,
   icon: Icon,
@@ -305,9 +348,7 @@ function Section({
   return (
     <section>
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 rounded-xl bg-primary/10">
-          <Icon size={18} className="text-primary" />
-        </div>
+        <Icon size={18} className="text-primary" />
         <h2 className="text-xl font-bold text-text heading-tight">{title}</h2>
       </div>
       {children}
@@ -321,7 +362,7 @@ function SourceCard({ source }: { source: SourceItem }) {
       href={source.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-start gap-3 bg-white rounded-2xl border border-border p-5 hover:border-primary/40 transition-colors group"
+      className="flex items-start gap-3 bg-white rounded-2xl border border-border p-6 card-interactive hover:border-primary/40 transition-colors group"
     >
       <ExternalLink
         size={15}
@@ -356,21 +397,21 @@ export default function AProposPage() {
         </div>
 
         {/* Disclaimer box */}
-        <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-5">
+        <div className="flex items-start gap-3 bg-slate-50 border border-border rounded-2xl p-5">
           <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
           <div className="text-sm space-y-2">
-            <p className="font-semibold text-amber-900">
+            <p className="font-semibold text-text">
               Projet personnel à visée pédagogique
             </p>
-            <p className="text-amber-800 leading-relaxed">
+            <p className="text-text-secondary leading-relaxed">
               Ceci n&apos;est <strong>pas un outil officiel</strong> de l&apos;administration fiscale.
               L&apos;objectif est de vulgariser le fonctionnement des prélèvements obligatoires
               et de rendre plus lisible l&apos;utilisation de l&apos;argent public.
               Ce n&apos;est pas une prise de position politique.
             </p>
-            <p className="text-amber-800 leading-relaxed">
-              Les montants affichés sont des <strong>estimations</strong> basées sur le
-              barème fiscal <strong>2026 (revenus 2025)</strong> et les données budgétaires
+            <p className="text-text-secondary leading-relaxed">
+              Les montants affichés sont des estimations basées sur le
+              barème fiscal 2026 (revenus 2025) et les données budgétaires
               publiques (LFI 2026). Le site peut contenir des erreurs ou des approximations.
               Pour une simulation officielle et personnalisée, consultez{" "}
               <a
@@ -448,24 +489,7 @@ export default function AProposPage() {
         <Section title="Hypothèses et simplifications" icon={AlertTriangle}>
           <div className="space-y-3">
             {SIMPLIFICATIONS.map((item) => (
-              <div key={item.title} className="bg-white rounded-2xl border border-border p-5">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-xl bg-amber-50 flex-shrink-0">
-                    <item.icon size={16} className="text-amber-600" />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-text">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-text-muted leading-relaxed">
-                      {item.detail}
-                    </p>
-                    <p className="text-sm bg-surface-alt rounded-xl px-4 py-2 text-text-muted">
-                      <strong className="text-text">Impact :</strong> {item.impact}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <SimplificationCard key={item.title} item={item} />
             ))}
           </div>
         </Section>
@@ -475,41 +499,41 @@ export default function AProposPage() {
           <div className="bg-white rounded-2xl border border-border p-6 space-y-4">
             <ul className="space-y-3 text-sm text-text-muted">
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Revenus non-salariaux</strong> : revenus
                   fonciers, plus-values, dividendes (PFU/flat tax), BIC/BNC.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Niches fiscales</strong> : réductions et
                   crédits d&apos;impôt (Pinel, dons, emploi à domicile, etc.).
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Mutuelle obligatoire</strong> : cotisations
                   complémentaires santé (variables selon l&apos;employeur).
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Cotisations patronales</strong> : ~27% du brut, non visibles sur la fiche de paie standard.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">Impôts des entreprises</strong> : impôt sur les sociétés (~59 Md€),
                   taxe sur les salaires (~15 Md€), forfait social, CVAE. Hors du périmètre salarié.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
                 <span>
                   <strong className="text-text">CDHR (contribution différentielle sur les hauts revenus)</strong> : impôt
                   plancher de 20% pour les revenus &gt; 250 k€ (célibataire) / 500 k€ (couple), créé par
@@ -577,7 +601,7 @@ export default function AProposPage() {
               au quadruple) et dépend de la valeur locative cadastrale de votre bien.
               On ne peut pas estimer votre taxe foncière à partir de votre seul salaire.
             </p>
-            <p className="text-xs text-text-muted/70 italic">
+            <p className="text-xs text-text-muted">
               Sources : DGCL « Les collectivités locales en chiffres 2025 » (collectivites-locales.gouv.fr) ;
               DGFiP Statistiques n° 34, taxe foncière 2024 (impots.gouv.fr) ;
               FIPECO « Ce que les collectivités locales ont fait de notre argent en 2024 » (fipeco.fr).
@@ -611,7 +635,7 @@ export default function AProposPage() {
               rendre les montants tangibles. Voici les prix unitaires utilisés et leurs sources :
             </p>
             <div className="overflow-x-auto -mx-2">
-              <table className="w-full text-xs">
+              <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-2 px-2 font-semibold text-text">Secteur</th>

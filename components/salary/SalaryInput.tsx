@@ -122,7 +122,7 @@ function SalaryField({ label, value, onChange, placeholder, large, hint }: Salar
       </div>
 
       {hint && (
-        <p className="text-[11px] text-text-muted mt-1">{hint}</p>
+        <p className="text-xs text-text-muted mt-1">{hint}</p>
       )}
     </div>
   );
@@ -163,9 +163,7 @@ export function SalaryInput() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full max-w-lg mx-auto"
     >
-      <div className="relative rounded-3xl bg-white p-8 md:p-10 shadow-primary-lg border border-border overflow-hidden">
-        {/* Accent bar */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+      <div className="relative rounded-3xl bg-white p-8 md:p-10 shadow-lg border border-border overflow-hidden">
 
         {/* Salary input */}
         <div className="mb-8">
@@ -196,7 +194,7 @@ export function SalaryInput() {
               <User size={18} />
               Seul(e)
             </span>
-            <span className="text-[11px] text-text-muted font-normal">
+            <span className="text-xs text-text-muted font-normal">
               Célibataire, divorcé(e) ou veuf/ve
             </span>
           </button>
@@ -213,7 +211,7 @@ export function SalaryInput() {
               <Users size={18} />
               Marié(e) / Pacsé(e)
             </span>
-            <span className="text-[11px] text-text-muted font-normal">
+            <span className="text-xs text-text-muted font-normal">
               Déclaration commune
             </span>
           </button>
@@ -289,7 +287,7 @@ export function SalaryInput() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSubmit}
-          className="w-full py-4 px-6 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/30 transition-all shadow-primary-sm"
+          className="w-full py-4 px-6 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/30 transition-all shadow-sm"
         >
           Voir où vont mes impôts
           <ArrowRight size={20} />

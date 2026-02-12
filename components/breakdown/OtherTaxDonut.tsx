@@ -58,7 +58,7 @@ export function OtherTaxDonut({ segments, grandTotal }: Props) {
         </ResponsiveContainer>
         {/* Center label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-2xl font-extrabold text-text tabular-nums heading-tight">
+          <span className="text-3xl font-extrabold text-text tabular-nums heading-tight">
             {formatEuros(grandTotal)}
           </span>
           <span className="text-xs text-text-muted">par an</span>
@@ -68,7 +68,7 @@ export function OtherTaxDonut({ segments, grandTotal }: Props) {
       {/* Legend */}
       <div className="flex flex-wrap justify-center gap-x-4 gap-y-1.5 mt-4">
         {segments.map((seg) => (
-          <div key={seg.name} className="flex items-center gap-1.5 text-xs">
+          <div key={seg.name} className="flex items-center gap-1.5 text-sm">
             <span
               className="w-2 h-2 rounded-full flex-shrink-0"
               style={{ backgroundColor: seg.color }}

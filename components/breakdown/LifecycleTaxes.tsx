@@ -8,6 +8,8 @@ const LIFECYCLE = [
   otherTaxesData.lifecycle_taxes.ifi,
 ];
 
+const STRIPE_COLORS = ["bg-amber-500", "bg-slate-500", "bg-violet-500"];
+
 export function LifecycleTaxes() {
   return (
     <div className="space-y-3">
@@ -15,11 +17,12 @@ export function LifecycleTaxes() {
         Un jour dans votre vie
       </p>
       <div className="grid sm:grid-cols-3 gap-3">
-        {LIFECYCLE.map((item) => (
+        {LIFECYCLE.map((item, i) => (
           <div
             key={item.id}
-            className="rounded-2xl border-2 border-dashed border-border bg-white/60 px-5 py-4"
+            className="rounded-2xl border border-border bg-white p-6 card-interactive overflow-hidden relative"
           >
+            <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${STRIPE_COLORS[i]}`} />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-lg">{item.emoji}</span>
               <span className="text-sm font-semibold text-text">
@@ -32,7 +35,7 @@ export function LifecycleTaxes() {
             <p className="text-xs text-text-muted leading-relaxed">
               {item.description}
             </p>
-            <p className="text-[11px] text-text-muted/60 mt-2">
+            <p className="text-xs text-text-muted mt-2">
               Recettes : {item.total_revenue_mde} Md€/an —{" "}
               <a
                 href={item.source.url}

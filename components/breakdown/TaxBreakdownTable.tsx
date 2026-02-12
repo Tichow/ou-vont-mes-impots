@@ -31,7 +31,7 @@ function buildRows(result: TaxResult): RowData[] {
       glossaryId: detail.id,
       amount: detail.amount,
       rate: formatPercent(detail.rate),
-      color: "#F59E0B",
+      color: "#D97706",
     });
   }
 
@@ -40,7 +40,7 @@ function buildRows(result: TaxResult): RowData[] {
     glossaryId: "cotisations",
     amount: result.socialContributions.total,
     rate: formatPercent(result.socialContributions.total / gross),
-    color: "#F59E0B",
+    color: "#D97706",
     isSubtotal: true,
   });
 
@@ -76,7 +76,7 @@ function buildRows(result: TaxResult): RowData[] {
     glossaryId: "fiche_de_paie",
     amount: result.directTaxes,
     rate: formatPercent(result.directTaxRate),
-    color: "#EF4444",
+    color: "#DC2626",
     isSubtotal: true,
   });
 
@@ -85,24 +85,21 @@ function buildRows(result: TaxResult): RowData[] {
 
 export function TaxBreakdownTable({ result }: Props) {
   const rows = buildRows(result);
-  const barMax = result.input.grossAnnualSalary * 0.25; // scale bars relative to max ~25%
+  const barMax = result.input.grossAnnualSalary * 0.25;
   const isHouseholdDeclaration =
     result.input.familyStatus === "couple" && result.input.partnerGrossAnnualSalary > 0;
 
   return (
     <div className="space-y-1">
       {isHouseholdDeclaration && (
-        <div className="text-xs text-text-muted bg-primary/5 border border-primary/20 rounded-lg px-3 py-2 mb-2">
+        <div className="text-xs text-text-muted rounded-xl border border-border bg-slate-50 px-4 py-3 mb-2">
           Votre taux d&apos;IR est individualisé à partir de la déclaration commune du foyer (revenu combiné : {formatEuros(result.incomeTax.householdNetImposable)}, IR foyer : {formatEuros(result.incomeTax.householdTax)}). Le montant ci-dessous est votre part.
         </div>
       )}
       {rows.map((row, i) => (
-        <motion.div
+        <div
           key={row.label}
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: i * 0.03 }}
-          className={`flex items-center gap-2 md:gap-3 py-2 px-2 md:px-3 rounded-lg ${
+          className={`flex items-center gap-2 md:gap-3 py-3 px-2 md:px-3 rounded-lg ${
             row.isSubtotal
               ? "bg-surface-alt font-semibold border border-border"
               : "hover:bg-surface-alt/50"
@@ -110,7 +107,7 @@ export function TaxBreakdownTable({ result }: Props) {
         >
           {/* Label */}
           <span
-            className={`min-w-0 text-xs md:text-sm ${
+            className={`min-w-0 text-sm ${
               row.isSubtotal ? "text-text" : "text-text-muted"
             }`}
             style={{ width: "45%" }}
@@ -145,19 +142,19 @@ export function TaxBreakdownTable({ result }: Props) {
           </div>
 
           {/* Rate */}
-          <span className="hidden md:block flex-shrink-0 text-xs text-text-muted w-14 text-right">
+          <span className="flex-shrink-0 text-xs text-text-muted w-14 text-right">
             {row.rate}
           </span>
 
           {/* Amount */}
           <span
-            className={`flex-shrink-0 text-xs md:text-sm text-right w-16 md:w-20 ${
+            className={`flex-shrink-0 text-sm text-right w-16 md:w-20 ${
               row.isSubtotal ? "font-bold text-text" : ""
             }`}
           >
             {formatEuros(row.amount)}
           </span>
-        </motion.div>
+        </div>
       ))}
     </div>
   );

@@ -1,23 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Budget sector colors */
+  /* Budget sector colors — 6 harmonious families */
+  --color-sector-blue: #3B82F6;
+  --color-sector-teal: #0D9488;
+  --color-sector-amber: #D97706;
+  --color-sector-red: #DC2626;
+  --color-sector-violet: #7C3AED;
+  --color-sector-slate: #64748B;
+
+  /* Legacy aliases (mapped to new families) */
   --color-education: #3B82F6;
-  --color-defense: #EF4444;
-  --color-health: #10B981;
-  --color-social: #F59E0B;
-  --color-debt: #6B7280;
-  --color-infrastructure: #8B5CF6;
-  --color-justice: #EC4899;
-  --color-culture: #14B8A6;
-  --color-research: #6366F1;
-  --color-security: #F97316;
-  --color-aid: #84CC16;
-  --color-admin: #A3A3A3;
-  --color-retirement: #F59E0B;
+  --color-defense: #DC2626;
+  --color-health: #0D9488;
+  --color-social: #D97706;
+  --color-debt: #64748B;
+  --color-infrastructure: #7C3AED;
+  --color-justice: #7C3AED;
+  --color-culture: #0D9488;
+  --color-research: #3B82F6;
+  --color-security: #DC2626;
+  --color-aid: #0D9488;
+  --color-admin: #64748B;
+  --color-retirement: #D97706;
 
   /* App palette */
   --color-primary: #2563EB;
@@ -27,8 +35,10 @@
   --color-surface-alt: #F8FAFC;
   --color-surface-warm: #FAFAF9;
   --color-text: #0F172A;
-  --color-text-muted: #64748B;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
   --color-border: #E2E8F0;
+  --color-border-light: #F1F5F9;
 }
 
 html {
@@ -46,22 +56,23 @@ body {
   letter-spacing: -0.02em;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.6);
+/* Interactive card hover effect */
+.card-interactive {
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+.card-interactive:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+.card-interactive:active {
+  transform: translateY(0);
 }
 
-.shadow-primary-sm {
-  box-shadow: 0 2px 8px -2px rgba(37, 99, 235, 0.12);
-}
-
-.shadow-primary-lg {
-  box-shadow: 0 8px 32px -8px rgba(37, 99, 235, 0.18);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .card-interactive {
+    transition: none;
+  }
+  .card-interactive:hover {
+    transform: none;
+  }
 }

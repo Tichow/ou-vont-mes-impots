@@ -68,7 +68,7 @@ export function OtherTaxes({ result }: Props) {
       <LifecycleTaxes />
 
       {/* Sources */}
-      <p className="text-[11px] text-text-muted/60">
+      <p className="text-xs text-text-muted mt-4">
         Sources : TICPE ~30 Md€ (DGDDI 2024) · TSCA ~9 Md€ (DGFiP 2024) · Taxe
         foncière ~40 Md€ (DGFiP 2024) · CEHR art. 223 sexies CGI · Tabac ~13 Md€
         (DGDDI 2024) · Alcool ~4 Md€ (DGDDI 2024) · DMTO ~16 Md€ (DGFiP) ·

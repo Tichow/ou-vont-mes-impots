@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search, ExternalLink, BookOpen, X } from "lucide-react";
+import { Search, ExternalLink, X } from "lucide-react";
 import { Header } from "@/components/shared/Header";
 import glossaryData from "@/data/glossary-full.json";
 
@@ -46,7 +46,7 @@ function CategoryBadge({ categoryId }: { categoryId: string }) {
   const colors = CATEGORY_COLORS[categoryId] ?? "bg-gray-50 text-gray-700 border-gray-200";
 
   return (
-    <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full border ${colors}`}>
+    <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${colors}`}>
       {category.label}
     </span>
   );
@@ -81,10 +81,10 @@ function TermCard({ term, query }: { term: GlossaryTerm; query: string }) {
     <article
       key={term.id}
       id={term.id}
-      className="bg-white rounded-xl border border-border p-4 hover:border-primary/30 transition-colors"
+      className="bg-white rounded-xl border border-border p-4 card-interactive hover:border-primary/30 transition-colors"
     >
       <div className="flex flex-wrap items-start justify-between gap-2 mb-1.5">
-        <h3 className="font-bold text-text text-[15px]">
+        <h3 className="font-bold text-text text-base">
           <HighlightText text={term.term} query={query} />
         </h3>
         <CategoryBadge categoryId={term.category} />
@@ -98,7 +98,7 @@ function TermCard({ term, query }: { term: GlossaryTerm; query: string }) {
         rel="noopener noreferrer"
         className="inline-flex items-center gap-1 mt-2 text-xs text-primary/70 hover:text-primary transition-colors"
       >
-        <ExternalLink size={11} />
+        <ExternalLink size={12} />
         {term.source.label}
       </a>
     </article>

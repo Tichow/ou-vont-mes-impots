@@ -6,7 +6,6 @@ import {
   sankeyLinkHorizontal,
   type SankeyGraph,
   type SankeyNode as D3SankeyNode,
-  type SankeyLink as D3SankeyLink,
 } from "d3-sankey";
 import type { TaxResult } from "@/lib/types";
 import { formatEuros } from "@/lib/formatting";
@@ -14,7 +13,6 @@ import { formatEuros } from "@/lib/formatting";
 type SNodeExtra = { id: string; label: string; shortLabel: string; amount: number; color: string; sortOrder: number };
 type SLinkExtra = { color: string; sourceName: string; targetName: string; amount: number; percentage: number };
 type SNode = D3SankeyNode<SNodeExtra, SLinkExtra>;
-type SLink = D3SankeyLink<SNodeExtra, SLinkExtra>;
 
 type Props = {
   result: TaxResult;

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AnalyticsProvider } from "@/components/shared/AnalyticsProvider";
 import "./globals.css";
 
-const figtree = Figtree({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={figtree.variable}>
+    <html lang="fr" className={plusJakarta.variable}>
       <body className="min-h-screen bg-surface antialiased">
         {children}
         <AnalyticsProvider />

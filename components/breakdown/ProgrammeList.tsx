@@ -55,7 +55,7 @@ function ExpandableOverflow<T>({
         >
           <div className="flex items-center gap-1.5 py-0.5">
             <ChevronDown size={10} className="text-text-muted/50" />
-            <span className="text-[10px] text-text-muted/70 group-hover:text-text-muted transition-colors">
+            <span className="text-xs text-text-muted/70 group-hover:text-text-muted transition-colors">
               Voir {hiddenCount === 1 ? "1 autre" : `les ${hiddenCount} autres`} {label}
             </span>
           </div>
@@ -80,7 +80,7 @@ export function ProgrammeList({ programmes, color, sectorId, includesSocialSecur
   return (
     <div className="space-y-1.5">
       {includesSocialSecurity && (
-        <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 mb-2 text-[11px] text-amber-900 leading-relaxed">
+        <div className="rounded-lg border border-border bg-slate-50 px-3 py-2 mb-2 text-xs text-text-muted leading-relaxed">
           <span className="font-semibold">Ce secteur est financé majoritairement par la Sécurité sociale.</span>{" "}
           Le détail ci-dessous ne couvre que la part du budget de l&apos;État
           Les pourcentages sont relatifs à cette seule part, pas au total du secteur.
@@ -130,7 +130,7 @@ export function ProgrammeList({ programmes, color, sectorId, includesSocialSecur
                       />
                     </div>
                   </div>
-                  <span className="text-[10px] tabular-nums text-text-muted w-10 text-right flex-shrink-0">
+                  <span className="text-xs tabular-nums text-text-muted w-10 text-right flex-shrink-0">
                     {fmtPct(prog.percentageOfSector)}
                   </span>
                 </div>
@@ -156,7 +156,7 @@ export function ProgrammeList({ programmes, color, sectorId, includesSocialSecur
         }}
       />
 
-      <p className="text-[10px] text-text-muted/70 pt-1">
+      <p className="text-xs text-text-muted pt-1">
         Source : PLF 2025 (data.economie.gouv.fr), budget de l&apos;État uniquement.
       </p>
     </div>
@@ -193,9 +193,9 @@ function ActionList({ actions, color }: { actions: ActionAllocation[]; color: st
                 <div className="flex items-center gap-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                      <span className="text-[11px] text-text-muted truncate">{act.name}</span>
+                      <span className="text-xs text-text-muted truncate">{act.name}</span>
                       <div className="flex items-center gap-1 flex-shrink-0">
-                        <span className="text-[11px] tabular-nums text-text-muted/80">
+                        <span className="text-xs tabular-nums text-text-muted/80">
                           {formatEuros(act.amount)}
                         </span>
                         {hasSA && (
@@ -219,7 +219,7 @@ function ActionList({ actions, color }: { actions: ActionAllocation[]; color: st
                       />
                     </div>
                   </div>
-                  <span className="text-[9px] tabular-nums text-text-muted/70 w-9 text-right flex-shrink-0">
+                  <span className="text-xs tabular-nums text-text-muted/70 w-9 text-right flex-shrink-0">
                     {fmtPct(act.percentageOfProgramme)}
                   </span>
                 </div>
@@ -266,8 +266,8 @@ function SousActionList({ sousActions, color }: { sousActions: SousActionAllocat
           <div key={sa.code} className="flex items-center gap-2">
             <div className="flex-1 min-w-0">
               <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                <span className="text-[10px] text-text-muted/80 truncate">{sa.name}</span>
-                <span className="text-[10px] tabular-nums text-text-muted/60 flex-shrink-0">
+                <span className="text-xs text-text-muted/80 truncate">{sa.name}</span>
+                <span className="text-xs tabular-nums text-text-muted/60 flex-shrink-0">
                   {formatEuros(sa.amount)}
                 </span>
               </div>
@@ -282,7 +282,7 @@ function SousActionList({ sousActions, color }: { sousActions: SousActionAllocat
                 />
               </div>
             </div>
-            <span className="text-[9px] tabular-nums text-text-muted/50 w-9 text-right flex-shrink-0">
+            <span className="text-xs tabular-nums text-text-muted/50 w-9 text-right flex-shrink-0">
               {fmtPct(sa.percentageOfAction)}
             </span>
           </div>

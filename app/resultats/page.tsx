@@ -53,13 +53,13 @@ function ResultsContent() {
           <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">
             Vos résultats
           </h1>
-          <p className="text-text-muted mt-2 text-lg max-w-2xl">
-            L&apos;argent prélevé sur votre salaire suit <strong className="text-text">deux circuits distincts</strong> :
-            vos cotisations financent directement votre <span className="text-social font-medium">protection sociale</span>,
-            tandis que vos impôts alimentent le <span className="text-primary font-medium">budget général de l&apos;État</span>.
+          <p className="text-text-secondary mt-2 text-lg max-w-2xl">
+            L&apos;argent prélevé sur votre salaire suit deux circuits distincts :
+            vos cotisations financent directement votre protection sociale,
+            tandis que vos impôts alimentent le budget général de l&apos;État.
           </p>
           {isCouple && (
-            <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-3 bg-primary/5 border border-primary/20 rounded-xl px-4 py-3">
+            <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-slate-50 px-4 py-3">
               <span className="text-sm text-text-muted">Afficher pour :</span>
               <div className="flex bg-white rounded-lg border border-border p-0.5">
                 <button
@@ -101,23 +101,27 @@ function ResultsContent() {
 
         {/* Sankey */}
         <section>
-          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+          <div className="flex items-center gap-2 mb-1">
+            <ShoppingCart size={18} className="text-primary" />
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider">Flux de votre argent</p>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-text mb-2 heading-tight">
             Le trajet de votre argent
           </h2>
-          <p className="text-text-muted mb-6 text-sm max-w-2xl">
+          <p className="text-sm text-text-secondary mb-6 max-w-2xl">
             Chaque mois, votre employeur prélève des cotisations et l&apos;impôt sur le revenu
-            sur votre salaire brut. Les <span className="text-social font-medium">cotisations</span> (en orange)
+            sur votre salaire brut. Les cotisations (en orange)
             vont directement à vos caisses de protection sociale.
-            {ir > 0 && <>{" "}L&apos;<span className="text-primary font-medium">impôt sur le revenu</span> (en bleu) est versé au budget général de l&apos;État.</>}
+            {ir > 0 && <>{" "}L&apos;impôt sur le revenu (en bleu) est versé au budget général de l&apos;État.</>}
           </p>
           <div className="rounded-3xl border border-border bg-white p-4 md:p-6 overflow-hidden">
             <SankeyDiagram result={result} />
           </div>
 
           {/* TVA annotation */}
-          <div className="mt-4 flex items-start gap-3 rounded-2xl border border-infrastructure/20 bg-infrastructure/5 px-4 py-3">
+          <div className="mt-4 flex items-start gap-3 rounded-xl border border-border bg-slate-50 px-5 py-4">
             <ShoppingCart size={18} className="text-infrastructure mt-0.5 flex-shrink-0" />
-            <p className="text-sm text-text-muted leading-relaxed">
+            <p className="text-sm text-text-secondary leading-relaxed">
               <span className="font-semibold text-text">+ {formatEuros(tva)} de TVA estimée</span> sur votre consommation annuelle.
               Cette taxe indirecte n&apos;apparaît pas sur votre fiche de paie :
               elle est incluse dans les prix que vous payez. Comme l&apos;IR,
@@ -129,97 +133,107 @@ function ResultsContent() {
         {/* Circuit 1 — Protection sociale (cotisations fléchées) */}
         <section>
           <div className="flex items-center gap-2 mb-1">
-            <ShieldCheck size={20} className="text-social" />
+            <ShieldCheck size={18} className="text-social" />
             <p className="text-xs font-semibold text-social uppercase tracking-wider">Circuit 1 : cotisations fléchées</p>
           </div>
-          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-text mb-2 heading-tight">
             Votre protection sociale
           </h2>
-          <p className="text-text-muted mb-4 text-sm max-w-2xl">
+          <p className="text-sm text-text-secondary mb-4 max-w-2xl">
             Contrairement aux impôts, vos cotisations ({formatEuros(cotisations)})
-            ne vont <strong className="text-text">pas dans un pot commun</strong>.
+            ne vont pas dans un pot commun.
             Chaque ligne de votre fiche de paie est directement fléchée
             vers un organisme de Sécurité sociale.
             C&apos;est un système d&apos;assurance collective : vous cotisez aujourd&apos;hui
             pour les retraités et les malades, et demain, d&apos;autres cotiseront pour vous.
           </p>
-          <p className="text-text-muted mb-6 text-xs">
-            C&apos;est aussi ici que va l&apos;essentiel du financement de la <strong className="text-text">santé</strong> et
-            des <strong className="text-text">retraites</strong> en France, pas dans le budget de l&apos;État.
+          <p className="text-xs text-text-muted mb-6 max-w-2xl">
+            C&apos;est aussi ici que va l&apos;essentiel du financement de la santé et
+            des retraites en France, pas dans le budget de l&apos;État.
           </p>
           <SocialProtection destinations={result.cotisationsByDestination} />
-          <p className="text-[11px] text-text-muted/60 mt-3">
-            Sources : taux de cotisations URSSAF 2026 · Répartition de la CSG : CSS art. L136-8 (Légifrance)
+          <p className="text-xs text-text-muted mt-4">
+            <Link href="/a-propos#sources-primaires" className="underline hover:text-text">
+              Sources : taux de cotisations URSSAF 2026 · Répartition de la CSG : CSS art. L136-8
+            </Link>
           </p>
         </section>
 
         {/* Circuit 2 — Budget de l'État (IR + TVA) */}
         <section>
           <div className="flex items-center gap-2 mb-1">
-            <Landmark size={20} className="text-primary" />
+            <Landmark size={18} className="text-primary" />
             <p className="text-xs font-semibold text-primary uppercase tracking-wider">Circuit 2 : impôts</p>
           </div>
-          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-text mb-2 heading-tight">
             Votre contribution au budget de l&apos;État
           </h2>
-          <p className="text-text-muted mb-4 text-sm max-w-2xl">
+          <p className="text-sm text-text-secondary mb-4 max-w-2xl">
             Contrairement aux cotisations, vos impôts (impôt sur le revenu : {formatEuros(ir)},
-            TVA : {formatEuros(tva)}) sont versés au <strong className="text-text">budget général de l&apos;État</strong>.
+            TVA : {formatEuros(tva)}) sont versés au budget général de l&apos;État.
             Ils ne sont pas fléchés : c&apos;est le Parlement qui décide chaque année de leur
             répartition entre les missions, via la loi de finances (LFI&nbsp;2026).
             Voici comment votre contribution de {formatEuros(result.stateTaxes)} serait
             répartie si elle suivait les proportions du budget national (~500 Md€).
           </p>
-          <p className="text-text-muted mb-6 text-xs max-w-2xl">
-            La <strong className="text-text">santé</strong> n&apos;apparaît quasiment pas ici (0,3%) :
+          <p className="text-xs text-text-muted mb-6 max-w-2xl">
+            La santé n&apos;apparaît quasiment pas ici (0,3%) :
             c&apos;est normal. En France, l&apos;assurance maladie est financée par vos cotisations
             (section ci-dessus), pas par l&apos;impôt. Le budget de l&apos;État ne finance que la
             prévention et la sécurité sanitaire.
-            De même, les <strong className="text-text">retraites</strong> ici (14%) ne couvrent que les pensions
+            De même, les retraites ici (14%) ne couvrent que les pensions
             des fonctionnaires. Les retraites du privé sont financées par vos cotisations.
           </p>
           <BudgetBreakdown sectors={result.stateBudgetAllocation} totalTaxes={result.stateTaxes} />
-          <p className="text-[11px] text-text-muted/60 mt-3">
-            Sources : répartition calculée à partir des crédits de paiement par mission, PLF 2025 (data.economie.gouv.fr) · Budget voté : LFI 2026
+          <p className="text-xs text-text-muted mt-4">
+            <Link href="/a-propos#sources-primaires" className="underline hover:text-text">
+              Sources : répartition calculée à partir des crédits de paiement par mission, PLF 2025 · Budget voté : LFI 2026
+            </Link>
           </p>
         </section>
 
         {/* Detailed breakdown */}
         <section>
-          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+          <div className="flex items-center gap-2 mb-1">
+            <Receipt size={18} className="text-text-muted" />
+            <p className="text-xs font-semibold text-text-muted uppercase tracking-wider">Fiche de paie</p>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-text mb-2 heading-tight">
             Détail de votre fiche de paie
           </h2>
-          <p className="text-text-muted mb-6 text-sm max-w-2xl">
+          <p className="text-sm text-text-secondary mb-6 max-w-2xl">
             Voici chaque ligne de prélèvement, de votre salaire brut à votre net.
-            Ces montants correspondent à la <strong className="text-text">part salariale</strong> uniquement. Votre
+            Ces montants correspondent à la part salariale uniquement. Votre
             employeur paie également des cotisations patronales (environ 30% du brut)
             qui n&apos;apparaissent pas sur votre bulletin de salaire.
           </p>
           <div className="rounded-3xl border border-border bg-white p-6">
             <TaxBreakdownTable result={result} />
           </div>
-          <p className="text-[11px] text-text-muted/60 mt-3">
-            Sources : taux de cotisations salariales URSSAF 2026 · Barème IR : service-public.gouv.fr (revenus 2025)
+          <p className="text-xs text-text-muted mt-4">
+            <Link href="/a-propos#sources-primaires" className="underline hover:text-text">
+              Sources : taux de cotisations salariales URSSAF 2026 · Barème IR : service-public.gouv.fr (revenus 2025)
+            </Link>
           </p>
         </section>
 
         {/* Other taxes — portrait fiscal complet */}
         <section>
           <div className="flex items-center gap-2 mb-1">
-            <Receipt size={20} className="text-infrastructure" />
+            <Receipt size={18} className="text-infrastructure" />
             <p className="text-xs font-semibold text-infrastructure uppercase tracking-wider">Au-delà de la fiche de paie</p>
           </div>
-          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-text mb-2 heading-tight">
             Et vos autres impôts ?
           </h2>
-          <p className="text-text-muted mb-4 text-sm max-w-2xl">
+          <p className="text-sm text-text-secondary mb-4 max-w-2xl">
             Votre fiche de paie ne raconte pas tout. En plus des cotisations et de l&apos;IR,
-            vous payez des <strong className="text-text">taxes indirectes</strong> au quotidien :
+            vous payez des taxes indirectes au quotidien :
             dans le prix de l&apos;essence (TICPE), de vos assurances (TSCA),
             et si vous êtes propriétaire, la taxe foncière.
           </p>
-          <p className="text-text-muted mb-6 text-xs max-w-2xl">
-            Utilisez les curseurs ci-dessous pour <strong className="text-text">personnaliser votre portrait fiscal</strong> :
+          <p className="text-xs text-text-muted mb-6 max-w-2xl">
+            Utilisez les curseurs ci-dessous pour personnaliser votre portrait fiscal :
             type de véhicule, kilométrage, consommation de tabac ou d&apos;alcool, taxe foncière.
             Chaque formule est transparente.
           </p>
@@ -228,22 +242,23 @@ function ResultsContent() {
 
         {/* History timeline */}
         <section>
-          <div className="flex items-center gap-2 mb-2">
-            <Clock size={20} className="text-primary" />
-            <h2 className="text-2xl font-bold text-text heading-tight">
-              Évolution des dépenses publiques (2015-2026)
-            </h2>
+          <div className="flex items-center gap-2 mb-1">
+            <Clock size={18} className="text-primary" />
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider">Historique</p>
           </div>
-          <p className="text-text-muted mb-4 text-sm max-w-2xl">
-            Comment la répartition de <strong className="text-text">l&apos;ensemble des dépenses publiques</strong> a
+          <h2 className="text-2xl md:text-3xl font-bold text-text mb-2 heading-tight">
+            Évolution des dépenses publiques (2015-2026)
+          </h2>
+          <p className="text-sm text-text-secondary mb-4 max-w-2xl">
+            Comment la répartition de l&apos;ensemble des dépenses publiques a
             évolué sur 11 ans.
           </p>
           {/* Scope warning */}
-          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-social/20 bg-social/5 px-4 py-3">
-            <AlertTriangle size={18} className="text-social mt-0.5 flex-shrink-0" />
-            <p className="text-xs text-text-muted leading-relaxed">
+          <div className="mb-6 flex items-start gap-3 rounded-xl border border-border bg-slate-50 px-5 py-4">
+            <AlertTriangle size={18} className="text-amber-600 mt-0.5 flex-shrink-0" />
+            <p className="text-xs text-text-secondary leading-relaxed">
               <span className="font-semibold text-text">Changement de périmètre.</span>{" "}
-              Ce graphique montre les dépenses publiques <strong className="text-text">combinées</strong> (État
+              Ce graphique montre les dépenses publiques combinées (État
               + Sécurité sociale, ~1 200 Md€), pas seulement le budget de l&apos;État (~500 Md€)
               de la section précédente. C&apos;est pourquoi les proportions diffèrent :
               la santé (24%, financée par vos cotisations via l&apos;assurance maladie) et
@@ -256,25 +271,28 @@ function ResultsContent() {
           <div className="rounded-3xl border border-border bg-white p-6">
             <HistoryTimeline />
           </div>
-          <p className="text-[11px] text-text-muted/60 mt-3">
-            Sources : approximations basées sur les LFI et LFSS successives (2015-2026), rapports DREES et CCSS · Classification COFOG
+          <p className="text-xs text-text-muted mt-4">
+            <Link href="/a-propos#sources-primaires" className="underline hover:text-text">
+              Sources : approximations basées sur les LFI et LFSS successives (2015-2026), rapports DREES et CCSS
+            </Link>
           </p>
         </section>
 
         {/* Country comparison */}
         <section>
-          <div className="flex items-center gap-2 mb-2">
-            <Globe size={20} className="text-primary" />
-            <h2 className="text-2xl font-bold text-text heading-tight">
-              La France face au monde
-            </h2>
+          <div className="flex items-center gap-2 mb-1">
+            <Globe size={18} className="text-primary" />
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider">Comparaison internationale</p>
           </div>
-          <p className="text-text-muted mb-4 text-sm max-w-2xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-text mb-2 heading-tight">
+            La France face au monde
+          </h2>
+          <p className="text-sm text-text-secondary mb-4 max-w-2xl">
             Le « coin fiscal » mesure l&apos;écart entre ce que coûte un salarié à son employeur
             et ce qu&apos;il reçoit en net. En France, il atteint 47,2%, l&apos;un des plus élevés
             de l&apos;OCDE, principalement à cause des cotisations patronales (26,7% du coût du travail).
           </p>
-          <p className="text-text-muted mb-6 text-xs max-w-2xl">
+          <p className="text-xs text-text-muted mb-6 max-w-2xl">
             En contrepartie, la France offre une protection sociale parmi les plus larges au monde
             (santé universelle, retraite par répartition, allocations familiales, chômage)
             financée précisément par ces cotisations élevées.
@@ -287,7 +305,7 @@ function ResultsContent() {
         {/* Disclaimer */}
         <section className="text-xs text-text-muted leading-relaxed border-t border-border pt-8 space-y-2">
           <p>
-            <strong>Projet personnel à visée pédagogique.</strong> Ceci n&apos;est pas un outil officiel.
+            Projet personnel à visée pédagogique. Ceci n&apos;est pas un outil officiel.
             Les montants sont des estimations basées sur le barème fiscal 2026 (revenus 2025)
             et les données budgétaires publiques. Le site peut contenir des erreurs.
             Pour une simulation officielle :{" "}

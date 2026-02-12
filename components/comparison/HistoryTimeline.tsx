@@ -78,9 +78,9 @@ function CustomTooltip({
       {/* Breakdown of "Autres" */}
       {otherEntry && OTHER_COMPOSITION.length > 0 && (
         <div className="mt-2 pt-2 border-t border-border/50">
-          <p className="text-[10px] font-semibold text-text-muted mb-1">Dont « Autres » :</p>
+          <p className="text-xs font-semibold text-text-muted mb-1">Dont « Autres » :</p>
           {OTHER_COMPOSITION.map((item) => (
-            <div key={item.name} className="flex justify-between gap-3 py-px text-[10px] text-text-muted">
+            <div key={item.name} className="flex justify-between gap-3 py-px text-xs text-text-muted">
               <span>{item.name}</span>
               <span>{item.pct}%</span>
             </div>
@@ -99,7 +99,7 @@ function CustomTooltip({
 
 export function HistoryTimeline() {
   const [selectedEvent, setSelectedEvent] = useState<EventMarker | null>(null);
-  const chartData = useMemo(buildChartData, []);
+  const chartData = useMemo(() => buildChartData(), []);
 
   return (
     <div className="space-y-4">
@@ -114,7 +114,7 @@ export function HistoryTimeline() {
               axisLine={{ stroke: "#E5E7EB" }}
             />
             <YAxis
-              tick={{ fontSize: 11, fill: "#6B7280" }}
+              tick={{ fontSize: 12, fill: "#6B7280" }}
               tickLine={false}
               axisLine={false}
               tickFormatter={(v: number) => `${v}%`}
@@ -137,7 +137,7 @@ export function HistoryTimeline() {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-text-muted justify-center">
+      <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-text-muted justify-center">
         {SECTOR_KEYS.map((key) => (
           <span key={key} className="flex items-center gap-1.5">
             <span
@@ -151,7 +151,7 @@ export function HistoryTimeline() {
 
       {/* Note about "Autres" */}
       {OTHER_COMPOSITION.length > 0 && (
-        <p className="text-[11px] text-text-muted/70 leading-relaxed px-1">
+        <p className="text-xs text-text-muted leading-relaxed px-1">
           <span className="font-medium text-text-muted">« Autres » (~12,5%) :</span>{" "}
           {OTHER_COMPOSITION.map((item) => item.name).join(", ")}.
           Survolez le graphique pour le détail.
@@ -160,7 +160,7 @@ export function HistoryTimeline() {
 
       {/* Event markers */}
       <div className="space-y-2">
-        <p className="text-xs font-medium text-text-muted uppercase tracking-wide">
+        <p className="text-sm font-semibold text-text-muted uppercase tracking-wide">
           Moments clés
         </p>
         <div className="flex flex-wrap gap-2">
@@ -172,7 +172,7 @@ export function HistoryTimeline() {
                   selectedEvent?.year === event.year ? null : event
                 )
               }
-              className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+              className={`text-xs px-4 py-2 rounded-full border transition-colors ${
                 selectedEvent?.year === event.year
                   ? "bg-primary text-white border-primary"
                   : "bg-white border-border text-text-muted hover:border-primary/50 hover:text-text"
@@ -191,8 +191,8 @@ export function HistoryTimeline() {
               exit={{ opacity: 0, height: 0 }}
               className="overflow-hidden"
             >
-              <div className="flex items-start gap-2 bg-primary/5 border border-primary/20 rounded-lg p-3 text-sm">
-                <Info size={16} className="text-primary flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2 rounded-xl border border-border bg-slate-50 px-5 py-4 text-sm">
+                <Info size={16} className="text-text-muted flex-shrink-0 mt-0.5" />
                 <div>
                   <span className="font-semibold text-text">
                     {selectedEvent.year} : {selectedEvent.label}
