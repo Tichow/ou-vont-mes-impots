@@ -137,7 +137,7 @@ export function HistoryTimeline() {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-text-muted justify-center">
+      <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-text-secondary justify-center">
         {SECTOR_KEYS.map((key) => (
           <span key={key} className="flex items-center gap-1.5">
             <span
@@ -160,7 +160,7 @@ export function HistoryTimeline() {
 
       {/* Event markers */}
       <div className="space-y-2">
-        <p className="text-sm font-semibold text-text-muted uppercase tracking-wide">
+        <p className="text-xs font-semibold text-text-muted uppercase tracking-wider">
           Moments clés
         </p>
         <div className="flex flex-wrap gap-2">

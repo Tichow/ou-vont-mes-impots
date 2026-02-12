@@ -52,10 +52,10 @@ export function BudgetBreakdown({ sectors, totalTaxes }: Props) {
               <div className="flex items-center gap-3">
                 <span className="text-xl">📦</span>
                 <div className="text-left">
-                  <span className="text-sm font-semibold text-text">
+                  <span className="text-base font-semibold text-text">
                     Autres ({smallSectors.length} secteurs)
                   </span>
-                  <span className="text-xs text-text-muted ml-2">
+                  <span className="text-sm text-text-muted ml-2">
                     {formatEuros(smallSectors.reduce((s, sec) => s + sec.amount, 0))}
                   </span>
                 </div>
@@ -115,7 +115,7 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
   const hasProgrammes = sector.programmes.length > 0;
 
   return (
-    <div className={`rounded-2xl border border-border bg-white hover:shadow-md hover:border-border/80 transition-all duration-200 ${compact ? "px-3 py-3" : "px-4 py-4"}`}>
+    <div className={`rounded-2xl border border-border bg-white hover:shadow-md hover:border-border/80 transition-all duration-200 ${compact ? "px-3 py-3" : expanded ? "px-5 py-5" : "px-4 py-4"}`}>
       {/* Clickable header */}
       <button
         onClick={hasProgrammes ? onToggle : undefined}
@@ -126,12 +126,12 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
         <div className="flex items-center justify-between gap-3 mb-2">
           <div className="flex items-center gap-2.5 min-w-0">
             <span className={compact ? "text-lg" : "text-xl"}>{sector.equivalence.emoji}</span>
-            <span className={`font-semibold text-text truncate ${compact ? "text-xs" : "text-sm"}`}>
+            <span className={`font-semibold text-text truncate ${compact ? "text-sm" : "text-base"}`}>
               {sector.name}
             </span>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
-            <span className={`font-bold tabular-nums ${compact ? "text-xs" : "text-sm"}`} style={{ color: sector.color }}>
+            <span className={`font-bold tabular-nums ${compact ? "text-sm" : "text-base"}`} style={{ color: sector.color }}>
               {formatEuros(sector.amount)}
             </span>
             <span className="text-text-muted tabular-nums text-xs">
@@ -163,7 +163,7 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
         {/* Equivalence text */}
         <p className="text-text-muted leading-snug mt-2 text-xs">
           {sector.equivalence.description}
-          <SourceTooltip source={sector.equivalence.source} />
+          <SourceTooltip source={sector.equivalence.source} label={sector.name} url={sector.equivalence.url} />
         </p>
       </button>
 
@@ -177,7 +177,7 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             className="overflow-hidden"
           >
-            <div className="pt-4 mt-3 border-t border-border/50">
+            <div className="pt-5 mt-4 border-t border-border/50 px-1">
               <ProgrammeList
                 programmes={sector.programmes}
                 color={sector.color}

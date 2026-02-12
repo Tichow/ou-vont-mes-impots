@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
 import { Search, ExternalLink, X } from "lucide-react";
 import { Header } from "@/components/shared/Header";
 import glossaryData from "@/data/glossary-full.json";
@@ -96,7 +95,7 @@ function TermCard({ term, query }: { term: GlossaryTerm; query: string }) {
         href={term.source.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1 mt-2 text-xs text-primary/70 hover:text-primary transition-colors"
+        className="inline-flex items-center gap-1 mt-2.5 text-xs text-primary hover:underline transition-colors"
       >
         <ExternalLink size={12} />
         {term.source.label}
@@ -173,7 +172,7 @@ export default function GlossairePage() {
     <main className="min-h-screen bg-surface-alt">
       <Header />
 
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="max-w-5xl mx-auto px-6 py-10">
         {/* Title */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
@@ -299,21 +298,6 @@ export default function GlossairePage() {
           </div>
         )}
 
-        {/* Footer nav */}
-        <div className="flex flex-col sm:flex-row gap-3 pt-10 mt-10 border-t border-border">
-          <Link
-            href="/"
-            className="flex-1 text-center text-sm bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all font-medium"
-          >
-            Calculer mes impôts
-          </Link>
-          <Link
-            href="/a-propos"
-            className="flex-1 text-center text-sm border border-border text-text px-4 py-3 rounded-full hover:bg-surface-alt transition-colors font-medium"
-          >
-            Sources & Méthodologie
-          </Link>
-        </div>
       </div>
     </main>
   );

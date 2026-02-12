@@ -38,19 +38,21 @@ export function OtherTaxes({ result }: Props) {
   return (
     <div className="space-y-8">
       {/* Donut + Cards side by side on desktop */}
-      <div className="grid lg:grid-cols-2 gap-8 items-start">
-        {/* Left: Donut chart */}
-        <div className="rounded-3xl border border-border bg-white p-6">
-          <h3 className="text-base font-bold text-text mb-1 heading-tight">
+      <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+        {/* Left: Donut chart — stretches to match cards height */}
+        <div className="rounded-3xl border border-border bg-white p-6 flex flex-col">
+          <h3 className="text-lg font-bold text-text mb-1 heading-tight">
             Votre portrait fiscal complet
           </h3>
-          <p className="text-xs text-text-muted mb-4">
+          <p className="text-sm text-text-secondary mb-4">
             Total estimé de tous vos prélèvements annuels, incluant les taxes indirectes.
           </p>
-          <OtherTaxDonut
-            segments={otherTaxes.donutSegments}
-            grandTotal={otherTaxes.grandTotal}
-          />
+          <div className="flex-1 flex items-center justify-center">
+            <OtherTaxDonut
+              segments={otherTaxes.donutSegments}
+              grandTotal={otherTaxes.grandTotal}
+            />
+          </div>
         </div>
 
         {/* Right: Cards */}
@@ -66,15 +68,6 @@ export function OtherTaxes({ result }: Props) {
 
       {/* Lifecycle taxes */}
       <LifecycleTaxes />
-
-      {/* Sources */}
-      <p className="text-xs text-text-muted mt-4">
-        Sources : TICPE ~30 Md€ (DGDDI 2024) · TSCA ~9 Md€ (DGFiP 2024) · Taxe
-        foncière ~40 Md€ (DGFiP 2024) · CEHR art. 223 sexies CGI · Tabac ~13 Md€
-        (DGDDI 2024) · Alcool ~4 Md€ (DGDDI 2024) · DMTO ~16 Md€ (DGFiP) ·
-        Succession ~20 Md€ (DGFiP) · IFI ~2,2 Md€ (DGFiP).
-        Taux unitaires vérifiés LFI 2026.
-      </p>
     </div>
   );
 }

@@ -80,9 +80,9 @@ function TICPECard({
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2.5">
           <span className="text-xl">{tax.emoji}</span>
-          <span className="text-sm font-semibold text-text">{tax.label}</span>
+          <span className="text-base font-semibold text-text">{tax.label}</span>
         </div>
-        <span className="text-base font-bold tabular-nums" style={{ color: tax.color }}>
+        <span className="text-lg font-bold tabular-nums" style={{ color: tax.color }}>
           {formatEuros(tax.amount)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -135,8 +135,8 @@ function TICPECard({
       )}
 
       <p className="text-xs text-text-muted mt-1.5">
-        <span className="text-text-muted/40">&rarr;</span> {tax.destinationLabel}
-        <SourceTooltip source="DGDDI 2024 — TICPE ~30 Md€ de recettes" />
+        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {tax.destinationLabel}
+        <SourceTooltip source="DGDDI 2024 — TICPE ~30 Md€ de recettes" label="TICPE" url="https://www.douane.gouv.fr/la-douane/open-data" />
       </p>
     </div>
   );
@@ -149,17 +149,17 @@ function TSCACard({ tax }: { tax: OtherTaxEstimate }) {
       <div className="flex items-center justify-between gap-3 mb-2">
         <div className="flex items-center gap-2.5">
           <span className="text-xl">{tax.emoji}</span>
-          <span className="text-sm font-semibold text-text">{tax.label}</span>
+          <span className="text-base font-semibold text-text">{tax.label}</span>
         </div>
-        <span className="text-base font-bold tabular-nums" style={{ color: tax.color }}>
+        <span className="text-lg font-bold tabular-nums" style={{ color: tax.color }}>
           {formatEuros(tax.amount)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
       </div>
-      <p className="text-xs text-text-muted leading-relaxed">{tax.description}</p>
+      <p className="text-sm text-text-muted leading-relaxed">{tax.description}</p>
       <p className="text-xs text-text-muted mt-1.5">
-        <span className="text-text-muted/40">&rarr;</span> {tax.destinationLabel}
-        <SourceTooltip source="DGFiP 2024 — TSCA ~9 Md€ de recettes" />
+        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {tax.destinationLabel}
+        <SourceTooltip source="DGFiP 2024 — TSCA ~9 Md€ de recettes" label="TSCA" url="https://www.impots.gouv.fr/statistiques" />
       </p>
     </div>
   );
@@ -181,9 +181,9 @@ function TabacCard({
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2.5">
           <span className="text-xl">{d.emoji}</span>
-          <span className="text-sm font-semibold text-text">{d.label}</span>
+          <span className="text-base font-semibold text-text">{d.label}</span>
         </div>
-        <span className="text-sm font-bold tabular-nums" style={{ color: "#DC2626" }}>
+        <span className="text-lg font-bold tabular-nums" style={{ color: "#DC2626" }}>
           {formatEuros(Math.round(amount * 100) / 100)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -205,8 +205,8 @@ function TabacCard({
       )}
 
       <p className="text-xs text-text-muted mt-1.5">
-        <span className="text-text-muted/40">&rarr;</span> {d.destination_label}
-        <SourceTooltip source="DGDDI 2024 — Droits tabac ~13 Md€" />
+        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {d.destination_label}
+        <SourceTooltip source="DGDDI 2024 — Droits tabac ~13 Md€" label="Accise tabac" url="https://www.douane.gouv.fr/la-douane/open-data" />
       </p>
       {inputs.packsPerWeek > 0 && (
         <p className="text-xs text-text-muted mt-0.5 italic">
@@ -233,9 +233,9 @@ function AlcoolCard({
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2.5">
           <span className="text-xl">{d.emoji}</span>
-          <span className="text-sm font-semibold text-text">{d.label}</span>
+          <span className="text-base font-semibold text-text">{d.label}</span>
         </div>
-        <span className="text-sm font-bold tabular-nums" style={{ color: "#9333EA" }}>
+        <span className="text-lg font-bold tabular-nums" style={{ color: "#9333EA" }}>
           {formatEuros(Math.round(amount * 100) / 100)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -257,8 +257,8 @@ function AlcoolCard({
       )}
 
       <p className="text-xs text-text-muted mt-1.5">
-        <span className="text-text-muted/40">&rarr;</span> {d.destination_label}
-        <SourceTooltip source="DGDDI 2024 — Accise alcool ~4 Md€" />
+        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {d.destination_label}
+        <SourceTooltip source="DGDDI 2024 — Accise alcool ~4 Md€" label="Accise alcool" url="https://www.douane.gouv.fr/la-douane/open-data" />
       </p>
       {inputs.drinksPerWeek > 0 && (
         <p className="text-xs text-text-muted mt-0.5 italic">
@@ -291,11 +291,11 @@ function TaxeFonciereCard({
         <div className="flex items-center gap-2.5">
           <span className="text-xl">{d.emoji}</span>
           <div>
-            <span className="text-sm font-semibold text-text">
+            <span className="text-base font-semibold text-text">
               Propriétaire ?
             </span>
             {inputs.proprietaire && (
-              <span className="ml-2 text-sm font-bold tabular-nums" style={{ color: "#0891B2" }}>
+              <span className="ml-2 text-base font-bold tabular-nums" style={{ color: "#0891B2" }}>
                 {formatEuros(inputs.taxeFonciereAmount)}/an
               </span>
             )}
@@ -340,8 +340,8 @@ function TaxeFonciereCard({
             </span>
           </div>
           <p className="text-xs text-text-muted mt-1.5">
-            <span className="text-text-muted/40">&rarr;</span> {d.destination_label}
-            <SourceTooltip source="DGFiP 2024 — Taxe foncière ~40 Md€ de recettes" />
+            <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {d.destination_label}
+            <SourceTooltip source="DGFiP 2024 — Taxe foncière ~40 Md€ de recettes" label="Taxe foncière" url="https://www.impots.gouv.fr/statistiques" />
           </p>
         </div>
       )}
@@ -356,17 +356,17 @@ function CEHRCard({ tax }: { tax: OtherTaxEstimate }) {
       <div className="flex items-center justify-between gap-3 mb-2">
         <div className="flex items-center gap-2.5">
           <span className="text-xl">{tax.emoji}</span>
-          <span className="text-sm font-semibold text-text">{tax.label}</span>
+          <span className="text-base font-semibold text-text">{tax.label}</span>
         </div>
-        <span className="text-base font-bold tabular-nums" style={{ color: tax.color }}>
+        <span className="text-lg font-bold tabular-nums" style={{ color: tax.color }}>
           {formatEuros(tax.amount)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
       </div>
-      <p className="text-xs text-text-muted leading-relaxed">{tax.description}</p>
+      <p className="text-sm text-text-muted leading-relaxed">{tax.description}</p>
       <p className="text-xs text-text-muted mt-1.5">
-        <span className="text-text-muted/40">&rarr;</span> {tax.destinationLabel}
-        <SourceTooltip source="Art. 223 sexies CGI — CEHR" />
+        <span className="font-semibold text-text-muted/70">Bénéficiaire :</span> {tax.destinationLabel}
+        <SourceTooltip source="Art. 223 sexies CGI — CEHR" label="CEHR" url="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025049488" />
       </p>
     </div>
   );
@@ -379,25 +379,24 @@ export function OtherTaxCards({ taxes, cehr, inputs, onChange }: Props) {
 
   return (
     <div className="space-y-3">
-      {/* Personalized taxes */}
-      <p className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-1">
-        Personnalisez vos taxes
-      </p>
-
+      {/* TICPE — full width */}
       <TICPECard tax={ticpe} inputs={inputs} onChange={onChange} />
+
+      {/* TSCA — full width */}
       <TSCACard tax={tsca} />
 
-      <div className="grid sm:grid-cols-2 gap-3">
+      {/* Tabac + Alcool — side by side */}
+      <div className="grid grid-cols-2 gap-3">
         <TabacCard inputs={inputs} onChange={onChange} />
         <AlcoolCard inputs={inputs} onChange={onChange} />
       </div>
 
+      {/* Propriétaire — full width */}
       <TaxeFonciereCard inputs={inputs} onChange={onChange} />
 
-      {/* CEHR */}
       {cehr && (
         <div>
-          <p className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-2 mt-4">
+          <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2 mt-4">
             Selon votre revenu
           </p>
           <CEHRCard tax={cehr} />

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   AlertTriangle,
   BookOpen,
@@ -307,7 +306,7 @@ function SimplificationCard({ item }: { item: SimplificationItem }) {
         <item.icon size={16} className="text-amber-600 flex-shrink-0 mt-0.5" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="font-semibold text-text">
+            <h3 className="text-base font-semibold text-text">
               {item.title}
             </h3>
             <ChevronDown
@@ -348,8 +347,8 @@ function Section({
   return (
     <section>
       <div className="flex items-center gap-3 mb-4">
-        <Icon size={18} className="text-primary" />
-        <h2 className="text-xl font-bold text-text heading-tight">{title}</h2>
+        <Icon size={20} className="text-primary" />
+        <h2 className="text-2xl font-bold text-text heading-tight">{title}</h2>
       </div>
       {children}
     </section>
@@ -369,7 +368,7 @@ function SourceCard({ source }: { source: SourceItem }) {
         className="text-text-muted group-hover:text-primary mt-0.5 flex-shrink-0"
       />
       <div>
-        <p className="text-sm font-semibold text-text group-hover:text-primary transition-colors">
+        <p className="text-base font-semibold text-text group-hover:text-primary transition-colors">
           {source.name}
         </p>
         <p className="text-sm text-text-muted mt-1 leading-relaxed">
@@ -385,7 +384,7 @@ export default function AProposPage() {
     <main className="min-h-screen bg-surface-alt">
       <Header />
 
-      <div className="max-w-4xl mx-auto px-6 py-10 space-y-12 md:space-y-16">
+      <div className="max-w-5xl mx-auto px-6 py-10 space-y-12 md:space-y-16">
         {/* Title */}
         <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">
@@ -399,8 +398,8 @@ export default function AProposPage() {
         {/* Disclaimer box */}
         <div className="flex items-start gap-3 bg-slate-50 border border-border rounded-2xl p-5">
           <AlertTriangle size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-          <div className="text-sm space-y-2">
-            <p className="font-semibold text-text">
+          <div className="space-y-2">
+            <p className="text-base font-semibold text-text">
               Projet personnel à visée pédagogique
             </p>
             <p className="text-text-secondary leading-relaxed">
@@ -458,7 +457,7 @@ export default function AProposPage() {
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="rounded-xl border border-social/30 bg-social/5 p-5">
-                <p className="font-semibold text-text mb-2">Circuit 1 : protection sociale</p>
+                <p className="text-base font-semibold text-text mb-2">Circuit 1 : protection sociale</p>
                 <p className="text-sm text-text-muted leading-relaxed">
                   Vos <strong className="text-text">cotisations sociales</strong> (CSG, CRDS, vieillesse, retraite complémentaire)
                   sont fléchées : elles vont directement aux caisses qui gèrent
@@ -468,7 +467,7 @@ export default function AProposPage() {
                 </p>
               </div>
               <div className="rounded-xl border border-primary/30 bg-primary/5 p-5">
-                <p className="font-semibold text-text mb-2">Circuit 2 : budget de l&apos;État</p>
+                <p className="text-base font-semibold text-text mb-2">Circuit 2 : budget de l&apos;État</p>
                 <p className="text-sm text-text-muted leading-relaxed">
                   Votre <strong className="text-text">impôt sur le revenu</strong> (IR) et la <strong className="text-text">TVA</strong> que vous payez
                   sur vos achats alimentent le budget général de l&apos;État (~500 Md€).
@@ -496,56 +495,32 @@ export default function AProposPage() {
 
         {/* What's NOT included */}
         <Section title="Ce que l'outil ne couvre pas" icon={Scale}>
-          <div className="bg-white rounded-2xl border border-border p-6 space-y-4">
-            <ul className="space-y-3 text-sm text-text-muted">
-              <li className="flex items-start gap-2">
-                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
-                <span>
-                  <strong className="text-text">Revenus non-salariaux</strong> : revenus
-                  fonciers, plus-values, dividendes (PFU/flat tax), BIC/BNC.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
-                <span>
-                  <strong className="text-text">Niches fiscales</strong> : réductions et
-                  crédits d&apos;impôt (Pinel, dons, emploi à domicile, etc.).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
-                <span>
-                  <strong className="text-text">Mutuelle obligatoire</strong> : cotisations
-                  complémentaires santé (variables selon l&apos;employeur).
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
-                <span>
-                  <strong className="text-text">Cotisations patronales</strong> : ~27% du brut, non visibles sur la fiche de paie standard.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
-                <span>
-                  <strong className="text-text">Impôts des entreprises</strong> : impôt sur les sociétés (~59 Md€),
-                  taxe sur les salaires (~15 Md€), forfait social, CVAE. Hors du périmètre salarié.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-text-muted flex-shrink-0 mt-1">&bull;</span>
-                <span>
-                  <strong className="text-text">CDHR (contribution différentielle sur les hauts revenus)</strong> : impôt
-                  plancher de 20% pour les revenus &gt; 250 k€ (célibataire) / 500 k€ (couple), créé par
-                  la LFI 2025 et prorogé en 2026. Complète la CEHR mais ne concerne qu&apos;environ 24 000 foyers.
-                </span>
-              </li>
-            </ul>
-            <div className="rounded-xl bg-surface-alt px-4 py-3 text-sm text-text-muted">
-              <strong className="text-text">Couvert avec personnalisation :</strong>{" "}
+          <div className="space-y-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {[
+                { emoji: "🏠", title: "Revenus non-salariaux", desc: "Fonciers, plus-values, dividendes (PFU), BIC/BNC" },
+                { emoji: "🎁", title: "Niches fiscales", desc: "Réductions et crédits d\u2019impôt (Pinel, dons, emploi à domicile\u2026)" },
+                { emoji: "🩺", title: "Mutuelle obligatoire", desc: "Complémentaire santé, variable selon l\u2019employeur" },
+                { emoji: "🏗️", title: "Cotisations patronales", desc: "~27% du brut, invisibles sur la fiche de paie" },
+                { emoji: "🏢", title: "Impôts des entreprises", desc: "IS (~59 Md€), taxe sur les salaires, forfait social, CVAE" },
+                { emoji: "⚖️", title: "CDHR", desc: "Impôt plancher 20% (>250 k€), ~24 000 foyers concernés" },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-xl border border-border bg-white p-4 flex items-start gap-3"
+                >
+                  <span className="text-lg flex-shrink-0">{item.emoji}</span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-text">{item.title}</p>
+                    <p className="text-xs text-text-muted mt-0.5 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-xl border border-green-200 bg-green-50/50 px-5 py-3.5 text-sm text-text-muted">
+              <span className="font-semibold text-green-700">Couvert avec personnalisation :</span>{" "}
               TICPE (type de véhicule + km/an), droits tabac (paquets/semaine), accise alcool (verres/semaine),
               taxe foncière (montant personnalisable), TSCA (moyenne 350 €/an).
-              Chaque formule de calcul est affichée de manière transparente.
             </div>
           </div>
         </Section>
@@ -568,7 +543,7 @@ export default function AProposPage() {
             </p>
             <div className="grid sm:grid-cols-3 gap-3">
               <div className="rounded-xl border border-border bg-surface-alt p-4">
-                <p className="font-semibold text-text mb-2">Communes (60 %)</p>
+                <p className="text-sm font-semibold text-text mb-2">Communes (60 %)</p>
                 <ul className="space-y-1 text-xs">
                   <li>Écoles primaires (bâtiments, cantines)</li>
                   <li>Voirie communale, eau, déchets</li>
@@ -577,7 +552,7 @@ export default function AProposPage() {
                 </ul>
               </div>
               <div className="rounded-xl border border-border bg-surface-alt p-4">
-                <p className="font-semibold text-text mb-2">Départements (26 %)</p>
+                <p className="text-sm font-semibold text-text mb-2">Départements (26 %)</p>
                 <ul className="space-y-1 text-xs">
                   <li>RSA, APA, aide à l&apos;enfance (ASE)</li>
                   <li>Collèges (bâtiments, équipement)</li>
@@ -586,7 +561,7 @@ export default function AProposPage() {
                 </ul>
               </div>
               <div className="rounded-xl border border-border bg-surface-alt p-4">
-                <p className="font-semibold text-text mb-2">Régions (14 %)</p>
+                <p className="text-sm font-semibold text-text mb-2">Régions (14 %)</p>
                 <ul className="space-y-1 text-xs">
                   <li>Lycées (bâtiments, équipement)</li>
                   <li>TER et transports interurbains</li>
@@ -601,11 +576,37 @@ export default function AProposPage() {
               au quadruple) et dépend de la valeur locative cadastrale de votre bien.
               On ne peut pas estimer votre taxe foncière à partir de votre seul salaire.
             </p>
-            <p className="text-xs text-text-muted">
-              Sources : DGCL « Les collectivités locales en chiffres 2025 » (collectivites-locales.gouv.fr) ;
-              DGFiP Statistiques n° 34, taxe foncière 2024 (impots.gouv.fr) ;
-              FIPECO « Ce que les collectivités locales ont fait de notre argent en 2024 » (fipeco.fr).
-            </p>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted">
+              <a
+                href="https://www.collectivites-locales.gouv.fr/files/Finances%20locales/2025/les_CL_en_chiffres_2025.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-primary hover:underline transition-colors"
+              >
+                <ExternalLink size={11} />
+                DGCL 2025
+              </a>
+              <span>·</span>
+              <a
+                href="https://www.impots.gouv.fr/statistiques"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-primary hover:underline transition-colors"
+              >
+                <ExternalLink size={11} />
+                DGFiP Statistiques
+              </a>
+              <span>·</span>
+              <a
+                href="https://www.fipeco.fr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-primary hover:underline transition-colors"
+              >
+                <ExternalLink size={11} />
+                FIPECO
+              </a>
+            </div>
           </div>
         </Section>
 
@@ -655,9 +656,10 @@ export default function AProposPage() {
                           href={eq.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="underline hover:text-text"
+                          className="inline-flex items-start gap-1 text-primary hover:underline transition-colors"
                         >
-                          {eq.source}
+                          <ExternalLink size={11} className="flex-shrink-0 mt-0.5" />
+                          <span>{eq.source}</span>
                         </a>
                       </td>
                     </tr>
@@ -702,21 +704,6 @@ export default function AProposPage() {
           </div>
         </Section>
 
-        {/* Footer nav */}
-        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
-          <Link
-            href="/"
-            className="flex-1 text-center text-sm bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all font-medium"
-          >
-            Calculer mes impôts
-          </Link>
-          <Link
-            href="/resultats?salary=35000&status=single&children=0"
-            className="flex-1 text-center text-sm border border-border text-text px-4 py-3 rounded-full hover:bg-surface-alt transition-colors font-medium"
-          >
-            Voir un exemple de résultats
-          </Link>
-        </div>
       </div>
     </main>
   );

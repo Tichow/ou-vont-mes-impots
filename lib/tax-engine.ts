@@ -140,7 +140,7 @@ export function calculateCotisationsByDestination(
 
   const equivData = equivalencesData.equivalences as Record<
     string,
-    { item: string; unit_price: number; emoji: string; source: string }
+    { item: string; unit_price: number; emoji: string; source: string; url?: string }
   >;
 
   const destinations: CotisationDestination[] = [
@@ -195,7 +195,7 @@ export function calculateCotisationsByDestination(
 
 function buildEquivalence(
   amount: number,
-  equiv: { item: string; unit_price: number; emoji: string; source: string }
+  equiv: { item: string; unit_price: number; emoji: string; source: string; url?: string }
 ) {
   const quantity = equiv.unit_price > 0 ? amount / equiv.unit_price : 0;
   return {
@@ -205,6 +205,7 @@ function buildEquivalence(
     unitPrice: equiv.unit_price,
     emoji: equiv.emoji,
     source: equiv.source,
+    ...(equiv.url ? { url: equiv.url } : {}),
   };
 }
 
@@ -383,7 +384,7 @@ const detailBySector = new Map(
 export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
   const equivData = equivalencesData.equivalences as Record<
     string,
-    { item: string; unit_price: number; emoji: string; source: string }
+    { item: string; unit_price: number; emoji: string; source: string; url?: string }
   >;
 
   return budgetData.sectors.map((sector) => {
@@ -442,6 +443,7 @@ export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
         unitPrice: equiv.unit_price,
         emoji: equiv.emoji,
         source: equiv.source,
+        ...(equiv.url ? { url: equiv.url } : {}),
       },
     };
   });
@@ -454,7 +456,7 @@ export function calculateBudgetAllocation(totalTaxes: number): BudgetSector[] {
 export function calculateStateBudgetAllocation(stateTaxes: number): BudgetSector[] {
   const equivData = equivalencesData.equivalences as Record<
     string,
-    { item: string; unit_price: number; emoji: string; source: string }
+    { item: string; unit_price: number; emoji: string; source: string; url?: string }
   >;
 
   return budgetData.sectors.map((sector) => {
@@ -514,6 +516,7 @@ export function calculateStateBudgetAllocation(stateTaxes: number): BudgetSector
         unitPrice: equiv.unit_price,
         emoji: equiv.emoji,
         source: equiv.source,
+        ...(equiv.url ? { url: equiv.url } : {}),
       },
     };
   });

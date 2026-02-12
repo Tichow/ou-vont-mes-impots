@@ -4,6 +4,8 @@
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
+  /* Type scale — use text-xs (12px) for footnotes/formulas, text-sm (14px) for body, text-base (16px) for card titles/metrics */
+
   /* Budget sector colors — 6 harmonious families */
   --color-sector-blue: #3B82F6;
   --color-sector-teal: #0D9488;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   BarChart,
   Bar,
@@ -12,12 +12,17 @@ import {
   Cell,
 } from "recharts";
 import { motion } from "motion/react";
+import { ExternalLink } from "lucide-react";
 import countriesData from "@/data/countries-comparison.json";
 import { formatPercent } from "@/lib/formatting";
 
 type ViewMode = "tax_wedge" | "breakdown" | "revenue";
 
 type Country = (typeof countriesData.countries)[number];
+
+const COUNTRIES_BY_NAME = new Map(
+  countriesData.countries.map((c) => [`${c.flag} ${c.name}`, c])
+);
 
 const BREAKDOWN_COLORS = {
   income_tax: "#3B82F6",
@@ -33,12 +38,59 @@ const BREAKDOWN_LABELS: Record<string, string> = {
   vat_standard: "TVA (taux standard)",
 };
 
+// ── Shared custom tooltip ──────────────────────────────────────────────
+
+function CountryTooltip({
+  active,
+  label,
+  children,
+}: {
+  active?: boolean;
+  label?: string | number;
+  children: React.ReactNode;
+}) {
+  if (!active || !label) return null;
+  const country = COUNTRIES_BY_NAME.get(String(label));
+  if (!country) return null;
+
+  return (
+    <div className="bg-white border border-border rounded-xl shadow-lg px-4 py-3.5 text-xs max-w-[280px]">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-base">{country.flag}</span>
+        <span className="font-bold text-text text-sm">{country.name}</span>
+      </div>
+      {children}
+      <div className="mt-2.5 pt-2.5 border-t border-border/50">
+        <p className="text-text-muted leading-relaxed">{country.highlights}</p>
+      </div>
+    </div>
+  );
+}
+
+// ── Hover helpers ──────────────────────────────────────────────────────
+
+function barFillOpacity(isActive: boolean, isFrance: boolean, hasHover: boolean): number {
+  if (!hasHover) return isFrance ? 1 : 0.7;
+  return isActive ? 1 : 0.35;
+}
+
+function barStroke(isActive: boolean): string {
+  return isActive ? "rgba(0,0,0,0.12)" : "none";
+}
+
+// ── Tax Wedge chart ────────────────────────────────────────────────────
+
 function TaxWedgeChart({ countries }: { countries: Country[] }) {
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+
   const data = countries.map((c) => ({
     name: `${c.flag} ${c.name}`,
     value: c.tax_wedge_pct,
     id: c.id,
   }));
+
+  const onEnter = useCallback((_: unknown, idx: number) => setHoverIdx(idx), []);
+  const onLeave = useCallback(() => setHoverIdx(null), []);
 
   return (
     <div className="h-[300px] md:h-[350px]">
@@ -46,32 +98,54 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, bottom: 5, left: 5 }}>
           <XAxis
             type="number"
-            tick={{ fontSize: 11, fill: "#6B7280" }}
+            tick={{ fontSize: 12, fill: "#6B7280" }}
             tickFormatter={(v: number) => `${v}%`}
             domain={[0, 55]}
+            tickLine={false}
+            axisLine={{ stroke: "#E5E7EB" }}
           />
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fontSize: 12, fill: "#374151" }}
+            tick={{ fontSize: 12, fill: "#6B7280" }}
             width={120}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip
-            formatter={(value) => [`${value}%`, "Coin fiscal"]}
-            contentStyle={{
-              borderRadius: "12px",
-              border: "1px solid #E5E7EB",
-              fontSize: "12px",
-            }}
+            cursor={false}
+            content={({ active, label }) => (
+              <CountryTooltip active={active} label={label}>
+                {(() => {
+                  const c = label ? COUNTRIES_BY_NAME.get(String(label)) : undefined;
+                  if (!c) return null;
+                  return (
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-text-muted">Coin fiscal</span>
+                      <span className="text-base font-bold text-text tabular-nums">
+                        {formatPercent(c.tax_wedge_pct / 100, 1)}
+                      </span>
+                    </div>
+                  );
+                })()}
+              </CountryTooltip>
+            )}
           />
-          <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={28}>
-            {data.map((entry) => (
+          <Bar
+            dataKey="value"
+            radius={[0, 6, 6, 0]}
+            barSize={28}
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+          >
+            {data.map((entry, i) => (
               <Cell
                 key={entry.id}
                 fill={entry.id === "france" ? "#2563EB" : "#94A3B8"}
-                fillOpacity={entry.id === "france" ? 1 : 0.7}
+                fillOpacity={barFillOpacity(hoverIdx === i, entry.id === "france", hoverIdx !== null)}
+                stroke={barStroke(hoverIdx === i)}
+                strokeWidth={hoverIdx === i ? 1.5 : 0}
+                style={{ transition: "fill-opacity 150ms ease, stroke 150ms ease" }}
               />
             ))}
           </Bar>
@@ -81,11 +155,18 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
   );
 }
 
+// ── Breakdown chart ────────────────────────────────────────────────────
+
 function BreakdownChart({ countries }: { countries: Country[] }) {
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+
   const data = countries.map((c) => ({
     name: `${c.flag} ${c.name}`,
     ...c.breakdown,
   }));
+
+  const onEnter = useCallback((_: unknown, idx: number) => setHoverIdx(idx), []);
+  const onLeave = useCallback(() => setHoverIdx(null), []);
 
   return (
     <div className="h-[300px] md:h-[350px]">
@@ -93,31 +174,45 @@ function BreakdownChart({ countries }: { countries: Country[] }) {
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, bottom: 5, left: 5 }}>
           <XAxis
             type="number"
-            tick={{ fontSize: 11, fill: "#6B7280" }}
+            tick={{ fontSize: 12, fill: "#6B7280" }}
             tickFormatter={(v: number) => `${v}%`}
+            tickLine={false}
+            axisLine={{ stroke: "#E5E7EB" }}
           />
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fontSize: 12, fill: "#374151" }}
+            tick={{ fontSize: 12, fill: "#6B7280" }}
             width={120}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip
-            contentStyle={{
-              borderRadius: "12px",
-              border: "1px solid #E5E7EB",
-              fontSize: "12px",
-            }}
-            formatter={(value, name) => [
-              `${value}%`,
-              BREAKDOWN_LABELS[name as string] ?? name,
-            ]}
+            cursor={false}
+            content={({ active, label, payload }) => (
+              <CountryTooltip active={active} label={label}>
+                {payload && (
+                  <div className="space-y-1">
+                    {payload.map((entry) => (
+                      <div key={entry.name} className="flex items-center justify-between gap-4">
+                        <span className="flex items-center gap-1.5">
+                          <span
+                            className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: entry.color as string }}
+                          />
+                          {BREAKDOWN_LABELS[entry.name as string] ?? entry.name}
+                        </span>
+                        <span className="font-medium tabular-nums">{entry.value}%</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CountryTooltip>
+            )}
           />
           <Legend
             formatter={(value) => BREAKDOWN_LABELS[value as string] ?? value}
-            wrapperStyle={{ fontSize: "11px" }}
+            wrapperStyle={{ fontSize: "12px" }}
           />
           {Object.entries(BREAKDOWN_COLORS).map(([key, color]) => (
             <Bar
@@ -126,7 +221,19 @@ function BreakdownChart({ countries }: { countries: Country[] }) {
               stackId="stack"
               fill={color}
               barSize={28}
-            />
+              onMouseEnter={onEnter}
+              onMouseLeave={onLeave}
+            >
+              {data.map((_, i) => (
+                <Cell
+                  key={i}
+                  fillOpacity={hoverIdx === null ? 0.85 : hoverIdx === i ? 1 : 0.35}
+                  stroke={barStroke(hoverIdx === i)}
+                  strokeWidth={hoverIdx === i ? 1.5 : 0}
+                  style={{ transition: "fill-opacity 150ms ease, stroke 150ms ease" }}
+                />
+              ))}
+            </Bar>
           ))}
         </BarChart>
       </ResponsiveContainer>
@@ -134,12 +241,19 @@ function BreakdownChart({ countries }: { countries: Country[] }) {
   );
 }
 
+// ── Revenue chart ──────────────────────────────────────────────────────
+
 function RevenueChart({ countries }: { countries: Country[] }) {
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+
   const data = countries.map((c) => ({
     name: `${c.flag} ${c.name}`,
     value: c.total_tax_revenue_pct_gdp,
     id: c.id,
   }));
+
+  const onEnter = useCallback((_: unknown, idx: number) => setHoverIdx(idx), []);
+  const onLeave = useCallback(() => setHoverIdx(null), []);
 
   return (
     <div className="h-[300px] md:h-[350px]">
@@ -147,32 +261,54 @@ function RevenueChart({ countries }: { countries: Country[] }) {
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, bottom: 5, left: 5 }}>
           <XAxis
             type="number"
-            tick={{ fontSize: 11, fill: "#6B7280" }}
+            tick={{ fontSize: 12, fill: "#6B7280" }}
             tickFormatter={(v: number) => `${v}%`}
             domain={[0, 55]}
+            tickLine={false}
+            axisLine={{ stroke: "#E5E7EB" }}
           />
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fontSize: 12, fill: "#374151" }}
+            tick={{ fontSize: 12, fill: "#6B7280" }}
             width={120}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip
-            formatter={(value) => [`${value}% du PIB`, "Recettes fiscales"]}
-            contentStyle={{
-              borderRadius: "12px",
-              border: "1px solid #E5E7EB",
-              fontSize: "12px",
-            }}
+            cursor={false}
+            content={({ active, label }) => (
+              <CountryTooltip active={active} label={label}>
+                {(() => {
+                  const c = label ? COUNTRIES_BY_NAME.get(String(label)) : undefined;
+                  if (!c) return null;
+                  return (
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-text-muted">Recettes / PIB</span>
+                      <span className="text-base font-bold text-text tabular-nums">
+                        {c.total_tax_revenue_pct_gdp}%
+                      </span>
+                    </div>
+                  );
+                })()}
+              </CountryTooltip>
+            )}
           />
-          <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={28}>
-            {data.map((entry) => (
+          <Bar
+            dataKey="value"
+            radius={[0, 6, 6, 0]}
+            barSize={28}
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+          >
+            {data.map((entry, i) => (
               <Cell
                 key={entry.id}
                 fill={entry.id === "france" ? "#2563EB" : "#94A3B8"}
-                fillOpacity={entry.id === "france" ? 1 : 0.7}
+                fillOpacity={barFillOpacity(hoverIdx === i, entry.id === "france", hoverIdx !== null)}
+                stroke={barStroke(hoverIdx === i)}
+                strokeWidth={hoverIdx === i ? 1.5 : 0}
+                style={{ transition: "fill-opacity 150ms ease, stroke 150ms ease" }}
               />
             ))}
           </Bar>
@@ -181,6 +317,8 @@ function RevenueChart({ countries }: { countries: Country[] }) {
     </div>
   );
 }
+
+// ── View definitions ───────────────────────────────────────────────────
 
 const VIEWS: { id: ViewMode; label: string; description: string }[] = [
   {
@@ -199,6 +337,8 @@ const VIEWS: { id: ViewMode; label: string; description: string }[] = [
     description: `Total des recettes fiscales en % du PIB. OCDE Revenue Statistics 2025 (données ${countriesData.metadata.year_tax_to_gdp})`,
   },
 ];
+
+// ── Main component ─────────────────────────────────────────────────────
 
 export function CountryCompare() {
   const [view, setView] = useState<ViewMode>("tax_wedge");
@@ -224,7 +364,7 @@ export function CountryCompare() {
       </div>
 
       {/* Description */}
-      <p className="text-xs text-text-muted">
+      <p className="text-sm text-text-muted">
         {VIEWS.find((v) => v.id === view)?.description}
       </p>
 
@@ -240,37 +380,29 @@ export function CountryCompare() {
         {view === "revenue" && <RevenueChart countries={countries} />}
       </motion.div>
 
-      {/* Country highlights */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-        {countries.map((c) => (
-          <div
-            key={c.id}
-            className={`rounded-xl border p-5 text-xs ${
-              c.id === "france"
-                ? "border-primary/30 bg-primary/5"
-                : "border-border bg-white"
-            }`}
-          >
-            <div className="flex items-center gap-1.5 mb-1">
-              <span className="text-lg">{c.flag}</span>
-              <span className="font-semibold text-text text-sm">{c.name}</span>
-            </div>
-            <p className="text-text-muted leading-relaxed">{c.highlights}</p>
-            <div className="mt-2 pt-2 border-t border-border/50 flex justify-between">
-              <span className="text-text-muted">Coin fiscal</span>
-              <span className="font-semibold text-text">
-                {formatPercent(c.tax_wedge_pct / 100, 1)}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Source */}
-      <p className="text-xs text-text-muted text-center">
-        Source : OCDE Taxing Wages 2025 (données {countriesData.metadata.year_tax_wedge}) · Célibataire
-        sans enfant au salaire moyen
-      </p>
+      <div className="flex items-center justify-center gap-3 text-xs text-text-muted">
+        <a
+          href="https://www.oecd.org/en/publications/2025/04/taxing-wages-2025_20d1a01d.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-primary hover:underline transition-colors"
+        >
+          <ExternalLink size={11} />
+          OCDE Taxing Wages 2025
+        </a>
+        <span>·</span>
+        <a
+          href="https://www.oecd.org/en/publications/2025/12/revenue-statistics-2025_07ca0a8e.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-primary hover:underline transition-colors"
+        >
+          <ExternalLink size={11} />
+          Revenue Statistics 2025
+        </a>
+        <span className="hidden sm:inline">· Célibataire sans enfant au salaire moyen</span>
+      </div>
     </div>
   );
 }

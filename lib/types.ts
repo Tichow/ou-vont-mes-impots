@@ -78,6 +78,7 @@ export type Equivalence = {
   unitPrice: number;
   emoji: string;
   source: string;
+  url?: string;
 };
 
 /** A sous-action within a budget action (PLF finest granularity) */

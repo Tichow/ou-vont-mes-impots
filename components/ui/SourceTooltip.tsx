@@ -13,12 +13,21 @@ import { Info } from "lucide-react";
 type Props = {
   source: string;
   url?: string;
+  label?: string;
 };
 
 type Coords = { top: number; left: number; placement: "above" | "below" };
 
-const TOOLTIP_W = 280;
+const TOOLTIP_W = 288;
 const GAP = 8;
+
+function extractDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace("www.", "");
+  } catch {
+    return url;
+  }
+}
 
 function computeCoords(trigger: HTMLElement): Coords {
   const rect = trigger.getBoundingClientRect();
@@ -41,11 +50,13 @@ function TooltipPortal({
   id,
   source,
   url,
+  label,
   coords,
 }: {
   id: string;
   source: string;
   url?: string;
+  label?: string;
   coords: Coords;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -65,18 +76,21 @@ function TooltipPortal({
       id={id}
       role="tooltip"
       style={{ top: finalTop, left: coords.left, width: TOOLTIP_W }}
-      className="fixed z-[9999] p-4 rounded-xl text-left bg-white border border-border shadow-lg animate-[fadeIn_120ms_ease-out]"
+      className="fixed z-[9999] p-3.5 rounded-xl text-left bg-white border border-border shadow-lg animate-[fadeIn_120ms_ease-out]"
     >
-      <p className="text-xs text-text-secondary leading-relaxed">{source}</p>
+      {label && (
+        <p className="text-sm font-semibold text-text mb-1">{label}</p>
+      )}
+      <p className="text-sm text-text-muted leading-relaxed">{source}</p>
       {url && (
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 mt-2 text-xs text-primary hover:underline"
+          className="inline-flex items-center gap-1 mt-2 text-sm text-primary hover:underline"
           onClick={(e) => e.stopPropagation()}
         >
-          Voir la source
+          Source&nbsp;: {extractDomain(url)}
         </a>
       )}
     </div>,
@@ -84,7 +98,7 @@ function TooltipPortal({
   );
 }
 
-export function SourceTooltip({ source, url }: Props) {
+export function SourceTooltip({ source, url, label }: Props) {
   const [open, setOpen] = useState(false);
   const [clickLocked, setClickLocked] = useState(false);
   const [coords, setCoords] = useState<Coords | null>(null);
@@ -170,6 +184,7 @@ export function SourceTooltip({ source, url }: Props) {
           id={tooltipId}
           source={source}
           url={url}
+          label={label}
           coords={coords}
         />
       )}

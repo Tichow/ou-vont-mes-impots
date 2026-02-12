@@ -35,7 +35,7 @@ function CustomTooltip({
 export function OtherTaxDonut({ segments, grandTotal }: Props) {
   return (
     <div className="flex flex-col items-center">
-      <div className="relative w-full max-w-[280px] aspect-square">
+      <div className="relative w-full max-w-[320px] aspect-square">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
