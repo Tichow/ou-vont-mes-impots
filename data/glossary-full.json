@@ -724,6 +724,66 @@
         "label": "DGFiP — Statistiques IFI 2024",
         "url": "https://www.impots.gouv.fr/statistiques"
       }
+    },
+    {
+      "id": "cdhr",
+      "term": "CDHR (Contribution Différentielle sur les Hauts Revenus)",
+      "definition": "Nouvel impôt plancher créé par la LFI 2026, garantissant un taux effectif d'imposition minimum de 20 % pour les contribuables dont le revenu fiscal de référence (RFR) dépasse 250 000 € (célibataire) ou 500 000 € (couple). Si le total de l'IR et de la CEHR est inférieur à 20 % du RFR, le contribuable paie la différence. Mesure temporaire (3 ans, 2025-2027), concernant environ 24 000 foyers fiscaux. Recettes estimées : ~2 Md€/an.",
+      "category": "impots",
+      "source": {
+        "label": "impots.gouv.fr — CDHR",
+        "url": "https://www.impots.gouv.fr/actualite/contribution-differentielle-sur-les-hauts-revenus-cdhr"
+      }
+    },
+    {
+      "id": "cvae",
+      "term": "CVAE (Cotisation sur la Valeur Ajoutée des Entreprises)",
+      "definition": "Impôt de production dû par les entreprises dont le chiffre d'affaires dépasse 500 000 €, calculé sur la valeur ajoutée produite (et non sur le bénéfice). Taux maximal de 0,28 % en 2025. Composante de la CET (contribution économique territoriale) avec la CFE. Sa suppression progressive a été annoncée puis reportée à plusieurs reprises ; elle devrait être effective d'ici 2030. Recettes : ~8 Md€/an, reversées aux collectivités territoriales.",
+      "category": "impots",
+      "source": {
+        "label": "entreprendre.service-public.gouv.fr — CVAE",
+        "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F23546"
+      }
+    },
+    {
+      "id": "bic",
+      "term": "BIC (Bénéfices Industriels et Commerciaux)",
+      "definition": "Catégorie fiscale de revenus correspondant aux bénéfices tirés d'activités commerciales, industrielles ou artisanales exercées par des personnes physiques (commerçants, artisans, loueurs meublés, e-commerçants). Deux régimes possibles : le micro-BIC (CA < 188 700 € pour les ventes, abattement forfaitaire de 71 % ou 50 %) ou le régime réel (déduction des charges réelles). Soumis à l'impôt sur le revenu au barème progressif.",
+      "category": "impots",
+      "source": {
+        "label": "economie.gouv.fr — BIC/BNC",
+        "url": "https://www.economie.gouv.fr/entreprises/gerer-sa-fiscalite-et-ses-impots/limpot-sur-les-benefices-ir-et/impot-sur-le-revenu-bic"
+      }
+    },
+    {
+      "id": "bnc",
+      "term": "BNC (Bénéfices Non Commerciaux)",
+      "definition": "Catégorie fiscale de revenus correspondant aux bénéfices des professions libérales et activités non commerciales (médecins, avocats, consultants, architectes, auteurs, artistes). Deux régimes possibles : le micro-BNC (recettes < 77 700 €, abattement forfaitaire de 34 %) ou la déclaration contrôlée (déduction des charges réelles). Soumis à l'impôt sur le revenu au barème progressif.",
+      "category": "impots",
+      "source": {
+        "label": "entreprendre.service-public.gouv.fr — BNC",
+        "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F32105"
+      }
+    },
+    {
+      "id": "bce",
+      "term": "BCE (Banque Centrale Européenne)",
+      "definition": "Institution de l'Union européenne chargée de la politique monétaire de la zone euro (20 pays). Elle fixe les taux directeurs, qui influencent le coût des emprunts pour les États et les ménages. Quand la BCE relève ses taux (comme en 2022-2023, de 0 % à 4 %), la charge de la dette française augmente car l'État emprunte plus cher. Siège : Francfort.",
+      "category": "organismes",
+      "source": {
+        "label": "economie.gouv.fr — Banque Centrale Européenne",
+        "url": "https://www.economie.gouv.fr/facileco/dossiers-economiques/banque-centrale-europeenne"
+      }
+    },
+    {
+      "id": "lpm",
+      "term": "LPM (Loi de Programmation Militaire)",
+      "definition": "Loi pluriannuelle qui fixe les objectifs stratégiques et les moyens financiers des armées françaises sur une période de 5 à 7 ans. La LPM 2024-2030 prévoit 413 milliards d'euros de crédits militaires cumulés, portant le budget annuel de la Défense à 2 % du PIB dès 2025, conformément aux engagements OTAN. Elle détermine les grands programmes d'armement, les effectifs et la posture stratégique de la France.",
+      "category": "budget",
+      "source": {
+        "label": "info.gouv.fr — LPM",
+        "url": "https://www.info.gouv.fr/actualite/la-loi-de-programmation-militaire-quest-ce-que-cest"
+      }
     }
   ]
 }

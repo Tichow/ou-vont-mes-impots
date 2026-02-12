@@ -204,6 +204,54 @@
         "label": "impots.gouv.fr",
         "url": "https://www.impots.gouv.fr/statistiques"
       }
+    },
+    "cdhr": {
+      "term": "CDHR",
+      "definition": "Contribution Différentielle sur les Hauts Revenus, créée par la LFI 2026. Impôt plancher garantissant un taux effectif minimum de 20 % pour les contribuables dont le RFR dépasse 250 000 € (célibataire) ou 500 000 € (couple). Concerne environ 24 000 foyers.",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/actualite/contribution-differentielle-sur-les-hauts-revenus-cdhr"
+      }
+    },
+    "cvae": {
+      "term": "CVAE",
+      "definition": "Cotisation sur la Valeur Ajoutée des Entreprises : impôt de production calculé sur la valeur ajoutée produite par les entreprises (CA > 500 000 €). Taux maximal de 0,28 % en 2025. Sa suppression progressive est prévue d'ici 2030.",
+      "source": {
+        "label": "entreprendre.service-public.gouv.fr",
+        "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F23546"
+      }
+    },
+    "bic": {
+      "term": "BIC",
+      "definition": "Bénéfices Industriels et Commerciaux : catégorie de revenus imposables correspondant aux bénéfices des activités commerciales, industrielles ou artisanales (commerçants, artisans, loueurs meublés). Soumis à l'IR au barème progressif ou au régime micro-BIC (abattement forfaitaire).",
+      "source": {
+        "label": "economie.gouv.fr",
+        "url": "https://www.economie.gouv.fr/entreprises/gerer-sa-fiscalite-et-ses-impots/limpot-sur-les-benefices-ir-et/impot-sur-le-revenu-bic"
+      }
+    },
+    "bnc": {
+      "term": "BNC",
+      "definition": "Bénéfices Non Commerciaux : catégorie de revenus imposables correspondant aux professions libérales et activités non commerciales (médecins, avocats, consultants, auteurs). Soumis à l'IR au barème progressif ou au régime micro-BNC (abattement de 34 %).",
+      "source": {
+        "label": "entreprendre.service-public.gouv.fr",
+        "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F32105"
+      }
+    },
+    "bce": {
+      "term": "BCE",
+      "definition": "Banque Centrale Européenne, institution de la zone euro qui fixe les taux directeurs et pilote la politique monétaire. Ses décisions influencent le coût de la dette publique française et donc la charge d'intérêts dans le budget de l'État.",
+      "source": {
+        "label": "economie.gouv.fr",
+        "url": "https://www.economie.gouv.fr/facileco/dossiers-economiques/banque-centrale-europeenne"
+      }
+    },
+    "lpm": {
+      "term": "LPM",
+      "definition": "Loi de Programmation Militaire : loi pluriannuelle qui fixe les objectifs et les moyens des armées sur 5 à 7 ans. La LPM 2024-2030 prévoit 413 Md€ de crédits militaires, portant le budget Défense à 2 % du PIB d'ici 2025.",
+      "source": {
+        "label": "info.gouv.fr",
+        "url": "https://www.info.gouv.fr/actualite/la-loi-de-programmation-militaire-quest-ce-que-cest"
+      }
     }
   }
 }
