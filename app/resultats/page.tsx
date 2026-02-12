@@ -59,7 +59,7 @@ function ResultsContent() {
             tandis que vos impôts alimentent le budget général de l&apos;État.
           </p>
           {isCouple && (
-            <div className="mt-3 rounded-xl border border-border bg-slate-50 px-4 py-3">
+            <div className="mt-3 w-fit rounded-xl border border-border bg-slate-50 px-4 py-3">
               <div className="flex items-center gap-3">
                 <span className="text-sm text-text-muted shrink-0">Afficher pour :</span>
                 <div className="inline-flex bg-white rounded-lg border border-border p-0.5">
