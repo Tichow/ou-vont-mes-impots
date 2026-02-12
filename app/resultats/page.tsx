@@ -59,37 +59,39 @@ function ResultsContent() {
             tandis que vos impôts alimentent le budget général de l&apos;État.
           </p>
           {isCouple && (
-            <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-border bg-slate-50 px-4 py-3">
-              <span className="text-sm text-text-muted">Afficher pour :</span>
-              <div className="flex bg-white rounded-lg border border-border p-0.5">
-                <button
-                  onClick={() => setViewMode("personal")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
-                    viewMode === "personal"
-                      ? "bg-primary text-white shadow-sm"
-                      : "text-text-muted hover:text-text"
-                  }`}
-                >
-                  <User size={13} />
-                  Votre part
-                </button>
-                <button
-                  onClick={() => setViewMode("household")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
-                    viewMode === "household"
-                      ? "bg-primary text-white shadow-sm"
-                      : "text-text-muted hover:text-text"
-                  }`}
-                >
-                  <Users size={13} />
-                  Foyer fiscal
-                </button>
+            <div className="mt-3 rounded-xl border border-border bg-slate-50 px-4 py-3">
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-text-muted shrink-0">Afficher pour :</span>
+                <div className="inline-flex bg-white rounded-lg border border-border p-0.5">
+                  <button
+                    onClick={() => setViewMode("personal")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                      viewMode === "personal"
+                        ? "bg-primary text-white shadow-sm"
+                        : "text-text-muted hover:text-text"
+                    }`}
+                  >
+                    <User size={13} />
+                    Votre part
+                  </button>
+                  <button
+                    onClick={() => setViewMode("household")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                      viewMode === "household"
+                        ? "bg-primary text-white shadow-sm"
+                        : "text-text-muted hover:text-text"
+                    }`}
+                  >
+                    <Users size={13} />
+                    Foyer fiscal
+                  </button>
+                </div>
               </div>
-              <span className="text-xs text-text-muted">
+              <p className="text-xs text-text-muted mt-2">
                 {viewMode === "personal"
                   ? "Montants calculés sur votre revenu uniquement."
                   : "Montants combinés des 2 déclarants."}
-              </span>
+              </p>
             </div>
           )}
         </div>
