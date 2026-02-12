@@ -10,7 +10,8 @@
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "fetch-budget-detail": "npx tsx scripts/fetch-budget-detail.ts"
+    "fetch-budget-detail": "npx tsx scripts/fetch-budget-detail.ts",
+    "generate-icons": "npx tsx scripts/generate-icons.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
@@ -42,6 +43,7 @@
     "eslint": "^9.27.0",
     "eslint-config-next": "^16.1.6",
     "postcss": "^8.5.4",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
