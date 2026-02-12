@@ -81,6 +81,24 @@
       "unit_price": 10.00,
       "emoji": "\ud83c\udf55",
       "source": "Prix moyen constaté en pizzeria, France, ~10 € (GIRA Conseil / études de marché 2024)"
+    },
+    "ticpe": {
+      "item": "pleins de carburant (50L)",
+      "unit_price": 30.00,
+      "emoji": "\u26fd",
+      "source": "TICPE ~0,60 €/L × 50 L = 30 € de taxes par plein — DGDDI, accises 2024 (douane.gouv.fr)"
+    },
+    "taxe_fonciere": {
+      "item": "mois de loyer social moyen",
+      "unit_price": 380,
+      "emoji": "\ud83c\udfe0",
+      "source": "Loyer social moyen ~380 €/mois, données RPLS 2024 — Ancols (ancols.fr)"
+    },
+    "tsca": {
+      "item": "consultations vétérinaires",
+      "unit_price": 50,
+      "emoji": "\ud83d\udee1\ufe0f",
+      "source": "Consultation vétérinaire généraliste ~50 € en 2024 — Ordre national des vétérinaires (veterinaire.fr)"
     }
   }
 }

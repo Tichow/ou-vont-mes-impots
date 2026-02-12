@@ -1,0 +1,141 @@
+{
+  "metadata": {
+    "description": "Autres impôts et taxes hors fiche de paie : données pour le portrait fiscal personnalisé",
+    "source_url": "https://www.budget.gouv.fr/reperes/loi_de_finances/articles/projet-loi-finances-2026",
+    "last_updated": "2026-02-12",
+    "year": 2026,
+    "total_po_france_2024": 1251,
+    "total_po_pib_pct": 42.8,
+    "notes": "Recettes 2024 (exécution) sauf mention contraire. Taux unitaires vérifiés LFI 2026."
+  },
+  "ticpe": {
+    "id": "ticpe",
+    "label": "TICPE / Accise carburant",
+    "emoji": "\u26fd",
+    "tax_per_liter": 0.60,
+    "default_km_per_year": 12200,
+    "vehicle_presets": [
+      { "id": "citadine", "label": "Citadine", "consumption": 5.5, "emoji": "\ud83d\ude97" },
+      { "id": "berline", "label": "Berline", "consumption": 6.5, "emoji": "\ud83d\ude99" },
+      { "id": "suv", "label": "SUV", "consumption": 8.0, "emoji": "\ud83d\ude9b" },
+      { "id": "none", "label": "Aucun", "consumption": 0, "emoji": "\u26a1" }
+    ],
+    "description": "Taxe incluse dans le prix de chaque litre de carburant (~0,60 \u20ac/L).",
+    "total_revenue_mde": 30,
+    "destination_label": "\u00c9tat 53% \u00b7 Collectivit\u00e9s 40% \u00b7 AFITF 7%",
+    "source": {
+      "label": "DGDDI, rapport annuel accises 2024",
+      "url": "https://www.douane.gouv.fr/la-douane/open-data"
+    }
+  },
+  "tsca": {
+    "id": "tsca",
+    "label": "TSCA (assurances)",
+    "emoji": "\ud83d\udee1\ufe0f",
+    "annual_amount": 350,
+    "description": "Taxe sp\u00e9ciale sur les conventions d\u2019assurance : incluse dans toutes vos primes (auto, habitation, sant\u00e9\u2026).",
+    "total_revenue_mde": 9,
+    "destination_label": "Collectivit\u00e9s 60% \u00b7 \u00c9tat 25% \u00b7 S\u00e9cu 15%",
+    "source": {
+      "label": "DGFiP, Statistiques fiscales 2024",
+      "url": "https://www.impots.gouv.fr/statistiques"
+    }
+  },
+  "tabac": {
+    "id": "tabac",
+    "label": "Droits tabac",
+    "emoji": "\ud83d\udeac",
+    "accise_per_pack": 8.50,
+    "pack_price_ttc": 13,
+    "description": "Droits de consommation sur le tabac (~65% du prix d\u2019un paquet). La TVA tabac est d\u00e9j\u00e0 compt\u00e9e dans votre estimation TVA.",
+    "total_revenue_mde": 13,
+    "destination_label": "S\u00e9curit\u00e9 sociale (branche maladie) : 96%",
+    "source": {
+      "label": "DGDDI, recettes tabac 2024 \u00b7 hausse accises LFI 2026",
+      "url": "https://www.douane.gouv.fr/la-douane/open-data"
+    }
+  },
+  "alcool": {
+    "id": "alcool",
+    "label": "Accise alcool",
+    "emoji": "\ud83c\udf77",
+    "accise_per_drink": 0.23,
+    "description": "Droits de consommation sur les boissons alcoolis\u00e9es (bi\u00e8re, vin, spiritueux). La TVA est d\u00e9j\u00e0 compt\u00e9e dans votre estimation TVA.",
+    "total_revenue_mde": 4,
+    "destination_label": "S\u00e9curit\u00e9 sociale (CNAM, CNAF)",
+    "source": {
+      "label": "DGDDI, recettes alcool 2024",
+      "url": "https://www.douane.gouv.fr/la-douane/open-data"
+    }
+  },
+  "taxe_fonciere": {
+    "id": "taxe_fonciere",
+    "label": "Taxe fonci\u00e8re",
+    "emoji": "\ud83c\udfe0",
+    "default_amount": 1082,
+    "description": "Imp\u00f4t local annuel des propri\u00e9taires. Moyenne nationale : 1 082 \u20ac/an par redevable.",
+    "total_revenue_mde": 40,
+    "destination_label": "Communes & intercommunalit\u00e9s (88%) \u00b7 D\u00e9partements (12%)",
+    "source": {
+      "label": "DGFiP, Statistiques n\u00b034 \u2014 taxe fonci\u00e8re 2024",
+      "url": "https://www.impots.gouv.fr/dgfip-statistiques-une-hausse-de-la-taxe-fonciere-en-2024-entrainee-par-lindexation-sur-linflation"
+    }
+  },
+  "cehr": {
+    "description": "Contribution Exceptionnelle sur les Hauts Revenus : surtaxe progressive pour les RFR \u00e9lev\u00e9s",
+    "thresholds": {
+      "single": [
+        { "from": 250000, "to": 500000, "rate": 0.03 },
+        { "from": 500000, "to": null, "rate": 0.04 }
+      ],
+      "couple": [
+        { "from": 500000, "to": 1000000, "rate": 0.03 },
+        { "from": 1000000, "to": null, "rate": 0.04 }
+      ]
+    },
+    "total_revenue_mde": 4.5,
+    "source": {
+      "label": "CGI art. 223 sexies, BOI-IR-CHR",
+      "url": "https://bofip.impots.gouv.fr/bofip/7573-PGP.html"
+    }
+  },
+  "lifecycle_taxes": {
+    "dmto": {
+      "id": "dmto",
+      "label": "Droits de mutation (DMTO)",
+      "emoji": "\ud83c\udfe2",
+      "headline": "Achat \u00e0 200 000 \u20ac \u2192 ~11 620 \u20ac de frais de mutation",
+      "description": "Les \u00ab frais de notaire \u00bb incluent 5,81% de droits de mutation (d\u00e9partement + commune). Sur un achat de 200k\u20ac, cela repr\u00e9sente ~11 620 \u20ac de taxes.",
+      "rate_pct": 5.81,
+      "total_revenue_mde": 16,
+      "source": {
+        "label": "service-public.gouv.fr \u2014 frais de notaire",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17759"
+      }
+    },
+    "succession": {
+      "id": "succession",
+      "label": "Droits de succession",
+      "emoji": "\ud83d\udcdc",
+      "headline": "H\u00e9ritage > 100k\u20ac \u2192 bar\u00e8me progressif jusqu\u2019\u00e0 45%",
+      "description": "En ligne directe : abattement de 100 000 \u20ac par parent et par enfant, puis bar\u00e8me progressif de 5% \u00e0 45%. Exon\u00e9ration totale entre \u00e9poux/partenaires PACS.",
+      "total_revenue_mde": 20,
+      "source": {
+        "label": "service-public.gouv.fr \u2014 droits de succession",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F14198"
+      }
+    },
+    "ifi": {
+      "id": "ifi",
+      "label": "IFI (Imp\u00f4t sur la Fortune Immobili\u00e8re)",
+      "emoji": "\ud83c\udfdb\ufe0f",
+      "headline": "Patrimoine immobilier > 1,3M\u20ac \u2192 186 000 foyers concern\u00e9s",
+      "description": "Remplace l\u2019ISF depuis 2018. Concerne le patrimoine immobilier net d\u00e9passant 1,3 M\u20ac. Bar\u00e8me progressif de 0,5% \u00e0 1,5%.",
+      "total_revenue_mde": 2.2,
+      "source": {
+        "label": "DGFiP, statistiques IFI 2024",
+        "url": "https://www.impots.gouv.fr/statistiques"
+      }
+    }
+  }
+}

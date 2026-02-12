@@ -50,7 +50,7 @@ const PRIMARY_SOURCES: SourceItem[] = [
     name: "service-public.gouv.fr : barème IR 2026",
     url: "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419",
     description:
-      "Barème progressif de l'impôt sur le revenu 2026 (revenus 2025), revalorisation +0.9%, abattement forfaitaire de 10%, quotient familial.",
+      "Barème progressif de l'impôt sur le revenu 2026 (revenus 2025), revalorisation +1,8%, abattement forfaitaire de 10%, quotient familial.",
   },
   {
     name: "LFSS 2026 : Sécurité sociale",
@@ -203,6 +203,36 @@ const SECONDARY_SOURCES: SourceItem[] = [
     description:
       "Pension moyenne brute de droit direct : 1 666 €/mois (fin 2023). Utilisée pour l'équivalence « X mois de pension moyenne » dans le circuit retraite.",
   },
+  {
+    name: "DGFiP : statistiques fiscales 2024",
+    url: "https://www.impots.gouv.fr/statistiques",
+    description:
+      "Recettes par impôt (taxe foncière 40 Md€, TSCA 9 Md€, IFI 2,2 Md€, droits de succession 20 Md€, DMTO 16 Md€). Base des moyennes de la section « Autres impôts ».",
+  },
+  {
+    name: "DGDDI : recettes des accises 2024",
+    url: "https://www.douane.gouv.fr/la-douane/open-data",
+    description:
+      "Accise sur les énergies (TICPE ~30 Md€), droits sur les tabacs (~13 Md€) et sur les alcools (~4 Md€). Base des estimations moyennes par ménage.",
+  },
+  {
+    name: "Moneyvox : barème IR 2026 officiel",
+    url: "https://www.moneyvox.fr/impot/actualites/105532/impot-sur-le-revenu-voici-le-bareme-2026",
+    description:
+      "Seuils du barème IR 2026 (revenus 2025) tels que retenus dans le texte final de la LFI 2026 : 11 497 / 29 315 / 83 823 / 180 294 €. Revalorisation +1,8%.",
+  },
+  {
+    name: "impots.gouv.fr : CDHR",
+    url: "https://www.impots.gouv.fr/actualite/contribution-differentielle-sur-les-hauts-revenus-cdhr",
+    description:
+      "Contribution différentielle sur les hauts revenus (impôt plancher 20%). Créée par la LFI 2025, prorogée par la LFI 2026. Complète la CEHR pour les revenus > 250 k€.",
+  },
+  {
+    name: "Fidal : synthèse LFI 2026",
+    url: "https://www.fidal.com/actualites/enfin-une-loi-de-finances-pour-2026",
+    description:
+      "Analyse complète des mesures fiscales de la LFI 2026 : CDHR, taxe holdings patrimoniales, Dutreil, CSG sur capital à 10,6%.",
+  },
 ];
 
 type SimplificationItem = {
@@ -244,6 +274,14 @@ const SIMPLIFICATIONS: SimplificationItem[] = [
       "Le budget de l'État comprend 32 missions et 130+ programmes. Nous les regroupons en 12 secteurs compréhensibles. Les pourcentages État-seul sont calculés à partir des crédits de paiement (CP) du PLF 2025 par secteur, normalisés à 100%. Chaque secteur peut être exploré programme par programme.",
     impact:
       "Certains programmes sont répartis entre plusieurs secteurs. Les pourcentages sont des approximations pédagogiques. Le drill-down par programme utilise les données PLF 2025 (les plus récentes disponibles en open data).",
+  },
+  {
+    icon: MapPin,
+    title: "Autres impôts : personnalisables",
+    detail:
+      "La TICPE est calculée à partir de votre type de véhicule et kilométrage annuel (0,60 €/L × consommation). Les accises tabac et alcool sont calculées depuis votre consommation hebdomadaire. La taxe foncière est saisie manuellement. Seule la TSCA reste une moyenne nationale (350 €/an) car elle dépend de vos contrats d'assurance. La CEHR est calculée automatiquement depuis votre revenu.",
+    impact:
+      "La TSCA peut s'écarter de ±50% de votre réalité. Les autres taxes sont personnalisées. Le taux de TICPE (0,60 €/L) est une moyenne entre essence et gazole.",
   },
   {
     icon: Scale,
@@ -434,15 +472,8 @@ export default function AProposPage() {
 
         {/* What's NOT included */}
         <Section title="Ce que l'outil ne couvre pas" icon={Scale}>
-          <div className="bg-white rounded-2xl border border-border p-6">
+          <div className="bg-white rounded-2xl border border-border p-6 space-y-4">
             <ul className="space-y-3 text-sm text-text-muted">
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
-                <span>
-                  <strong className="text-text">Impôts locaux</strong> : taxe foncière,
-                  ancienne taxe d&apos;habitation (résidences secondaires), CFE, etc.
-                </span>
-              </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
@@ -460,13 +491,6 @@ export default function AProposPage() {
               <li className="flex items-start gap-2">
                 <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
                 <span>
-                  <strong className="text-text">Taxes spécifiques</strong> : TICPE (carburants),
-                  droits de succession, ISF/IFI, taxes sur le tabac/alcool.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
-                <span>
                   <strong className="text-text">Mutuelle obligatoire</strong> : cotisations
                   complémentaires santé (variables selon l&apos;employeur).
                 </span>
@@ -477,7 +501,28 @@ export default function AProposPage() {
                   <strong className="text-text">Cotisations patronales</strong> : ~27% du brut, non visibles sur la fiche de paie standard.
                 </span>
               </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span>
+                  <strong className="text-text">Impôts des entreprises</strong> : impôt sur les sociétés (~59 Md€),
+                  taxe sur les salaires (~15 Md€), forfait social, CVAE. Hors du périmètre salarié.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0 mt-1">&bull;</span>
+                <span>
+                  <strong className="text-text">CDHR (contribution différentielle sur les hauts revenus)</strong> : impôt
+                  plancher de 20% pour les revenus &gt; 250 k€ (célibataire) / 500 k€ (couple), créé par
+                  la LFI 2025 et prorogé en 2026. Complète la CEHR mais ne concerne qu&apos;environ 24 000 foyers.
+                </span>
+              </li>
             </ul>
+            <div className="rounded-xl bg-surface-alt px-4 py-3 text-sm text-text-muted">
+              <strong className="text-text">Couvert avec personnalisation :</strong>{" "}
+              TICPE (type de véhicule + km/an), droits tabac (paquets/semaine), accise alcool (verres/semaine),
+              taxe foncière (montant personnalisable), TSCA (moyenne 350 €/an).
+              Chaque formule de calcul est affichée de manière transparente.
+            </div>
           </div>
         </Section>
 

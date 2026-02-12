@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useMemo, Suspense } from "react";
 import Link from "next/link";
-import { Clock, Globe, BookOpen, ShoppingCart, ShieldCheck, Landmark, AlertTriangle, Users, User } from "lucide-react";
+import { Clock, Globe, BookOpen, ShoppingCart, ShieldCheck, Landmark, AlertTriangle, Users, User, Receipt } from "lucide-react";
 import { calculateTaxes, calculateHouseholdTaxes } from "@/lib/tax-engine";
 import { formatEuros } from "@/lib/formatting";
 import { SankeyDiagram } from "@/components/breakdown/SankeyDiagram";
@@ -11,6 +11,7 @@ import { BudgetBreakdown } from "@/components/breakdown/BudgetBreakdown";
 import { SocialProtection } from "@/components/breakdown/SocialProtection";
 import { SummaryCards } from "@/components/breakdown/SummaryCards";
 import { TaxBreakdownTable } from "@/components/breakdown/TaxBreakdownTable";
+import { OtherTaxes } from "@/components/breakdown/OtherTaxes";
 import { HistoryTimeline } from "@/components/comparison/HistoryTimeline";
 import { CountryCompare } from "@/components/comparison/CountryCompare";
 import { Header } from "@/components/shared/Header";
@@ -200,6 +201,29 @@ function ResultsContent() {
           <p className="text-[11px] text-text-muted/60 mt-3">
             Sources : taux de cotisations salariales URSSAF 2026 · Barème IR : service-public.gouv.fr (revenus 2025)
           </p>
+        </section>
+
+        {/* Other taxes — portrait fiscal complet */}
+        <section>
+          <div className="flex items-center gap-2 mb-1">
+            <Receipt size={20} className="text-infrastructure" />
+            <p className="text-xs font-semibold text-infrastructure uppercase tracking-wider">Au-delà de la fiche de paie</p>
+          </div>
+          <h2 className="text-2xl font-bold text-text mb-2 heading-tight">
+            Et vos autres impôts ?
+          </h2>
+          <p className="text-text-muted mb-4 text-sm max-w-2xl">
+            Votre fiche de paie ne raconte pas tout. En plus des cotisations et de l&apos;IR,
+            vous payez des <strong className="text-text">taxes indirectes</strong> au quotidien :
+            dans le prix de l&apos;essence (TICPE), de vos assurances (TSCA),
+            et si vous êtes propriétaire, la taxe foncière.
+          </p>
+          <p className="text-text-muted mb-6 text-xs max-w-2xl">
+            Utilisez les curseurs ci-dessous pour <strong className="text-text">personnaliser votre portrait fiscal</strong> :
+            type de véhicule, kilométrage, consommation de tabac ou d&apos;alcool, taxe foncière.
+            Chaque formule est transparente.
+          </p>
+          <OtherTaxes result={result} />
         </section>
 
         {/* History timeline */}

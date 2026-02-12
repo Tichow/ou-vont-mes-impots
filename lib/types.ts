@@ -134,6 +134,51 @@ export type BudgetSector = {
   programmes: ProgrammeAllocation[];
 };
 
+/** Vehicle type for TICPE calculation */
+export type VehicleType = "citadine" | "berline" | "suv" | "none";
+
+/** User inputs for other-taxes personalization */
+export type OtherTaxInputs = {
+  vehicleType: VehicleType;
+  kmPerYear: number;
+  packsPerWeek: number;
+  drinksPerWeek: number;
+  proprietaire: boolean;
+  taxeFonciereAmount: number;
+};
+
+/** A single other-tax estimate */
+export type OtherTaxEstimate = {
+  id: string;
+  label: string;
+  emoji: string;
+  amount: number;
+  color: string;
+  destinationLabel: string;
+  description: string;
+};
+
+/** Aggregated result from other-taxes calculation */
+export type OtherTaxesResult = {
+  /** All personalized tax estimates */
+  taxes: OtherTaxEstimate[];
+  /** CEHR (calculated from income) */
+  cehr: OtherTaxEstimate | null;
+  /** Total of all other taxes */
+  totalOtherTaxes: number;
+  /** Segments for the donut chart (payroll taxes + other taxes) */
+  donutSegments: DonutSegment[];
+  /** Grand total: payroll taxes + other taxes */
+  grandTotal: number;
+};
+
+/** Segment for the fiscal portrait donut chart */
+export type DonutSegment = {
+  name: string;
+  value: number;
+  color: string;
+};
+
 /** Complete tax calculation result */
 export type TaxResult = {
   input: UserInput;

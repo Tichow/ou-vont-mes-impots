@@ -57,11 +57,19 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 
 ### Glossaire
 
-- **63 définitions sourcées** couvrant tous les termes du site : salaire, cotisations, impôts, situation familiale, organismes, budget, comparaison internationale
+- **70 définitions sourcées** couvrant tous les termes du site : salaire, cotisations, impôts, situation familiale, organismes, budget, comparaison internationale
 - Chaque définition cite sa source officielle (service-public.gouv.fr, urssaf.fr, impots.gouv.fr, budget.gouv.fr, vie-publique.fr, OCDE, etc.)
 - Barre de recherche avec normalisation des accents et classement par pertinence
 - Filtres par catégorie, classement alphabétique avec lettres de section
 - Surlignage du texte correspondant à la recherche
+
+### Portrait fiscal complet
+
+- **Donut chart** — Vision synthétique de tous vos prélèvements : cotisations, IR, TVA, TICPE, TSCA, et taxes conditionnelles
+- **Taxes universelles** — TICPE (~475 €/an, incluse dans le prix des carburants) et TSCA (~350 €/an, incluse dans les primes d'assurance)
+- **Taxes conditionnelles** — Toggles pour affiner : propriétaire (taxe foncière ~1 082 €/an), fumeur (droits tabac ~2 190 €/an), consommateur d'alcool (~120 €/an)
+- **CEHR** — Contribution exceptionnelle sur les hauts revenus, calculée précisément depuis le RFR (3% / 4%)
+- **Événements de vie** — DMTO (frais de mutation), droits de succession, IFI : montants indicatifs pour sensibiliser
 
 ### Comparaison et contexte
 
@@ -83,9 +91,11 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 - **TVA estimée, pas calculée** — La TVA dépend des habitudes de consommation. On estime la consommation à partir du net (après épargne par tranche INSEE), puis on applique un taux effectif moyen de 12,5% (DGFiP).
 - **Revenus non-salariaux** — Revenus fonciers, dividendes, plus-values (PFU/flat tax), BIC/BNC.
 - **Niches fiscales** — Réductions et crédits d'impôt (Pinel, dons, emploi à domicile).
-- **Impôts locaux** — Taxe foncière (moy. 1 082 €/an par propriétaire, [DGFiP 2024](https://www.impots.gouv.fr/dgfip-statistiques-une-hausse-de-la-taxe-fonciere-en-2024-entrainee-par-lindexation-sur-linflation)), ancienne taxe d'habitation (résidences secondaires), CFE. Les collectivités dépensent ~330 Md €/an pour les services de proximité (écoles, routes, crèches, RSA, TER). Voir l'encadré dédié dans [Sources & Méthodologie](/a-propos).
-- **Taxes spécifiques** — TICPE (carburants), droits de succession, ISF/IFI.
+- **Impôts des entreprises** — IS (~59 Md€), taxe sur les salaires (~15 Md€), forfait social, CVAE. Hors du périmètre salarié.
+- **CDHR** — Contribution différentielle sur les hauts revenus (impôt plancher 20%, revenus > 250 k€). Créée par la LFI 2025, prorogée en 2026. Ne concerne qu'~24 000 foyers.
 - **Situations complexes** — Garde alternée, invalidité, ancien combattant.
+
+**Couvert avec des moyennes nationales :** TICPE (~475 €/an), TSCA (~350 €/an), taxe foncière (~1 082 €/an si propriétaire), droits tabac (~2 190 €/an si fumeur), accise alcool (~120 €/an). Seule la CEHR est calculée précisément depuis le revenu.
 
 Ces choix sont documentés en détail dans la page [Sources & Méthodologie](/a-propos).
 
@@ -99,7 +109,7 @@ Ces choix sont documentés en détail dans la page [Sources & Méthodologie](/a-
 | Animations | [Motion v12](https://motion.dev/) (`motion/react`) | Barres animées, transitions fluides |
 | Data Viz | D3.js (tree-shaken) | `d3-sankey`, `d3-hierarchy`, `d3-shape`, `d3-scale` |
 | Charts | [Recharts 3](https://recharts.org/) | Aires empilées, barres horizontales |
-| Tests | [Vitest 4](https://vitest.dev/) | 204 tests unitaires sur le moteur fiscal |
+| Tests | [Vitest 4](https://vitest.dev/) | 226 tests unitaires sur le moteur fiscal |
 | Linting | ESLint 9 (flat config) | `eslint.config.mjs`, pas de `.eslintrc` |
 | Déploiement | [Vercel](https://vercel.com/) | Export statique, CDN mondial |
 
@@ -160,7 +170,7 @@ Chaque secteur affiche une équivalence concrète pour rendre les montants tangi
 ### Chiffres clés utilisés
 
 - **PASS 2026** : 48 060 €/an (4 005 €/mois)
-- **Tranches IR 2026** : 0% jusqu'à 11 600 €, 11% jusqu'à 29 579 €, 30% jusqu'à 84 577 €, 41% jusqu'à 181 917 €, 45% au-delà
+- **Tranches IR 2026** : 0% jusqu'à 11 497 €, 11% jusqu'à 29 315 €, 30% jusqu'à 83 823 €, 41% jusqu'à 180 294 €, 45% au-delà
 - **Plafond quotient familial** : 1 807 € par demi-part supplémentaire
 - **Abattement forfaitaire** : 10%, min 504 €, max 14 426 €
 - **Taux CSG** : 9,2% (6,8% déductible + 2,4% non déductible)
@@ -168,7 +178,7 @@ Chaque secteur affiche une équivalence concrète pour rendre les montants tangi
 - **TVA effective moyenne** : ~12,5% (moyenne pondérée des 4 taux sur le panier national)
 - **Taux d'épargne** : variable par tranche de revenu (4% à 25%), calibré sur INSEE BDF 2017 + Banque de France 2024
 
-Les calculs sont validés par **204 tests unitaires** couvrant le moteur fiscal, la ventilation par destination, et l'allocation budgétaire.
+Les calculs sont validés par **226 tests unitaires** couvrant le moteur fiscal, la ventilation par destination, et l'allocation budgétaire.
 
 ## Structure du projet
 
@@ -189,7 +199,11 @@ components/
 │   ├── SocialProtection.tsx # Circuit 1 : cotisations fléchées par caisse
 │   ├── BudgetBreakdown.tsx  # Circuit 2 : budget État par secteur
 │   ├── ProgrammeList.tsx    # Drill-down : programmes dans un secteur
-│   └── EquivalenceCards.tsx # Équivalences concrètes (pension, dette, école...)
+│   ├── EquivalenceCards.tsx # Équivalences concrètes (pension, dette, école...)
+│   ├── OtherTaxes.tsx       # Portrait fiscal complet (donut + cards + lifecycle)
+│   ├── OtherTaxDonut.tsx    # Donut chart Recharts (tous prélèvements)
+│   ├── OtherTaxCards.tsx    # Cards interactives avec toggles
+│   └── LifecycleTaxes.tsx   # Événements de vie (DMTO, succession, IFI)
 ├── comparison/
 │   ├── HistoryTimeline.tsx  # Évolution 2015-2026 (dépenses consolidées)
 │   └── CountryCompare.tsx   # Coin fiscal OCDE, recettes/PIB
@@ -202,6 +216,7 @@ components/
 
 lib/
 ├── tax-engine.ts            # Moteur fiscal pur (deux circuits, quotient familial)
+├── other-taxes.ts           # Calcul des taxes hors fiche de paie (TICPE, CEHR...)
 ├── glossary.ts              # Accès aux définitions du glossaire (tooltips)
 ├── formatting.ts            # Formatage nombres/devises (espaces insécables)
 └── types.ts                 # Types partagés (TaxBreakdown, BudgetSector, etc.)
@@ -212,14 +227,16 @@ data/
 ├── budget-detail-plf2025.json # Détail par programme (PLF 2025, open data)
 ├── budget-history.json      # Série historique 2015-2026
 ├── countries-comparison.json # Données OCDE (coin fiscal, recettes/PIB)
+├── other-taxes-2026.json    # Données taxes hors fiche de paie (TICPE, TSCA, etc.)
 ├── equivalences.json        # Prix de référence pour les équivalences
 ├── glossary.json            # Définitions courtes pour les tooltips
-└── glossary-full.json       # 63 définitions complètes pour la page glossaire
+└── glossary-full.json       # 70 définitions complètes pour la page glossaire
 
 __tests__/
 ├── tax-engine.test.ts       # Tests du moteur fiscal (IR, cotisations, QF)
 ├── tax-audit.test.ts        # Validation croisée contre impots.gouv.fr
-└── budget-detail.test.ts    # Intégrité des données budgétaires
+├── budget-detail.test.ts    # Intégrité des données budgétaires
+└── other-taxes.test.ts      # Tests TICPE, CEHR, toggles, agrégation
 ```
 
 ## Méthodologie détaillée
@@ -258,7 +275,7 @@ git clone https://github.com/tichow/ou-vont-mes-impots.git
 cd ou-vont-mes-impots
 pnpm install
 pnpm dev       # Développement (Turbopack)
-pnpm test      # 204 tests unitaires
+pnpm test      # 226 tests unitaires
 pnpm build     # Build statique
 pnpm lint      # ESLint 9 (flat config)
 ```

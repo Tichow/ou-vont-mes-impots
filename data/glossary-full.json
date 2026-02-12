@@ -258,7 +258,7 @@
     {
       "id": "bareme_progressif",
       "term": "Barème progressif",
-      "definition": "Grille de taux d'imposition par tranches de revenus. Chaque tranche est imposée à un taux différent. Par exemple, les premiers 11 600 € ne sont pas imposés (taux 0 %), puis de 11 601 € à 29 579 € le taux est de 11 %, etc.",
+      "definition": "Grille de taux d'imposition par tranches de revenus. Chaque tranche est imposée à un taux différent. Par exemple, les premiers 11 497 € ne sont pas imposés (taux 0 %), puis de 11 498 € à 29 315 € le taux est de 11 %, etc.",
       "category": "impots",
       "source": {
         "label": "service-public.gouv.fr",
@@ -323,16 +323,6 @@
       "source": {
         "label": "service-public.gouv.fr",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F2613"
-      }
-    },
-    {
-      "id": "ticpe",
-      "term": "TICPE (Taxe Intérieure de Consommation sur les Produits Énergétiques)",
-      "definition": "Taxe sur les carburants et combustibles fossiles (essence, gazole, fioul). C'est l'une des principales recettes fiscales de l'État (~17 Md€/an). Son montant est fixe (en centimes par litre), pas proportionnel au prix.",
-      "category": "impots",
-      "source": {
-        "label": "ecologie.gouv.fr",
-        "url": "https://www.ecologie.gouv.fr/politiques-publiques/fiscalite-energies"
       }
     },
     {
@@ -663,6 +653,76 @@
       "source": {
         "label": "INSEE",
         "url": "https://www.insee.fr/fr/statistiques/5371275"
+      }
+    },
+    {
+      "id": "ticpe",
+      "term": "TICPE / Accise sur les énergies",
+      "definition": "Taxe intérieure de consommation sur les produits énergétiques, incluse dans le prix des carburants à la pompe (~0,60 €/L de gazole, ~0,70 €/L de SP95). Son montant est fixe (en centimes par litre), il ne varie pas avec le prix du pétrole. Recettes totales : ~30 Md€/an, réparties entre l'État (53%), les collectivités territoriales (40%) et l'AFITF (7%, agence de financement des transports).",
+      "category": "impots",
+      "source": {
+        "label": "DGDDI — Statistiques des accises 2024",
+        "url": "https://www.douane.gouv.fr/la-douane/open-data"
+      }
+    },
+    {
+      "id": "taxe_fonciere",
+      "term": "Taxe foncière (sur les propriétés bâties)",
+      "definition": "Impôt local annuel payé par tout propriétaire d'un bien immobilier bâti. Son montant dépend de la valeur locative cadastrale du bien et du taux voté par la commune et le département. Moyenne nationale : 1 082 €/an par redevable (717 € pour un logement unique). Recettes totales : ~40 Md€/an (53,6 Md€ incluant le non-bâti). Seul impôt local direct des ménages depuis la suppression de la taxe d'habitation (résidences principales) en 2023.",
+      "category": "impots",
+      "source": {
+        "label": "DGFiP — Statistiques n°34, taxe foncière 2024",
+        "url": "https://www.impots.gouv.fr/dgfip-statistiques-une-hausse-de-la-taxe-fonciere-en-2024-entrainee-par-lindexation-sur-linflation"
+      }
+    },
+    {
+      "id": "cehr",
+      "term": "CEHR (Contribution Exceptionnelle sur les Hauts Revenus)",
+      "definition": "Surtaxe progressive créée en 2012 pour les contribuables à revenus très élevés. Pour un célibataire : 3% sur la fraction du RFR entre 250 000 € et 500 000 €, et 4% au-delà. Pour un couple : seuils doublés (500 000 € et 1 000 000 €). Rapporte environ 4,5 Md€/an et concerne ~50 000 foyers fiscaux.",
+      "category": "impots",
+      "source": {
+        "label": "BOFiP — BOI-IR-CHR (CGI art. 223 sexies)",
+        "url": "https://bofip.impots.gouv.fr/bofip/7573-PGP.html"
+      }
+    },
+    {
+      "id": "tsca",
+      "term": "TSCA (Taxe Spéciale sur les Conventions d'Assurance)",
+      "definition": "Taxe incluse dans toutes les primes d'assurance payées en France (auto, habitation, santé complémentaire, responsabilité civile, etc.). Taux variable selon le type de contrat : 9% pour l'assurance maladie, 18% pour l'assurance auto, 30% pour l'incendie. Recettes totales : ~9 Md€/an, principalement affectées aux collectivités territoriales (60%), à l'État (25%) et à la Sécurité sociale (15%).",
+      "category": "impots",
+      "source": {
+        "label": "DGFiP — Statistiques fiscales 2024",
+        "url": "https://www.impots.gouv.fr/statistiques"
+      }
+    },
+    {
+      "id": "dmto",
+      "term": "DMTO (Droits de Mutation à Titre Onéreux)",
+      "definition": "Communément appelés « frais de notaire », les DMTO représentent 5,81% du prix d'achat d'un bien immobilier dans l'ancien (4,50% département + 1,20% commune + 0,10% État + frais d'assiette). Sur un achat de 200 000 €, cela représente environ 11 620 € de taxes. Les DMTO sont la principale ressource fiscale des départements. Recettes totales : ~16 Md€/an (très cycliques, dépendent du marché immobilier).",
+      "category": "impots",
+      "source": {
+        "label": "service-public.gouv.fr — Frais de notaire",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17759"
+      }
+    },
+    {
+      "id": "droits_succession",
+      "term": "Droits de succession",
+      "definition": "Impôt progressif prélevé lors de la transmission d'un patrimoine au décès. En ligne directe (parent → enfant) : abattement de 100 000 € par parent et par enfant, puis barème progressif de 5% (jusqu'à 8 072 €) à 45% (au-delà de 1 805 677 €). Exonération totale entre époux et partenaires de PACS. Recettes totales : ~20 Md€/an.",
+      "category": "impots",
+      "source": {
+        "label": "service-public.gouv.fr — Droits de succession",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F14198"
+      }
+    },
+    {
+      "id": "ifi",
+      "term": "IFI (Impôt sur la Fortune Immobilière)",
+      "definition": "Impôt annuel sur le patrimoine immobilier net supérieur à 1,3 million d'euros, instauré en 2018 en remplacement de l'ISF (qui taxait aussi les placements financiers). Barème progressif de 0,50% (800 000-1,3 M€) à 1,50% (au-delà de 10 M€). Concerne environ 186 000 foyers fiscaux. Recettes : ~2,2 Md€/an.",
+      "category": "impots",
+      "source": {
+        "label": "DGFiP — Statistiques IFI 2024",
+        "url": "https://www.impots.gouv.fr/statistiques"
       }
     }
   ]

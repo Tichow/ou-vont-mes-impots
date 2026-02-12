@@ -148,6 +148,62 @@
         "label": "service-public.gouv.fr",
         "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F559"
       }
+    },
+    "ticpe": {
+      "term": "TICPE / Accise énergies",
+      "definition": "Taxe incluse dans le prix des carburants (~0,60 €/L). Elle représente ~30 Md€ de recettes, réparties entre l'État, les collectivités et l'AFITF (transports).",
+      "source": {
+        "label": "douane.gouv.fr",
+        "url": "https://www.douane.gouv.fr/la-douane/open-data"
+      }
+    },
+    "taxe_fonciere": {
+      "term": "Taxe foncière",
+      "definition": "Impôt local annuel payé par les propriétaires de biens immobiliers. Moyenne nationale : ~1 082 €/an par redevable. Finance les communes et départements.",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/dgfip-statistiques-une-hausse-de-la-taxe-fonciere-en-2024-entrainee-par-lindexation-sur-linflation"
+      }
+    },
+    "cehr": {
+      "term": "CEHR",
+      "definition": "Contribution Exceptionnelle sur les Hauts Revenus : surtaxe de 3% (250k-500k€ pour un célibataire) et 4% au-delà. Concerne ~50 000 foyers en France.",
+      "source": {
+        "label": "bofip.impots.gouv.fr",
+        "url": "https://bofip.impots.gouv.fr/bofip/7573-PGP.html"
+      }
+    },
+    "tsca": {
+      "term": "TSCA",
+      "definition": "Taxe Spéciale sur les Conventions d'Assurance : prélevée sur vos primes d'assurance (auto, habitation, santé). Taux de 9% à 30% selon le contrat.",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/statistiques"
+      }
+    },
+    "dmto": {
+      "term": "DMTO (frais de mutation)",
+      "definition": "Droits de Mutation à Titre Onéreux : les « frais de notaire » comprennent 5,81% de taxes sur les achats immobiliers, reversées aux départements et communes.",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F17759"
+      }
+    },
+    "droits_succession": {
+      "term": "Droits de succession",
+      "definition": "Barème progressif de 5% à 45% sur les héritages en ligne directe, après abattement de 100 000 € par parent et par enfant. Exonération totale entre époux.",
+      "source": {
+        "label": "service-public.gouv.fr",
+        "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F14198"
+      }
+    },
+    "ifi": {
+      "term": "IFI",
+      "definition": "Impôt sur la Fortune Immobilière (ex-ISF depuis 2018). Concerne le patrimoine immobilier net > 1,3 M€. Barème progressif de 0,5% à 1,5%. ~186 000 foyers concernés.",
+      "source": {
+        "label": "impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/statistiques"
+      }
     }
   }
 }
