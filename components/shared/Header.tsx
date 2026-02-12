@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { BarChart3, Github } from "lucide-react";
+import Image from "next/image";
+import { Github } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/", label: "Accueil" },
@@ -38,7 +39,7 @@ function HeaderInner() {
       <nav className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-2">
         {/* Left — logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-          <BarChart3 size={22} className="text-primary" />
+          <Image src="/logo.svg" alt="Où Vont Mes Impôts" width={24} height={24} />
           <span className="font-bold text-lg heading-tight text-text hidden sm:inline">
             Où Vont Mes Impôts
           </span>
@@ -83,7 +84,7 @@ export function Header() {
         <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-border/50">
           <nav className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <BarChart3 size={22} className="text-primary" />
+              <Image src="/logo.svg" alt="Où Vont Mes Impôts" width={24} height={24} />
               <span className="font-bold text-lg heading-tight text-text hidden sm:inline">
                 Où Vont Mes Impôts
               </span>
