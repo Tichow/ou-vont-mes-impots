@@ -32,7 +32,7 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 
 ### Calcul personnalisé
 
-- Salaire brut annuel (slider ou saisie libre, de 0 à 200 000 €)
+- Salaire brut annuel (slider ou saisie libre, de 0 à 500 000 €)
 - Situation familiale : célibataire, couple marié/pacsé (avec salaire du conjoint)
 - Nombre d'enfants à charge (0 à 3+), option parent isolé (case T)
 - Calcul du quotient familial complet, plafonnement de l'avantage par demi-part
@@ -57,7 +57,7 @@ Cette distinction est essentielle : en France, la santé et les retraites sont f
 
 ### Glossaire
 
-- **70 définitions sourcées** couvrant tous les termes du site : salaire, cotisations, impôts, situation familiale, organismes, budget, comparaison internationale
+- **75 définitions sourcées** couvrant tous les termes du site : salaire, cotisations, impôts, situation familiale, organismes, budget, comparaison internationale
 - Chaque définition cite sa source officielle (service-public.gouv.fr, urssaf.fr, impots.gouv.fr, budget.gouv.fr, vie-publique.fr, OCDE, etc.)
 - Barre de recherche avec normalisation des accents et classement par pertinence
 - Filtres par catégorie, classement alphabétique avec lettres de section
@@ -109,7 +109,7 @@ Ces choix sont documentés en détail dans la page [Sources & Méthodologie](/a-
 | Animations | [Motion v12](https://motion.dev/) (`motion/react`) | Barres animées, transitions fluides |
 | Data Viz | D3.js (tree-shaken) | `d3-sankey`, `d3-hierarchy`, `d3-shape`, `d3-scale` |
 | Charts | [Recharts 3](https://recharts.org/) | Aires empilées, barres horizontales |
-| Tests | [Vitest 4](https://vitest.dev/) | 226 tests unitaires sur le moteur fiscal |
+| Tests | [Vitest 4](https://vitest.dev/) | 237 tests unitaires sur le moteur fiscal |
 | Linting | ESLint 9 (flat config) | `eslint.config.mjs`, pas de `.eslintrc` |
 | Déploiement | [Vercel](https://vercel.com/) | Export statique, CDN mondial |
 
@@ -178,7 +178,7 @@ Chaque secteur affiche une équivalence concrète pour rendre les montants tangi
 - **TVA effective moyenne** : ~12,5% (moyenne pondérée des 4 taux sur le panier national)
 - **Taux d'épargne** : variable par tranche de revenu (4% à 25%), calibré sur INSEE BDF 2017 + Banque de France 2024
 
-Les calculs sont validés par **226 tests unitaires** couvrant le moteur fiscal, la ventilation par destination, et l'allocation budgétaire.
+Les calculs sont validés par **237 tests unitaires** couvrant le moteur fiscal, la ventilation par destination, et l'allocation budgétaire.
 
 ## Structure du projet
 
@@ -186,7 +186,7 @@ Les calculs sont validés par **226 tests unitaires** couvrant le moteur fiscal,
 app/
 ├── page.tsx                 # Landing — saisie du salaire
 ├── resultats/page.tsx       # Dashboard de résultats (Sankey, cartes, tableaux)
-├── glossaire/page.tsx       # Glossaire — 63 termes sourcés, recherche et filtres
+├── glossaire/page.tsx       # Glossaire — 75 termes sourcés, recherche et filtres
 └── a-propos/page.tsx        # Sources, méthodologie et limites
 
 components/
@@ -208,11 +208,12 @@ components/
 │   ├── HistoryTimeline.tsx  # Évolution 2015-2026 (dépenses consolidées)
 │   └── CountryCompare.tsx   # Coin fiscal OCDE, recettes/PIB
 ├── shared/
-│   ├── Header.tsx           # Navbar sticky avec propagation des paramètres
-│   ├── ScrollReveal.tsx     # Animation au scroll (Motion)
+│   ├── Header.tsx           # Navbar sticky avec burger menu mobile, propagation des paramètres
+│   ├── AnalyticsProvider.tsx # Vercel Analytics + Speed Insights
 │   └── DecorativeShapes.tsx # Éléments décoratifs de la landing
 └── ui/
-    └── GlossaryTerm.tsx     # Tooltip interactif sur les termes techniques
+    ├── GlossaryTerm.tsx     # Tooltip interactif sur les termes techniques
+    └── SourceTooltip.tsx    # Tooltip de source avec lien cliquable
 
 lib/
 ├── tax-engine.ts            # Moteur fiscal pur (deux circuits, quotient familial)
@@ -275,7 +276,7 @@ git clone https://github.com/tichow/ou-vont-mes-impots.git
 cd ou-vont-mes-impots
 pnpm install
 pnpm dev       # Développement (Turbopack)
-pnpm test      # 226 tests unitaires
+pnpm test      # 237 tests unitaires
 pnpm build     # Build statique
 pnpm lint      # ESLint 9 (flat config)
 ```
@@ -292,7 +293,7 @@ Le travail humain sur ce projet :
 - Choix de l'angle (deux circuits) après lecture de la LOLF, du CSS et des rapports sénatoriaux
 - Recherche et vérification de chaque source officielle (pas de données générées par IA)
 - Validation croisée du moteur fiscal contre le simulateur impots.gouv.fr/2026
-- Vérification de chaque URL du glossaire (63 liens testés manuellement)
+- Vérification de chaque URL du glossaire (75 liens testés manuellement)
 - Décisions de simplification documentées (TVA estimée, cotisations patronales exclues, etc.)
 
 ## Licence
