@@ -90,13 +90,13 @@ function TICPECard({
       </div>
 
       {/* Vehicle chips */}
-      <div className="grid grid-cols-4 gap-1.5 mb-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
         {VEHICLE_PRESETS.map((p) => (
           <button
             key={p.id}
             type="button"
             onClick={() => onChange("vehicleType", p.id as VehicleType)}
-            className={`flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl border-2 text-xs font-medium transition-all ${
+            className={`flex flex-col items-center justify-center gap-0.5 min-h-[48px] py-2.5 px-2 rounded-xl border-2 text-xs font-medium transition-all touch-manipulation ${
               inputs.vehicleType === p.id
                 ? "border-primary bg-primary/5 text-primary"
                 : "border-border text-text-muted hover:border-primary/30"
