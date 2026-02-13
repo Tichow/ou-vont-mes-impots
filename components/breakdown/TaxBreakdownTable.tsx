@@ -72,19 +72,19 @@ export function TaxBreakdownTable({ result }: Props) {
       )}
 
       {/* Bloc 1 : Cotisations sociales */}
-      <div className="rounded-2xl border border-border bg-white p-5">
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">🏛️</span>
-            <span className="text-base font-semibold text-text">
+      <div className="rounded-2xl border border-border bg-white p-3 sm:p-5">
+        <div className="flex items-center justify-between gap-2 sm:gap-3 mb-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-lg flex-shrink-0">🏛️</span>
+            <span className="text-sm sm:text-base font-semibold text-text truncate">
               <GlossaryTerm termId="cotisations">
                 Cotisations sociales
               </GlossaryTerm>
             </span>
           </div>
-          <span className="text-lg font-bold tabular-nums text-amber-600">
+          <span className="text-base sm:text-lg font-bold tabular-nums text-amber-600 flex-shrink-0">
             {formatEuros(result.socialContributions.total)}
-            <span className="text-xs font-normal text-text-muted ml-1">
+            <span className="text-xs font-normal text-text-muted ml-1 hidden sm:inline">
               {formatPercent(result.socialContributions.total / gross)}
             </span>
           </span>
@@ -98,22 +98,22 @@ export function TaxBreakdownTable({ result }: Props) {
       </div>
 
       {/* Bloc 2 : Impôt sur le revenu */}
-      <div className="rounded-2xl border border-border bg-white p-5">
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">📋</span>
-            <span className="text-base font-semibold text-text">
+      <div className="rounded-2xl border border-border bg-white p-3 sm:p-5">
+        <div className="flex items-center justify-between gap-2 sm:gap-3 mb-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-lg flex-shrink-0">📋</span>
+            <span className="text-sm sm:text-base font-semibold text-text">
               <GlossaryTerm termId="ir">Impôt sur le revenu</GlossaryTerm>
               {irRow.suffix && (
-                <span className="text-sm text-text-muted font-normal">
+                <span className="text-xs sm:text-sm text-text-muted font-normal hidden sm:inline">
                   {irRow.suffix}
                 </span>
               )}
             </span>
           </div>
-          <span className="text-lg font-bold tabular-nums text-blue-600">
+          <span className="text-base sm:text-lg font-bold tabular-nums text-blue-600 flex-shrink-0">
             {formatEuros(irRow.amount)}
-            <span className="text-xs font-normal text-text-muted ml-1">
+            <span className="text-xs font-normal text-text-muted ml-1 hidden sm:inline">
               {irRow.rate}
             </span>
           </span>
@@ -135,16 +135,16 @@ export function TaxBreakdownTable({ result }: Props) {
       </div>
 
       {/* Bloc 3 : Total */}
-      <div className="rounded-2xl border-2 border-red-200 bg-red-50/50 p-5">
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-base font-semibold text-text">
+      <div className="rounded-2xl border-2 border-red-200 bg-red-50/50 p-3 sm:p-5">
+        <div className="flex items-center justify-between gap-2 sm:gap-3">
+          <span className="text-sm sm:text-base font-semibold text-text min-w-0">
             <GlossaryTerm termId="fiche_de_paie">
               Total prélevé sur fiche de paie
             </GlossaryTerm>
           </span>
-          <span className="text-xl font-bold tabular-nums text-red-600">
+          <span className="text-lg sm:text-xl font-bold tabular-nums text-red-600 flex-shrink-0">
             {formatEuros(result.directTaxes)}
-            <span className="text-xs font-normal text-text-muted ml-1">
+            <span className="text-xs font-normal text-text-muted ml-1 hidden sm:inline">
               {formatPercent(result.directTaxRate)}
             </span>
           </span>
@@ -164,11 +164,11 @@ function DetailRow({
   index: number;
 }) {
   return (
-    <div className="flex items-center gap-2 md:gap-3 py-2 px-1 rounded-lg hover:bg-surface-alt/50">
+    <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 py-2 px-1 rounded-lg hover:bg-surface-alt/50">
       {/* Label */}
-      <span className="min-w-0 text-sm text-text-muted" style={{ width: "45%" }}>
+      <span className="min-w-0 text-xs sm:text-sm text-text-muted flex items-center" style={{ width: "40%" }}>
         <span
-          className="inline-block w-2 h-2 rounded-full mr-1.5"
+          className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full mr-1 sm:mr-1.5 flex-shrink-0"
           style={{ backgroundColor: row.color }}
         />
         <span className="truncate">
@@ -181,7 +181,7 @@ function DetailRow({
       </span>
 
       {/* Bar */}
-      <div className="flex-1 h-2 md:h-2.5 bg-border/30 rounded-full overflow-hidden">
+      <div className="flex-1 h-1.5 sm:h-2 md:h-2.5 bg-border/30 rounded-full overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{ backgroundColor: row.color }}
@@ -194,12 +194,12 @@ function DetailRow({
       </div>
 
       {/* Rate */}
-      <span className="flex-shrink-0 text-xs text-text-muted w-14 text-right">
+      <span className="flex-shrink-0 text-[10px] sm:text-xs text-text-muted w-10 sm:w-14 text-right">
         {row.rate}
       </span>
 
       {/* Amount */}
-      <span className="flex-shrink-0 text-sm font-medium text-text text-right w-16 md:w-20 tabular-nums">
+      <span className="flex-shrink-0 text-xs sm:text-sm font-medium text-text text-right w-14 sm:w-16 md:w-20 tabular-nums">
         {formatEuros(row.amount)}
       </span>
     </div>

@@ -40,7 +40,7 @@ export function OtherTaxes({ result }: Props) {
       {/* Donut + Cards side by side on desktop */}
       <div className="grid lg:grid-cols-2 gap-8 items-stretch">
         {/* Left: Donut chart — stretches to match cards height */}
-        <div className="rounded-3xl border border-border bg-white p-6 flex flex-col">
+        <div className="rounded-2xl sm:rounded-3xl border border-border bg-white p-4 sm:p-6 flex flex-col">
           <h3 className="text-lg font-bold text-text mb-1 heading-tight">
             Votre portrait fiscal complet
           </h3>

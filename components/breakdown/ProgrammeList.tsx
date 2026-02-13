@@ -145,7 +145,7 @@ export function ProgrammeList({ programmes, color, sectorId, includesSocialSecur
                     transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                     className="overflow-hidden"
                   >
-                    <div className="pl-5 pt-3 pb-2 border-l-2 ml-1 mt-2" style={{ borderColor: `${color}40` }}>
+                    <div className="pl-3 sm:pl-5 pt-3 pb-2 border-l-2 ml-1 mt-2" style={{ borderColor: `${color}40` }}>
                       <ActionList actions={prog.actions} color={color} />
                     </div>
                   </motion.div>
@@ -240,7 +240,7 @@ function ActionList({ actions, color }: { actions: ActionAllocation[]; color: st
                     transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                     className="overflow-hidden"
                   >
-                    <div className="pl-4 pt-2 pb-1 border-l border-gray-200 ml-1 mt-1.5">
+                    <div className="pl-2 sm:pl-4 pt-2 pb-1 border-l border-gray-200 ml-1 mt-1.5">
                       <SousActionList sousActions={act.sousActions} color={color} />
                     </div>
                   </motion.div>

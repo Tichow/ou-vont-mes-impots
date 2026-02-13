@@ -76,14 +76,14 @@ function TICPECard({
   const consumption = preset?.consumption ?? 0;
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-6">
+    <div className="rounded-2xl border border-border bg-white p-4 sm:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between gap-3 mb-3">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">{tax.emoji}</span>
-          <span className="text-base font-semibold text-text">{tax.label}</span>
+      <div className="flex items-center justify-between gap-2 sm:gap-3 mb-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xl flex-shrink-0">{tax.emoji}</span>
+          <span className="text-sm sm:text-base font-semibold text-text">{tax.label}</span>
         </div>
-        <span className="text-lg font-bold tabular-nums" style={{ color: tax.color }}>
+        <span className="text-base sm:text-lg font-bold tabular-nums flex-shrink-0" style={{ color: tax.color }}>
           {formatEuros(tax.amount)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -152,13 +152,13 @@ function TICPECard({
 // ── TSCA Card (fixed) ────────────────────────────────────────────────
 function TSCACard({ tax }: { tax: OtherTaxEstimate }) {
   return (
-    <div className="rounded-2xl border border-border bg-white p-6">
-      <div className="flex items-center justify-between gap-3 mb-2">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">{tax.emoji}</span>
-          <span className="text-base font-semibold text-text">{tax.label}</span>
+    <div className="rounded-2xl border border-border bg-white p-4 sm:p-6">
+      <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xl flex-shrink-0">{tax.emoji}</span>
+          <span className="text-sm sm:text-base font-semibold text-text">{tax.label}</span>
         </div>
-        <span className="text-lg font-bold tabular-nums" style={{ color: tax.color }}>
+        <span className="text-base sm:text-lg font-bold tabular-nums flex-shrink-0" style={{ color: tax.color }}>
           {formatEuros(tax.amount)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -190,13 +190,13 @@ function TabacCard({
   const d = otherTaxesData.tabac;
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-6">
-      <div className="flex items-center justify-between gap-3 mb-3">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">{d.emoji}</span>
-          <span className="text-base font-semibold text-text">{d.label}</span>
+    <div className="rounded-2xl border border-border bg-white p-4 sm:p-6">
+      <div className="flex items-center justify-between gap-2 sm:gap-3 mb-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xl flex-shrink-0">{d.emoji}</span>
+          <span className="text-sm sm:text-base font-semibold text-text">{d.label}</span>
         </div>
-        <span className="text-lg font-bold tabular-nums" style={{ color: "#DC2626" }}>
+        <span className="text-base sm:text-lg font-bold tabular-nums flex-shrink-0" style={{ color: "#DC2626" }}>
           {formatEuros(Math.round(amount * 100) / 100)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -248,13 +248,13 @@ function AlcoolCard({
   const d = otherTaxesData.alcool;
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-6">
-      <div className="flex items-center justify-between gap-3 mb-3">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">{d.emoji}</span>
-          <span className="text-base font-semibold text-text">{d.label}</span>
+    <div className="rounded-2xl border border-border bg-white p-4 sm:p-6">
+      <div className="flex items-center justify-between gap-2 sm:gap-3 mb-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xl flex-shrink-0">{d.emoji}</span>
+          <span className="text-sm sm:text-base font-semibold text-text">{d.label}</span>
         </div>
-        <span className="text-lg font-bold tabular-nums" style={{ color: "#9333EA" }}>
+        <span className="text-base sm:text-lg font-bold tabular-nums flex-shrink-0" style={{ color: "#9333EA" }}>
           {formatEuros(Math.round(amount * 100) / 100)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -306,15 +306,15 @@ function TaxeFonciereCard({
 
   return (
     <div
-      className={`rounded-2xl border p-6 transition-colors ${
+      className={`rounded-2xl border p-4 sm:p-6 transition-colors ${
         inputs.proprietaire
           ? "border-border bg-white"
           : "border-border/60 bg-surface-alt"
       }`}
     >
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">{d.emoji}</span>
+      <div className="flex items-center justify-between gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xl flex-shrink-0">{d.emoji}</span>
           <div>
             <span className="text-base font-semibold text-text">
               Propriétaire ?
@@ -383,13 +383,13 @@ function TaxeFonciereCard({
 // ── CEHR Card ────────────────────────────────────────────────────────
 function CEHRCard({ tax }: { tax: OtherTaxEstimate }) {
   return (
-    <div className="rounded-2xl border border-border bg-white p-6">
-      <div className="flex items-center justify-between gap-3 mb-2">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xl">{tax.emoji}</span>
-          <span className="text-base font-semibold text-text">{tax.label}</span>
+    <div className="rounded-2xl border border-border bg-white p-4 sm:p-6">
+      <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xl flex-shrink-0">{tax.emoji}</span>
+          <span className="text-sm sm:text-base font-semibold text-text">{tax.label}</span>
         </div>
-        <span className="text-lg font-bold tabular-nums" style={{ color: tax.color }}>
+        <span className="text-base sm:text-lg font-bold tabular-nums flex-shrink-0" style={{ color: tax.color }}>
           {formatEuros(tax.amount)}
           <span className="text-xs font-normal text-text-muted">/an</span>
         </span>
@@ -422,8 +422,8 @@ export function OtherTaxCards({ taxes, cehr, inputs, onChange }: Props) {
       {/* TSCA, full width */}
       <TSCACard tax={tsca} />
 
-      {/* Tabac + Alcool, side by side */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Tabac + Alcool, stacked on mobile, side by side on sm+ */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <TabacCard inputs={inputs} onChange={onChange} />
         <AlcoolCard inputs={inputs} onChange={onChange} />
       </div>

@@ -21,7 +21,7 @@ export function LifecycleTaxes() {
         {LIFECYCLE.map((item, i) => (
           <div
             key={item.id}
-            className="rounded-2xl border border-border bg-white p-6 card-interactive overflow-hidden relative"
+            className="rounded-2xl border border-border bg-white p-4 sm:p-6 card-interactive overflow-hidden relative"
           >
             <div
               className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"

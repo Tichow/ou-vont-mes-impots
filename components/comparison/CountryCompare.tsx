@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -15,6 +15,18 @@ import { motion } from "motion/react";
 import { ExternalLink } from "lucide-react";
 import countriesData from "@/data/countries-comparison.json";
 import { formatPercent } from "@/lib/formatting";
+
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [breakpoint]);
+  return isMobile;
+}
 
 type ViewMode = "tax_wedge" | "breakdown" | "revenue";
 
@@ -82,6 +94,7 @@ function barStroke(isActive: boolean): string {
 
 function TaxWedgeChart({ countries }: { countries: Country[] }) {
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   const data = countries.map((c) => ({
     name: `${c.flag} ${c.name}`,
@@ -95,10 +108,10 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
   return (
     <div className="h-[300px] md:h-[350px]">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, bottom: 5, left: 5 }}>
+        <BarChart data={data} layout="vertical" margin={{ top: 5, right: isMobile ? 10 : 30, bottom: 5, left: 5 }}>
           <XAxis
             type="number"
-            tick={{ fontSize: 12, fill: "#6B7280" }}
+            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
             tickFormatter={(v: number) => `${v}%`}
             domain={[0, 55]}
             tickLine={false}
@@ -107,8 +120,8 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fontSize: 12, fill: "#6B7280" }}
-            width={120}
+            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
+            width={isMobile ? 90 : 120}
             tickLine={false}
             axisLine={false}
           />
@@ -159,6 +172,7 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
 
 function BreakdownChart({ countries }: { countries: Country[] }) {
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   const data = countries.map((c) => ({
     name: `${c.flag} ${c.name}`,
@@ -171,10 +185,10 @@ function BreakdownChart({ countries }: { countries: Country[] }) {
   return (
     <div className="h-[300px] md:h-[350px]">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, bottom: 5, left: 5 }}>
+        <BarChart data={data} layout="vertical" margin={{ top: 5, right: isMobile ? 10 : 30, bottom: 5, left: 5 }}>
           <XAxis
             type="number"
-            tick={{ fontSize: 12, fill: "#6B7280" }}
+            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
             tickFormatter={(v: number) => `${v}%`}
             tickLine={false}
             axisLine={{ stroke: "#E5E7EB" }}
@@ -182,8 +196,8 @@ function BreakdownChart({ countries }: { countries: Country[] }) {
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fontSize: 12, fill: "#6B7280" }}
-            width={120}
+            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
+            width={isMobile ? 90 : 120}
             tickLine={false}
             axisLine={false}
           />
@@ -245,6 +259,7 @@ function BreakdownChart({ countries }: { countries: Country[] }) {
 
 function RevenueChart({ countries }: { countries: Country[] }) {
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   const data = countries.map((c) => ({
     name: `${c.flag} ${c.name}`,
@@ -258,10 +273,10 @@ function RevenueChart({ countries }: { countries: Country[] }) {
   return (
     <div className="h-[300px] md:h-[350px]">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, bottom: 5, left: 5 }}>
+        <BarChart data={data} layout="vertical" margin={{ top: 5, right: isMobile ? 10 : 30, bottom: 5, left: 5 }}>
           <XAxis
             type="number"
-            tick={{ fontSize: 12, fill: "#6B7280" }}
+            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
             tickFormatter={(v: number) => `${v}%`}
             domain={[0, 55]}
             tickLine={false}
@@ -270,8 +285,8 @@ function RevenueChart({ countries }: { countries: Country[] }) {
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fontSize: 12, fill: "#6B7280" }}
-            width={120}
+            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
+            width={isMobile ? 90 : 120}
             tickLine={false}
             axisLine={false}
           />
@@ -352,7 +367,7 @@ export function CountryCompare() {
           <button
             key={v.id}
             onClick={() => setView(v.id)}
-            className={`flex-1 text-sm px-3 py-2 rounded-lg transition-all ${
+            className={`flex-1 text-xs sm:text-sm px-2 sm:px-3 py-2 rounded-lg transition-all ${
               view === v.id
                 ? "bg-white shadow-sm font-semibold text-text"
                 : "text-text-muted hover:text-text"

@@ -78,3 +78,12 @@ body {
     transform: none;
   }
 }
+
+/* Hide scrollbar for horizontal scroll containers */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

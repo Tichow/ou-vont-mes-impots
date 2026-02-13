@@ -448,7 +448,7 @@ export default function AProposPage() {
     <main className="min-h-screen bg-surface-alt">
       <Header />
 
-      <div className="max-w-5xl mx-auto px-6 py-10 space-y-12 md:space-y-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10 sm:space-y-12 md:space-y-16">
         {/* Title */}
         <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">

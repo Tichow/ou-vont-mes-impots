@@ -91,11 +91,11 @@ function SalaryField({ label, value, onChange, placeholder, large, hint }: Salar
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           placeholder={placeholder ?? "Ex : 35 000"}
-          className={`w-full ${large ? "text-4xl py-4" : "text-2xl py-3"} text-center font-bold text-text bg-surface-alt rounded-xl px-6 border border-border focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all placeholder:text-text-muted/30 placeholder:font-normal ${large ? "placeholder:text-2xl" : "placeholder:text-lg"}`}
+          className={`w-full ${large ? "text-3xl sm:text-4xl py-3 sm:py-4" : "text-xl sm:text-2xl py-2.5 sm:py-3"} text-center font-bold text-text bg-surface-alt rounded-xl px-4 sm:px-6 border border-border focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all placeholder:text-text-muted/30 placeholder:font-normal ${large ? "placeholder:text-xl sm:placeholder:text-2xl" : "placeholder:text-base sm:placeholder:text-lg"}`}
         />
         {/* € suffix when there's a value */}
         {value > 0 && !isFocused && (
-          <span className={`absolute right-5 top-1/2 -translate-y-1/2 ${large ? "text-2xl" : "text-lg"} font-bold text-text-muted/40 pointer-events-none`}>
+          <span className={`absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 ${large ? "text-xl sm:text-2xl" : "text-base sm:text-lg"} font-bold text-text-muted/40 pointer-events-none`}>
             €
           </span>
         )}
@@ -163,7 +163,7 @@ export function SalaryInput() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full max-w-lg mx-auto"
     >
-      <div className="relative rounded-3xl bg-white p-8 md:p-10 shadow-lg border border-border overflow-hidden">
+      <div className="relative rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 md:p-10 shadow-lg border border-border overflow-hidden">
 
         {/* Salary input */}
         <div className="mb-8">

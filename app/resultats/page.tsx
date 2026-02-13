@@ -47,7 +47,7 @@ function ResultsContent() {
     <main className="min-h-screen bg-surface-alt">
       <Header />
 
-      <div className="max-w-5xl mx-auto px-6 py-10 space-y-16 md:space-y-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-12 sm:space-y-16 md:space-y-20">
         {/* Page title */}
         <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-text heading-tight">
@@ -116,12 +116,12 @@ function ResultsContent() {
             vont directement à vos caisses de protection sociale.
             {ir > 0 && <>{" "}L&apos;impôt sur le revenu (en bleu) est versé au budget général de l&apos;État.</>}
           </p>
-          <div className="rounded-3xl border border-border bg-white p-4 md:p-6 overflow-hidden">
+          <div className="rounded-2xl sm:rounded-3xl border border-border bg-white p-2 sm:p-4 md:p-6 overflow-hidden">
             <SankeyDiagram result={result} />
           </div>
 
           {/* TVA annotation */}
-          <div className="mt-4 flex items-start gap-3 rounded-xl border border-border bg-slate-50 px-5 py-4">
+          <div className="mt-4 flex items-start gap-2 sm:gap-3 rounded-xl border border-border bg-slate-50 px-3 py-3 sm:px-5 sm:py-4">
             <ShoppingCart size={18} className="text-infrastructure mt-0.5 flex-shrink-0" />
             <p className="text-sm text-text-secondary leading-relaxed">
               <span className="font-semibold text-text text-base">+ {formatEuros(tva)} de TVA estimée</span> sur votre consommation annuelle.
@@ -260,7 +260,7 @@ function ResultsContent() {
             évolué sur 11 ans.
           </p>
           {/* Scope warning */}
-          <div className="mb-6 flex items-start gap-3 rounded-xl border border-border bg-slate-50 px-5 py-4">
+          <div className="mb-6 flex items-start gap-2 sm:gap-3 rounded-xl border border-border bg-slate-50 px-3 py-3 sm:px-5 sm:py-4">
             <AlertTriangle size={18} className="text-amber-600 mt-0.5 flex-shrink-0" />
             <p className="text-sm text-text-secondary leading-relaxed">
               <span className="font-semibold text-text">Changement de périmètre.</span>{" "}
@@ -274,7 +274,7 @@ function ResultsContent() {
               car la frontière entre État et Sécu a évolué (ex. : réforme CSG 2017).
             </p>
           </div>
-          <div className="rounded-3xl border border-border bg-white p-6">
+          <div className="rounded-2xl sm:rounded-3xl border border-border bg-white p-3 sm:p-6">
             <HistoryTimeline />
           </div>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted mt-4">
@@ -329,13 +329,13 @@ function ResultsContent() {
             (santé universelle, retraite par répartition, allocations familiales, chômage)
             financée précisément par ces cotisations élevées.
           </p>
-          <div className="rounded-3xl border border-border bg-white p-6">
+          <div className="rounded-2xl sm:rounded-3xl border border-border bg-white p-3 sm:p-6">
             <CountryCompare />
           </div>
         </section>
 
         {/* Footer */}
-        <section className="rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-border p-8 text-center space-y-4">
+        <section className="rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-border p-6 sm:p-8 text-center space-y-4">
           <p className="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto">
             Projet personnel à visée pédagogique. Ceci n&apos;est pas un outil officiel.
             Les montants sont des estimations basées sur le barème fiscal 2026 (revenus 2025)
@@ -361,6 +361,15 @@ function ResultsContent() {
               className="text-sm text-text-muted hover:text-text transition-colors"
             >
               Simulateur officiel
+            </a>
+            <span className="hidden sm:inline text-border">&middot;</span>
+            <a
+              href="https://github.com/tichow/ou-vont-mes-impots"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-text-muted hover:text-text transition-colors"
+            >
+              GitHub
             </a>
           </div>
           <p className="text-xs text-text-muted">

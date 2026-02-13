@@ -58,7 +58,7 @@ function CustomTooltip({
   const otherEntry = payload.find((e) => e.name === "other");
 
   return (
-    <div className="bg-white border border-border rounded-xl shadow-lg px-4 py-3 text-xs max-w-[300px]">
+    <div className="bg-white border border-border rounded-xl shadow-lg px-3 py-2.5 sm:px-4 sm:py-3 text-xs max-w-[250px] sm:max-w-[300px]">
       <p className="font-bold text-text mb-2">{label}</p>
       {payload
         .slice()
@@ -104,21 +104,22 @@ export function HistoryTimeline() {
   return (
     <div className="space-y-4">
       {/* Chart */}
-      <div className="h-[320px] md:h-[380px] w-full">
+      <div className="h-[280px] sm:h-[320px] md:h-[380px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={chartData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
+          <AreaChart data={chartData} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
             <XAxis
               dataKey="year"
-              tick={{ fontSize: 12, fill: "#6B7280" }}
+              tick={{ fontSize: 11, fill: "#6B7280" }}
               tickLine={false}
               axisLine={{ stroke: "#E5E7EB" }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: "#6B7280" }}
+              tick={{ fontSize: 11, fill: "#6B7280" }}
               tickLine={false}
               axisLine={false}
               tickFormatter={(v: number) => `${v}%`}
               domain={[0, 100]}
+              width={40}
             />
             <Tooltip content={<CustomTooltip />} />
             {SECTOR_KEYS.map((key) => (

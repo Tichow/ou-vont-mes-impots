@@ -11,11 +11,11 @@ export function EquivalenceCards({ sectors }: Props) {
   const sorted = [...sectors].sort((a, b) => b.amount - a.amount);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
       {sorted.map((sector) => (
         <div
           key={sector.id}
-          className="group relative rounded-2xl border border-border bg-white p-5 card-interactive cursor-default overflow-hidden h-full"
+          className="group relative rounded-2xl border border-border bg-white p-4 sm:p-5 card-interactive cursor-default overflow-hidden h-full"
         >
           {/* Gradient accent on hover */}
           <div

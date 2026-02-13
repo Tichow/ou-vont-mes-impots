@@ -172,7 +172,7 @@ export default function GlossairePage() {
     <main className="min-h-screen bg-surface-alt">
       <Header />
 
-      <div className="max-w-5xl mx-auto px-6 py-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Title */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
@@ -188,8 +188,8 @@ export default function GlossairePage() {
           </p>
         </div>
 
-        {/* Search bar */}
-        <div className="sticky top-[57px] z-40 bg-surface-alt pt-2 pb-4">
+        {/* Search bar + category filters — sticky */}
+        <div className="sticky top-[57px] z-40 bg-surface-alt pt-2 pb-3 sm:pb-4">
           <div className="relative">
             <Search
               size={18}
@@ -199,7 +199,7 @@ export default function GlossairePage() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher un terme (ex. CSG, quotient familial, CNAV...)"
+              placeholder="Rechercher un terme (ex. CSG, quotient familial...)"
               className="w-full pl-11 pr-10 py-3 bg-white border border-border rounded-xl text-sm text-text placeholder:text-text-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
             {query && (
@@ -212,33 +212,35 @@ export default function GlossairePage() {
             )}
           </div>
 
-          {/* Category filters */}
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            <button
-              onClick={() => setActiveCategory(null)}
-              className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
-                activeCategory === null
-                  ? "bg-text text-white border-text"
-                  : "bg-white text-text-muted border-border hover:border-text/30"
-              }`}
-            >
-              Tous
-            </button>
-            {categories.map((cat) => (
+          {/* Category filters — horizontal scroll on mobile, wrap on sm+ */}
+          <div className="mt-2 sm:mt-3 overflow-x-auto scrollbar-none">
+            <div className="flex sm:flex-wrap gap-1.5">
               <button
-                key={cat.id}
-                onClick={() =>
-                  setActiveCategory(activeCategory === cat.id ? null : cat.id)
-                }
-                className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
-                  activeCategory === cat.id
+                onClick={() => setActiveCategory(null)}
+                className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors whitespace-nowrap flex-shrink-0 ${
+                  activeCategory === null
                     ? "bg-text text-white border-text"
                     : "bg-white text-text-muted border-border hover:border-text/30"
                 }`}
               >
-                {cat.label}
+                Tous
               </button>
-            ))}
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() =>
+                    setActiveCategory(activeCategory === cat.id ? null : cat.id)
+                  }
+                  className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors whitespace-nowrap flex-shrink-0 sm:flex-shrink sm:whitespace-normal ${
+                    activeCategory === cat.id
+                      ? "bg-text text-white border-text"
+                      : "bg-white text-text-muted border-border hover:border-text/30"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -282,7 +284,7 @@ export default function GlossairePage() {
           <div className="space-y-8">
             {grouped.map(([letter, terms]) => (
               <section key={letter}>
-                <div className="sticky top-[160px] z-30 bg-surface-alt py-1">
+                <div className="py-1">
                   <h2 className="text-2xl font-extrabold text-primary/80 heading-tight">
                     {letter}
                   </h2>

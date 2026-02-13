@@ -67,18 +67,18 @@ const cards: CardDef[] = [
 
 export function SummaryCards({ result }: Props) {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {cards.map((card) => (
-        <div key={card.key} className="bg-white border border-border rounded-2xl p-6 card-interactive relative">
+        <div key={card.key} className="bg-white border border-border rounded-2xl p-4 sm:p-6 card-interactive relative">
           {card.note && (
             <span className="absolute top-3 right-3 text-xs font-medium text-text-muted bg-surface-alt px-2 py-0.5 rounded">
               {card.note}
             </span>
           )}
-          <div className={`w-10 h-10 rounded-xl ${card.iconBg} flex items-center justify-center mb-3`}>
-            <card.icon size={20} className={card.color} />
+          <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${card.iconBg} flex items-center justify-center mb-2 sm:mb-3`}>
+            <card.icon size={18} className={`${card.color} sm:[&]:w-5 sm:[&]:h-5`} />
           </div>
-          <p className={`text-3xl md:text-4xl font-bold ${card.color} mb-1`}>
+          <p className={`text-2xl sm:text-3xl md:text-4xl font-bold ${card.color} mb-1`}>
             {card.getValue(result)}
           </p>
           <p className="text-sm text-text-secondary font-medium">

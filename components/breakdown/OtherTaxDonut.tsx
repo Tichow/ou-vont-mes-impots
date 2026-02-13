@@ -58,7 +58,7 @@ export function OtherTaxDonut({ segments, grandTotal }: Props) {
         </ResponsiveContainer>
         {/* Center label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-3xl font-extrabold text-text tabular-nums heading-tight">
+          <span className="text-2xl sm:text-3xl font-extrabold text-text tabular-nums heading-tight">
             {formatEuros(grandTotal)}
           </span>
           <span className="text-xs text-text-muted">par an</span>

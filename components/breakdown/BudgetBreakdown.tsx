@@ -115,7 +115,7 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
   const hasProgrammes = sector.programmes.length > 0;
 
   return (
-    <div className={`rounded-2xl border border-border bg-white hover:shadow-md hover:border-border/80 transition-all duration-200 ${compact ? "px-3 py-3" : expanded ? "px-5 py-5" : "px-4 py-4"}`}>
+    <div className={`rounded-2xl border border-border bg-white hover:shadow-md hover:border-border/80 transition-all duration-200 ${compact ? "px-3 py-3" : expanded ? "px-3 py-3 sm:px-5 sm:py-5" : "px-3 py-3 sm:px-4 sm:py-4"}`}>
       {/* Clickable header */}
       <button
         onClick={hasProgrammes ? onToggle : undefined}
@@ -123,18 +123,18 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
         disabled={!hasProgrammes}
       >
         {/* Top row: emoji + name + amount + % + chevron */}
-        <div className="flex items-center justify-between gap-3 mb-2">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <span className={compact ? "text-lg" : "text-xl"}>{sector.equivalence.emoji}</span>
-            <span className={`font-semibold text-text truncate ${compact ? "text-sm" : "text-base"}`}>
+        <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className={`flex-shrink-0 ${compact ? "text-lg" : "text-xl"}`}>{sector.equivalence.emoji}</span>
+            <span className={`font-semibold text-text truncate ${compact ? "text-xs sm:text-sm" : "text-sm sm:text-base"}`}>
               {sector.name}
             </span>
           </div>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <span className={`font-bold tabular-nums ${compact ? "text-sm" : "text-base"}`} style={{ color: sector.color }}>
+          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+            <span className={`font-bold tabular-nums ${compact ? "text-xs sm:text-sm" : "text-sm sm:text-base"}`} style={{ color: sector.color }}>
               {formatEuros(sector.amount)}
             </span>
-            <span className="text-text-muted tabular-nums text-xs">
+            <span className="text-text-muted tabular-nums text-[10px] sm:text-xs">
               {pctOfTotal.toFixed(1)}%
             </span>
             {hasProgrammes && (
@@ -155,7 +155,7 @@ function SectorRow({ sector, maxAmount, totalTaxes, compact, expanded, onToggle 
             style={{ backgroundColor: sector.color }}
             initial={{ width: 0 }}
             whileInView={{ width: `${barWidth}%` }}
-            viewport={{ once: true, margin: "-40px" }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
           />
         </div>

@@ -75,6 +75,10 @@ export default function HomePage() {
           <Link href="/a-propos" className="underline hover:text-text">
             Sources et méthodologie
           </Link>
+          {" · "}
+          <a href="https://github.com/tichow/ou-vont-mes-impots" target="_blank" rel="noopener noreferrer" className="underline hover:text-text">
+            GitHub
+          </a>
         </p>
       </footer>
     </main>
