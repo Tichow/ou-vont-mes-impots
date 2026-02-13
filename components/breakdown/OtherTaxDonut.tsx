@@ -48,6 +48,7 @@ export function OtherTaxDonut({ segments, grandTotal }: Props) {
               outerRadius="85%"
               paddingAngle={1.5}
               strokeWidth={0}
+              isAnimationActive={false}
             >
               {segments.map((seg) => (
                 <Cell key={seg.name} fill={seg.color} />
