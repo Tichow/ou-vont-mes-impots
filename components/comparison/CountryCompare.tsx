@@ -14,7 +14,6 @@ import {
 import { motion } from "motion/react";
 import { ExternalLink } from "lucide-react";
 import countriesData from "@/data/countries-comparison.json";
-import { formatPercent } from "@/lib/formatting";
 
 function useIsMobile(breakpoint = 640) {
   const [isMobile, setIsMobile] = useState(false);
@@ -28,7 +27,7 @@ function useIsMobile(breakpoint = 640) {
   return isMobile;
 }
 
-type ViewMode = "tax_wedge" | "breakdown" | "revenue";
+type ViewMode = "tax_wedge" | "revenue";
 
 type Country = (typeof countriesData.countries)[number];
 
@@ -36,19 +35,11 @@ const COUNTRIES_BY_NAME = new Map(
   countriesData.countries.map((c) => [`${c.flag} ${c.name}`, c])
 );
 
-const BREAKDOWN_COLORS = {
-  income_tax: "#3B82F6",
-  employee_social: "#F59E0B",
-  employer_social: "#EF4444",
-  vat_standard: "#10B981",
-};
-
-const BREAKDOWN_LABELS: Record<string, string> = {
-  income_tax: "Impôt sur le revenu",
-  employee_social: "Cotisations salarié",
-  employer_social: "Cotisations employeur",
-  vat_standard: "TVA (taux standard)",
-};
+const WEDGE_COMPONENTS: { key: string; color: string; label: string }[] = [
+  { key: "income_tax", color: "#3B82F6", label: "Impôt sur le revenu" },
+  { key: "employee_social", color: "#F59E0B", label: "Cotisations salarié" },
+  { key: "employer_social", color: "#EF4444", label: "Cotisations employeur" },
+];
 
 // ── Shared custom tooltip ──────────────────────────────────────────────
 
@@ -90,7 +81,7 @@ function barStroke(isActive: boolean): string {
   return isActive ? "rgba(0,0,0,0.12)" : "none";
 }
 
-// ── Tax Wedge chart ────────────────────────────────────────────────────
+// ── Tax Wedge chart (stacked breakdown) ───────────────────────────────
 
 function TaxWedgeChart({ countries }: { countries: Country[] }) {
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
@@ -98,8 +89,9 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
 
   const data = countries.map((c) => ({
     name: `${c.flag} ${c.name}`,
-    value: c.tax_wedge_pct,
-    id: c.id,
+    income_tax: c.breakdown.income_tax,
+    employee_social: c.breakdown.employee_social,
+    employer_social: c.breakdown.employer_social,
   }));
 
   const onEnter = useCallback((_: unknown, idx: number) => setHoverIdx(idx), []);
@@ -127,112 +119,46 @@ function TaxWedgeChart({ countries }: { countries: Country[] }) {
           />
           <Tooltip
             cursor={false}
-            content={({ active, label }) => (
-              <CountryTooltip active={active} label={label}>
-                {(() => {
-                  const c = label ? COUNTRIES_BY_NAME.get(String(label)) : undefined;
-                  if (!c) return null;
-                  return (
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-text-muted">Coin fiscal</span>
-                      <span className="text-base font-bold text-text tabular-nums">
-                        {formatPercent(c.tax_wedge_pct / 100, 1)}
-                      </span>
-                    </div>
-                  );
-                })()}
-              </CountryTooltip>
-            )}
-          />
-          <Bar
-            dataKey="value"
-            radius={[0, 6, 6, 0]}
-            barSize={28}
-            onMouseEnter={onEnter}
-            onMouseLeave={onLeave}
-          >
-            {data.map((entry, i) => (
-              <Cell
-                key={entry.id}
-                fill={entry.id === "france" ? "#2563EB" : "#94A3B8"}
-                fillOpacity={barFillOpacity(hoverIdx === i, entry.id === "france", hoverIdx !== null)}
-                stroke={barStroke(hoverIdx === i)}
-                strokeWidth={hoverIdx === i ? 1.5 : 0}
-                style={{ transition: "fill-opacity 150ms ease, stroke 150ms ease" }}
-              />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-// ── Breakdown chart ────────────────────────────────────────────────────
-
-function BreakdownChart({ countries }: { countries: Country[] }) {
-  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
-  const isMobile = useIsMobile();
-
-  const data = countries.map((c) => ({
-    name: `${c.flag} ${c.name}`,
-    ...c.breakdown,
-  }));
-
-  const onEnter = useCallback((_: unknown, idx: number) => setHoverIdx(idx), []);
-  const onLeave = useCallback(() => setHoverIdx(null), []);
-
-  return (
-    <div className="h-[300px] md:h-[350px]">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 5, right: isMobile ? 10 : 30, bottom: 5, left: 5 }}>
-          <XAxis
-            type="number"
-            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
-            tickFormatter={(v: number) => `${v}%`}
-            tickLine={false}
-            axisLine={{ stroke: "#E5E7EB" }}
-          />
-          <YAxis
-            type="category"
-            dataKey="name"
-            tick={{ fontSize: isMobile ? 10 : 12, fill: "#6B7280" }}
-            width={isMobile ? 90 : 120}
-            tickLine={false}
-            axisLine={false}
-          />
-          <Tooltip
-            cursor={false}
-            content={({ active, label, payload }) => (
-              <CountryTooltip active={active} label={label}>
-                {payload && (
-                  <div className="space-y-1">
-                    {payload.map((entry) => (
-                      <div key={entry.name} className="flex items-center justify-between gap-4">
-                        <span className="flex items-center gap-1.5">
-                          <span
-                            className="w-2 h-2 rounded-full flex-shrink-0"
-                            style={{ backgroundColor: entry.color as string }}
-                          />
-                          {BREAKDOWN_LABELS[entry.name as string] ?? entry.name}
-                        </span>
-                        <span className="font-medium tabular-nums">{entry.value}%</span>
+            content={({ active, label, payload }) => {
+              const total = payload?.reduce((s, e) => s + (Number(e.value) || 0), 0) ?? 0;
+              return (
+                <CountryTooltip active={active} label={label}>
+                  {payload && (
+                    <div className="space-y-1">
+                      {payload.map((entry) => {
+                        const comp = WEDGE_COMPONENTS.find((c) => c.key === entry.name);
+                        return (
+                          <div key={entry.name} className="flex items-center justify-between gap-4">
+                            <span className="flex items-center gap-1.5">
+                              <span
+                                className="w-2 h-2 rounded-full flex-shrink-0"
+                                style={{ backgroundColor: entry.color as string }}
+                              />
+                              {comp?.label ?? entry.name}
+                            </span>
+                            <span className="font-medium tabular-nums">{entry.value}%</span>
+                          </div>
+                        );
+                      })}
+                      <div className="flex items-center justify-between gap-4 pt-1 border-t border-border/50 font-semibold">
+                        <span>= Coin fiscal</span>
+                        <span className="tabular-nums">{total.toFixed(1)}%</span>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </CountryTooltip>
-            )}
+                    </div>
+                  )}
+                </CountryTooltip>
+              );
+            }}
           />
           <Legend
-            formatter={(value) => BREAKDOWN_LABELS[value as string] ?? value}
+            formatter={(value) => WEDGE_COMPONENTS.find((c) => c.key === value)?.label ?? value}
             wrapperStyle={{ fontSize: "12px" }}
           />
-          {Object.entries(BREAKDOWN_COLORS).map(([key, color]) => (
+          {WEDGE_COMPONENTS.map(({ key, color }) => (
             <Bar
               key={key}
               dataKey={key}
-              stackId="stack"
+              stackId="wedge"
               fill={color}
               barSize={28}
               onMouseEnter={onEnter}
@@ -339,12 +265,7 @@ const VIEWS: { id: ViewMode; label: string; description: string }[] = [
   {
     id: "tax_wedge",
     label: "Coin fiscal",
-    description: `% prélevé sur le salaire brut moyen. OCDE Taxing Wages 2025 (données ${countriesData.metadata.year_tax_wedge}), célibataire sans enfant`,
-  },
-  {
-    id: "breakdown",
-    label: "Décomposition",
-    description: `Répartition entre IR, cotisations salarié/employeur et TVA. Données ${countriesData.metadata.year_tax_wedge}`,
+    description: `IR + cotisations salarié + employeur, en % du coût du travail. OCDE Taxing Wages 2025 (données ${countriesData.metadata.year_tax_wedge}), célibataire sans enfant`,
   },
   {
     id: "revenue",
@@ -391,7 +312,6 @@ export function CountryCompare() {
         transition={{ duration: 0.3 }}
       >
         {view === "tax_wedge" && <TaxWedgeChart countries={countries} />}
-        {view === "breakdown" && <BreakdownChart countries={countries} />}
         {view === "revenue" && <RevenueChart countries={countries} />}
       </motion.div>
 
